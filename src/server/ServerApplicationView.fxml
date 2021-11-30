@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+
+<Pane fx:id="serverScene" prefHeight="704.0" prefWidth="544.0" style="-fx-background-color: -fx-gray;" styleClass="subpane-layout" stylesheets="@../application/dark-theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="serverApp.ServerController">
+   <children>
+      <Group fx:id="startButton" layoutX="154.0" layoutY="477.0">
+         <children>
+            <Circle fill="WHITE" layoutX="9.0" layoutY="9.0" radius="100.0" stroke="#ffffff00" strokeType="INSIDE">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.46970000863075256" green="0.7699999809265137" blue="0.7649949789047241" opacity="0.46206897497177124" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Circle>
+            <ImageView fitHeight="111.0" fitWidth="109.0" layoutX="-45.0" layoutY="-42.0" opacity="0.79" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../application/icon/start_black.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="-53.0" layoutY="90.0" prefHeight="106.0" prefWidth="125.0" styleClass="main-text" text="Start the server" />
+         </children>
+      </Group>
+      <Label layoutX="116.0" layoutY="105.0" style="-fx-font-size: 25;" styleClass="title-text-style" text="ANXIPHARMA" />
+      <Label alignment="CENTER" layoutX="74.0" layoutY="208.0" opacity="0.64" prefHeight="175.0" prefWidth="396.0" style="-fx-font-size: 16;" styleClass="main-text" text="This scene only represent a graphical way of starting the server to allow clients have access to its resources. Once started, the scene closes but the server still waiting for connections." wrapText="true" />
+      <ImageView fitHeight="195.0" fitWidth="200.0" layoutX="288.0" layoutY="26.0">
+         <image>
+            <Image url="@../application/icon/menu_icon.png" />
+         </image>
+      </ImageView>
+      <Group fx:id="stopButton" layoutX="379.0" layoutY="477.0">
+         <children>
+            <Circle fill="WHITE" layoutX="9.0" layoutY="9.0" radius="100.0" stroke="#ffffff00" strokeType="INSIDE">
+               <effect>
+                  <DropShadow>
+                     <color>
+                        <Color red="0.6568889021873474" green="0.75789475440979" blue="0.4014035165309906" opacity="0.46000000834465027" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Circle>
+            <Label layoutX="-53.0" layoutY="90.0" prefHeight="106.0" prefWidth="125.0" styleClass="main-text" text="Stop the server" />
+            <ImageView fitHeight="101.0" fitWidth="99.0" layoutX="-40.0" layoutY="-41.0" preserveRatio="true">
+               <image>
+                  <Image url="@../application/icon/stop.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Group>
+   </children>
+</Pane>
