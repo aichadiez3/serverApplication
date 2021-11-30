@@ -59,7 +59,7 @@
       </Group>
    </children>
    <stylesheets>
-      <URL value="@../application/dark-theme.css" />
+      <URL value="@../server/dark-theme.css" />
       <URL value="@dark-theme.css" />
    </stylesheets>
 </Pane>
