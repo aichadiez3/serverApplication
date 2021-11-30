@@ -62,21 +62,22 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 	
-	public Integer Insert_new_medical_record(MedicalRecord record) {
+	public MedicalRecord Insert_new_medical_record(Date record_date, Integer reference_number, Integer bitalino_test_id) {
 		try {
 			String table = "INSERT INTO medical_record (reference_number, record_date, bitalino_test_id) " + " VALUES(?,?,?);";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setDate(1, (Date) record.getRecordDate());
-			template.setInt(2, record.getReferenceNumber());
-			template.setInt(3, record.getBitalinoTestId());
+			template.setDate(1, (Date) record_date);
+			template.setInt(2, reference_number);
+			template.setInt(3, bitalino_test_id);
 			template.executeUpdate();
 			
 			String SQL_code = "SELECT last_insert_rowid() AS record_id";
 			template = this.sqlite_connection.prepareStatement(SQL_code);
 			ResultSet result_set = template.executeQuery();
 			Integer record_id = result_set.getInt("record_id");
+			MedicalRecord medical_record = new MedicalRecord(record_id, record_date, (Integer) reference_number, (Integer) bitalino_test_id);
 			template.close();
-			return record_id;
+			return medical_record;
 			
 		} catch (SQLException insert_record_error) {
 			insert_record_error.printStackTrace();
@@ -85,23 +86,24 @@ public class SQLiteMethods implements Interface {
 	}
 	
     
-    public Patient Insert_new_patient(User user) {
+    public Patient Insert_new_patient(Integer user_id, String name, String surname) {
     	try {
-			String table = "INSERT INTO patient (user_id, name, surname) " + "VALUES (?,?);";
+			String table = "INSERT INTO patient (user_id, name, surname) " + "VALUES (?,?,?);";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setInt(1, user.getUserId());
-			template.setString(2, user.getUserName());
+			template.setInt(1, user_id);
+			template.setString(2, name);
+			template.setString(3, surname);
 			template.executeUpdate();
 			
 			String SQL_code = "SELECT * FROM patient WHERE user_id = ?";
 			template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setInt(1, user.getUserId());
+			template.setInt(1, user_id);
 			ResultSet result_set = template.executeQuery();
 			Patient patient = new Patient();
 			patient.setPatient_id(result_set.getInt("patient_id"));
 			patient.setName(result_set.getString("name"));
 			patient.setSurname(result_set.getString("surname"));
-			patient.setUser(user);
+			patient.setUser_id(user_id);
 			patient.setBirth_date(null);
 			patient.setAge(null);
 			patient.setHeight(null);
@@ -119,17 +121,17 @@ public class SQLiteMethods implements Interface {
     
     
     
-    public Doctor Insert_new_doctor(User user) {
+    public Doctor Insert_new_doctor(Integer user_id, String name) {
 		try {
 			String table = "INSERT INTO doctor (user_id, name) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setInt(1, user.getUserId());
-			template.setString(2, user.getUserName());
+			template.setInt(1, user_id);
+			template.setString(2, name);
 			template.executeUpdate();
 			
 			String SQL_code = "SELECT * FROM director WHERE user_id = ?";
 			template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setInt(1, user.getUserId());
+			template.setInt(1, user_id);
 			ResultSet result_set = template.executeQuery();
 			Doctor doctor = new Doctor();
 			doctor.setDoctor_id(result_set.getInt("director_id"));
@@ -143,12 +145,12 @@ public class SQLiteMethods implements Interface {
 	}
     
     
-    public Integer Insert_new_ecg(EcgTest ecg) {
+    public Integer Insert_new_ecg(LinkedList<Integer> ecg_values, Integer ecg_id) {
 		try {
 			String table = "INSERT INTO ecg_test (values, test_id) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setArray(1, (Array) ecg.getEcg_values());
-			template.setInt(2, ecg.getTest_id());
+			template.setArray(1, (Array) ecg_values);
+			template.setInt(2, ecg_id);
 			template.executeUpdate();
 			
 			String SQL_code = "SELECT last_insert_rowid() AS ecg_id";

@@ -22,6 +22,14 @@ public class MedicalRecord implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
+	public MedicalRecord(Integer medicalRecord_id, Date recordDate, Integer referenceNumber, Integer bitalino_test_id) {
+		super();
+		this.medicalRecord_id = medicalRecord_id;
+		this.recordDate = recordDate;
+		this.referenceNumber = referenceNumber;
+		this.bitalino_test_id = bitalino_test_id;
+	}
+
 	public MedicalRecord(Date recordDate, Integer bitalino_test_id) {
 		super();
 		this.recordDate = recordDate;

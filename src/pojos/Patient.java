@@ -16,7 +16,8 @@ public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer patient_id;
-	private User user;
+	//private User user;
+	private Integer user_id;
 	private String name;
 	private String surname;
 	private LocalDate birth_date;
@@ -52,12 +53,12 @@ public class Patient implements Serializable {
 		this.patient_id = patient_id;
 	}
 
-	public User getUser() {
-		return user;
+	public Integer getUser_id() {
+		return user_id;
 	}
-	
-	public void setUser(User user) {
-		this.user = user;
+
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getName() {
@@ -163,7 +164,7 @@ public class Patient implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Patient [patient_id=" + patient_id + ", user=" + user + ", name=" + name + ", surname=" + surname
+		return "Patient [patient_id=" + patient_id + ", user_id=" + user_id + ", name=" + name + ", surname=" + surname
 				+ ", birth_date=" + birth_date + ", age=" + age + ", height=" + height + ", weight=" + weight
 				+ ", gender=" + gender + ", telephone=" + telephone + ", insurance=" + insurance + "]";
 	}
