@@ -26,14 +26,14 @@ public class Patient implements Serializable {
 	private Integer weight;
 	private String gender;
 	private Integer telephone;
-	private Insurance_company insurance;
+	private Integer insurance_id;
 
 	public Patient() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Patient(String name, String surname, LocalDate birth_date, Integer height, Integer weight, String gender, Integer telephone, Insurance_company insurance) {
+	public Patient(String name, String surname, LocalDate birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -42,7 +42,7 @@ public class Patient implements Serializable {
 		this.weight = weight;
 		this.gender = gender;
 		this.telephone = telephone;
-		this.insurance = insurance;
+		this.insurance_id = insurance_id;
 	}
 
 	public Integer getPatient_id() {
@@ -128,12 +128,13 @@ public class Patient implements Serializable {
 		this.telephone = telephone;
 	}
 
-	public Insurance_company getInsurance() {
-		return insurance;
+
+	public Integer getInsurance_id() {
+		return insurance_id;
 	}
 
-	public void setInsurance(Insurance_company insurance) {
-		this.insurance = insurance;
+	public void setInsurance_id(Integer insurance_id) {
+		this.insurance_id = insurance_id;
 	}
 
 	public String getGender() {
@@ -166,7 +167,7 @@ public class Patient implements Serializable {
 	public String toString() {
 		return "Patient [patient_id=" + patient_id + ", user_id=" + user_id + ", name=" + name + ", surname=" + surname
 				+ ", birth_date=" + birth_date + ", age=" + age + ", height=" + height + ", weight=" + weight
-				+ ", gender=" + gender + ", telephone=" + telephone + ", insurance=" + insurance + "]";
+				+ ", gender=" + gender + ", telephone=" + telephone + ", insurance_id=" + insurance_id + "]";
 	}
 	
 	

@@ -91,7 +91,7 @@ public class SQLiteManager {
 			stmt4.execute(sql4);
 			stmt4.close();
 			
-			/*
+			
 			Statement stmt5 = sqlite_connection.createStatement();
 			String sql5 = "CREATE TABLE ecg_test " + "(ecg_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " values TEXT default NULL, "
@@ -105,7 +105,7 @@ public class SQLiteManager {
 					+ " test_id FOREING KEY REFERENCES bitalino_test(test_id))";
 			stmt6.execute(sql6);
 			stmt6.close();
-			*/
+			
 			
 			Statement stmt7 = sqlite_connection.createStatement();
 			String sql7 = "CREATE TABLE insurance " + "(insurance_id INTEGER PRIMARY KEY AUTOINCREMENT, " 

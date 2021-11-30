@@ -110,7 +110,7 @@ public class SQLiteMethods implements Interface {
 			patient.setWeight(null);
 			patient.setGender(null);
 			patient.setTelephone(null);
-			patient.setInsurance(null);
+			patient.setInsurance_id(null);
 			
 			return patient;
 		} catch (SQLException new_client_account_error) {
@@ -268,9 +268,11 @@ public class SQLiteMethods implements Interface {
 		}
 	}
     
-    public boolean Update_patient_info(Patient patient) {
+    public boolean Update_patient_info(Integer patient_id) {
     	try {
     		//BUSCAR PACIENTE LLAMANDO AL METODO BUSCAR PACIENTE POR ID
+    		
+    		Patient patient = Search_stored_patient_by_id(patient_id);
     		
     		String SQL_code = "UPDATE patient SET name = ?, surname = ?, birthdate = ?, age = ?, telephone = ?, height = ?, weight = ?, gender = ?, insurance_id = ? WHERE patient_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
@@ -282,7 +284,7 @@ public class SQLiteMethods implements Interface {
 			template.setInt(6, patient.getHeight());
 			template.setInt(7, patient.getWeight());
 			template.setString(8, patient.getGender());
-			template.setInt(9, patient.getInsurance().getInsurance_id());
+			template.setInt(9, patient.getInsurance_id());
 			template.setInt(10, patient.getPatient_id());
 			template.executeUpdate();
 			template.close();
@@ -311,7 +313,7 @@ public class SQLiteMethods implements Interface {
 			patient.setWeight(result_set.getInt("weight"));
 			patient.setGender(result_set.getString("gender"));
 			patient.setTelephone(result_set.getInt("telephone"));
-			patient.setInsurance(result_set.getInsurance("insurance"));
+			patient.setInsurance_id(result_set.getInt("insurance_id"));
 			template.close();
 			return patient;
 		} catch (SQLException search_patient_error) {
