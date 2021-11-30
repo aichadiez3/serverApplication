@@ -85,7 +85,6 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 	
-    
     public Patient Insert_new_patient(Integer user_id, String name, String surname) {
     	try {
 			String table = "INSERT INTO patient (user_id, name, surname) " + "VALUES (?,?,?);";
@@ -118,9 +117,7 @@ public class SQLiteMethods implements Interface {
 			return null;
 		}
     }
-    
-    
-    
+     
     public Doctor Insert_new_doctor(Integer user_id, String name) {
 		try {
 			String table = "INSERT INTO doctor (user_id, name) " + "VALUES (?,?)";
@@ -346,11 +343,12 @@ public class SQLiteMethods implements Interface {
 		
 	}
 	
-	public List<MedicalRecord> Search_stored_record_by_test(Integer test) {
+	public List<MedicalRecord> Search_stored_record_by_test(Integer test_id) {
 		List<MedicalRecord> records = new LinkedList<MedicalRecord>();
 		try {
-			String SQL_code = "SELECT * FROM medical_record WHERE reference_number LIKE ?";
+			String SQL_code = "SELECT * FROM medical_record WHERE bitalino_test_id LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setInt(1, test_id);
 			ResultSet rs = template.executeQuery();
 			while(rs.next()) {
 				int id = rs.getInt("medicalRecord_id");
@@ -429,7 +427,6 @@ public class SQLiteMethods implements Interface {
 		
 	}
 	
-	
 	public List<MedicalRecord> Search_stored_record_by_date_descendent() {
 		List<MedicalRecord> records = new LinkedList<MedicalRecord>();
 		try {
@@ -453,8 +450,6 @@ public class SQLiteMethods implements Interface {
 		
 	}
 	
-	
-	
 	// -----> LIST METHODS <-----
 	public List<Symptom> Search_all_symptoms_from_record(Integer record_id) {
 		try {
@@ -475,8 +470,6 @@ public class SQLiteMethods implements Interface {
 			return null;
 		}
 	}
-	
-	
 	
 	public List<User> List_all_users() {
 		try {

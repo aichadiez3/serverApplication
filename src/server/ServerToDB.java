@@ -9,6 +9,12 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,19 +63,16 @@ public class ServerToDB {
                 	
         			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
                 	
-                	// inputStream = socket.getInputStream(); 
             		boolean stopClient = false;
                     while (!stopClient) {
-                    	//instruction = dataInputStream.readLine();
                     	instruction = dataInputStream.readUTF();
-                        //byteRead = dataInputStream.readLine();
                         //We read until is finished the connection or character 'x'
                         if (instruction.equals("end_client")) {
                             //System.out.println("Client character reception finished");
                             stopClient = true;
                         }
                         
-                        //todo lo que he hecho, aïcha habia puesto esto mas adelante, donde comentare **!**, no se donde habrá que colocarlo para que funcione
+                        //todo lo que he hecho, aïcha habia puesto esto mas adelante, donde comentare *!*, no se donde habrá que colocarlo para que funcione
                         String[] parameters = instruction.split(",");
                         if (parameters[0].equals("new_user")) {
                         	String user_name = parameters[1];
@@ -78,74 +81,74 @@ public class ServerToDB {
                             methods.Insert_new_user(user_name, password, email);
                         }
                         if (parameters[0].equals("new_patient")) {
-                        	try {
-								user = (User) objectInputStream.readObject();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-                            methods.Insert_new_patient(user);
+                    		String user_name = parameters[1];
+                        	String password = parameters[2];
+                        	String email = parameters[3];
+                        	user = new User(user_name, password, email);
+                        	Integer user_id = user.getUserId();
+                        	String name = parameters[4];
+                        	String surname = parameters[5];
+                        	LocalDate date = LocalDate.parse(parameters[6]);
+                        	Integer age = Integer.parseInt(parameters[7]);
+                        	Integer height = Integer.parseInt(parameters[8]);
+                        	Integer weight = Integer.parseInt(parameters[9]);
+                        	String gender = parameters[10];
+                        	Integer telephone = Integer.parseInt(parameters[11]);
+                        	Integer insurance_id = Integer.parseInt(parameters[12]);
+                        	String company_name = parameters[13];
+                        	Insurance_company company = new Insurance_company(insurance_id, company_name);
+                            methods.Insert_new_patient(user_id, name, surname);
                         }
+
+
                         if (parameters[0].equals("new_doctor")) {
-                        	try {
-								user = (User) objectInputStream.readObject();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-                            methods.Insert_new_doctor(user);
+                    		String user_name = parameters[1];
+                        	String password = parameters[2];
+                        	String email = parameters[3];
+                        	user = new User(user_name, password, email);
+                        	Integer user_id = user.getUserId();
+                        	String name = parameters[4];
+                        	methods.Insert_new_doctor(user_id, name);
                         }
-                        if (parameters[0].equals("new_medical_record")) {
-                        	try {
-								record = (MedicalRecord) objectInputStream.readObject();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
 
-                            methods.Insert_new_medical_record(record);
+                        
+                        if (parameters[0].equals("new_medical_record")) {
+                    		Integer record_id = Integer.parseInt(parameters[1]);
+                    		Date record_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[2]);
+                    		Integer reference_number = Integer.parseInt(parameters[3]);
+                    		Integer bitalino_test_id = Integer.parseInt(parameters[4]);
+                            methods.Insert_new_medical_record((java.sql.Date) record_date, reference_number, bitalino_test_id);
                         }
                         if (parameters[0].equals("new_ecg")) {
-                        	try {
-                        		ecg = (EcgTest) objectInputStream.readObject();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-                            methods.Insert_new_ecg(ecg);
+                    		Integer ecg_id = Integer.parseInt(parameters[1]);
+                    		Integer test_id = Integer.parseInt(parameters[2]);
+                    		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[3]));
+							LinkedList<Integer> ecg_values = linkedList;
+                            methods.Insert_new_ecg(ecg_values, test_id);
                         }
                         if (parameters[0].equals("new_eda")) {
-                        	try {
-                        		eda = (EdaTest) objectInputStream.readObject();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-                            methods.Insert_new_eda(eda);
+                    		Integer eda_id = Integer.parseInt(parameters[1]);
+                    		Integer test_id = Integer.parseInt(parameters[2]);
+                    		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[3]));
+							LinkedList<Integer> eda_values = linkedList;
+                            methods.Insert_new_eda(eda_values, test_id);
                         }
                         if (parameters[0].equals("new_psycho")) {
-                        	try {
-                        		psycho = (PsychoTest) objectInputStream.readObject();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-                            methods.Insert_new_psycho_test(psycho);
+                    		Integer queries_id = Integer.parseInt(parameters[1]);
+                    		Integer medicalRecord_id = Integer.parseInt(parameters[2]);
+                    		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[3]));
+							LinkedList<Boolean> positive_res = linkedList;
+							LinkedList linkedList2 = new LinkedList(Arrays.asList(parameters[4]));
+							LinkedList<Boolean> negative_res = linkedList2;
+                            methods.Insert_new_psycho_test(positive_res, negative_res, medicalRecord_id);
                         }
                         if (parameters[0].equals("new_physical")) {
-                        	try {
-                        		physical = (PhysicalTest) objectInputStream.readObject();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-                            methods.Insert_new_physical_test(physical);
+                    		Integer test_id = Integer.parseInt(parameters[1]);
+                    		Integer saturation = Integer.parseInt(parameters[2]);
+                    		Integer pulse = Integer.parseInt(parameters[3]);
+                    		Integer breathingRate = Integer.parseInt(parameters[4]);
+                    		Integer medicalRecord_id = Integer.parseInt(parameters[5]);
+                            methods.Insert_new_physical_test(saturation, pulse, breathingRate, medicalRecord_id);
                         }
                         if (parameters[0].equals("change_password")) {
                         	String password = parameters[1];
@@ -153,14 +156,12 @@ public class ServerToDB {
                             methods.Change_password(password, user_id);
                         }
                         if (parameters[0].equals("update_patient")) {
-                        	try {
-                        		patient = (Patient) objectInputStream.readObject();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-
-                            methods.Update_patient_info(patient);
+                    		Integer user_id = Integer.parseInt(parameters[1]);
+                            methods.Update_patient_info(user_id);
+                        }
+                        if (parameters[0].equals("search_patient_by_id")) {
+                        	int patient_id = Integer.parseInt(parameters[1]);
+                            methods.Search_stored_patient_by_id(patient_id);
                         }
                         if (parameters[0].equals("search_record_by_id")) {
                         	int record_id = Integer.parseInt(parameters[1]);
@@ -180,19 +181,14 @@ public class ServerToDB {
                         if (parameters[0].equals("search_record_by_date_descendent")) {
                             methods.Search_stored_record_by_date_descendent();
                         }
-                        if (parameters[0].equals("search_symptoms_from_record")) {
+                        if (parameters[0].equals("search_all_symptoms_from_record")) {
                         	int record_id = Integer.parseInt(parameters[1]);
                             methods.Search_all_symptoms_from_record(record_id);
                         }
                         if (parameters[0].equals("list_users")) {
                             methods.List_all_users();
                         }
-                        if (parameters[0].equals("search_insurance_by_name")) {
-                        	String name = parameters[1];
-                        	Insurance_company insurance = null;
-                            insurance = methods.Search_insurance_by_name(name);
-                			objectOutputStream.writeObject(insurance);
-                        }
+                        
                     }
                 
                 }  catch (IOException ex) {
@@ -201,19 +197,8 @@ public class ServerToDB {
                     releaseResourcesClient(inputStream, socket);
                 }
                 
-                //aqui aïcha es donde decia de poner lo que yo he puesto donde esta el **!**, yo no se donde ponerlo, me acabo de dar cuenta
-                
-                /*byte[] bytes = String.valueOf(inputStream.read()).getBytes();
-                
-                String message = new String(bytes, StandardCharsets.UTF_8);
-                
-                if(message.equals("insert user")) {
-                	//SQLiteMethods.Insert_new_user(); // Parámetros se tienen que introducir a través de los sockets desde cliente 
-                										//-> son los datos q envía el cliente al server, y el server al manejador de db
-                	
-                }*/
-                  
-                
+                //aqui aïcha es donde decia de poner lo que yo he puesto donde esta el *!*, yo no se donde ponerlo, me acabo de dar cuenta
+                                
             } catch (IOException e) {
             	e.printStackTrace();
             	releaseResourcesClient(inputStream, socket);
@@ -221,10 +206,7 @@ public class ServerToDB {
             } finally {
             	releaseResourcesServer(socket, serverSocket);
             	
-            }
-        
-     
-		
+            }		
 	}
 	
 	private static void releaseResourcesClient(InputStream inputStream, Socket socket) {
