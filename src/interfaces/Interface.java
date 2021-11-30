@@ -16,7 +16,7 @@ public interface Interface {
 	
 	public User Insert_new_user(String user_name, String password, String email);
 	public Patient Insert_new_patient(Integer user_id, String name, String surname);
-	public Doctor Insert_new_doctor(User user);
+	public Doctor Insert_new_doctor(Integer user_id, String namer);
 	public Integer Insert_new_medical_record(MedicalRecord record);
 	public Integer Insert_new_ecg(EcgTest ecg);
 	public Integer Insert_new_eda(EdaTest eda);
