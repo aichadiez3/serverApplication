@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
 
-<Pane fx:id="serverScene" prefHeight="704.0" prefWidth="544.0" style="-fx-background-color: -fx-gray;" styleClass="subpane-layout" stylesheets="@../application/dark-theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="serverApp.ServerController">
+<Pane fx:id="serverScene" prefHeight="704.0" prefWidth="544.0" style="-fx-background-color: -fx-gray;" styleClass="subpane-layout" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
    <children>
       <Group fx:id="startButton" layoutX="154.0" layoutY="477.0">
          <children>
@@ -24,7 +25,7 @@
             </Circle>
             <ImageView fitHeight="111.0" fitWidth="109.0" layoutX="-45.0" layoutY="-42.0" opacity="0.79" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../application/icon/start_black.png" />
+                  <Image url="@icons/start_black.png" />
                </image>
             </ImageView>
             <Label layoutX="-53.0" layoutY="90.0" prefHeight="106.0" prefWidth="125.0" styleClass="main-text" text="Start the server" />
@@ -34,7 +35,7 @@
       <Label alignment="CENTER" layoutX="74.0" layoutY="208.0" opacity="0.64" prefHeight="175.0" prefWidth="396.0" style="-fx-font-size: 16;" styleClass="main-text" text="This scene only represent a graphical way of starting the server to allow clients have access to its resources. Once started, the scene closes but the server still waiting for connections." wrapText="true" />
       <ImageView fitHeight="195.0" fitWidth="200.0" layoutX="288.0" layoutY="26.0">
          <image>
-            <Image url="@../application/icon/menu_icon.png" />
+            <Image url="@icons/menu_icon.png" />
          </image>
       </ImageView>
       <Group fx:id="stopButton" layoutX="379.0" layoutY="477.0">
@@ -51,10 +52,14 @@
             <Label layoutX="-53.0" layoutY="90.0" prefHeight="106.0" prefWidth="125.0" styleClass="main-text" text="Stop the server" />
             <ImageView fitHeight="101.0" fitWidth="99.0" layoutX="-40.0" layoutY="-41.0" preserveRatio="true">
                <image>
-                  <Image url="@../application/icon/stop.png" />
+                  <Image url="@icons/stop.png" />
                </image>
             </ImageView>
          </children>
       </Group>
    </children>
+   <stylesheets>
+      <URL value="@../application/dark-theme.css" />
+      <URL value="@dark-theme.css" />
+   </stylesheets>
 </Pane>

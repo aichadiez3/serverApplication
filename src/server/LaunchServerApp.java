@@ -34,7 +34,7 @@ public class LaunchServerApp extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource("ServerApplicationView.fxml"));
 			primaryStage.setTitle("Log in page");
 			Scene scene = new Scene(root);
-			//scene.getStylesheets().addAll(getClass().getResource("dark-theme.css").toExternalForm());
+			scene.getStylesheets().addAll(getClass().getResource("dark-theme.css").toExternalForm());
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setScene(scene);
 			stage = primaryStage;
