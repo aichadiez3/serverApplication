@@ -145,12 +145,12 @@ public class SQLiteMethods implements Interface {
 	}
     
     
-    public Integer Insert_new_ecg(LinkedList<Integer> ecg_values, Integer ecg_id) {
+    public Integer Insert_new_ecg(LinkedList<Integer> ecg_values, Integer test_id) {
 		try {
 			String table = "INSERT INTO ecg_test (values, test_id) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setArray(1, (Array) ecg_values);
-			template.setInt(2, ecg_id);
+			template.setInt(2, test_id);
 			template.executeUpdate();
 			
 			String SQL_code = "SELECT last_insert_rowid() AS ecg_id";
@@ -165,12 +165,12 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 
-    public Integer Insert_new_eda(EdaTest eda) {
+    public Integer Insert_new_eda(LinkedList<Integer> eda_values, Integer test_id) {
 		try {
 			String table = "INSERT INTO eda_test (values, test_id) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setArray(1, (Array) eda.getEda_values());
-			template.setInt(2, eda.getTest_id());
+			template.setArray(1, (Array) eda_values);
+			template.setInt(2, test_id);
 			template.executeUpdate();
 			
 			String SQL_code = "SELECT last_insert_rowid() AS eda_id";
@@ -185,13 +185,13 @@ public class SQLiteMethods implements Interface {
 		}
 	}
     
-    public Integer Insert_new_psycho_test(PsychoTest psycho) {
+    public Integer Insert_new_psycho_test(LinkedList<Boolean> positive_res, LinkedList<Boolean> negative_res, Integer medicalRecord_id) {
 		try {
 			String table = "INSERT INTO psycho_test (positive_res, negative_res, medicalRecord_id) " + "VALUES (?,?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setArray(1, (Array) psycho.getPositive_res());
-			template.setArray(2, (Array) psycho.getNegative_res());
-			template.setInt(3, psycho.getMedicalRecord_id());
+			template.setArray(1, (Array) positive_res);
+			template.setArray(2, (Array) negative_res);
+			template.setInt(3, medicalRecord_id);
 			template.executeUpdate();
 			
 			
@@ -228,14 +228,14 @@ public class SQLiteMethods implements Interface {
 		}
 	}
     
-    public Integer Insert_new_physical_test(PhysicalTest physical) {
+    public Integer Insert_new_physical_test(Integer saturation, Integer pulse, Integer breathingRate,Integer medicalRecord_id) {
 		try {
 			String table = "INSERT INTO physical_test (saturation, pulse, breathingRate, medicalRecord_id) " + "VALUES (?,?,?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setInt(1, physical.getSaturation());
-			template.setInt(2, physical.getPulse());
-			template.setInt(3, physical.getBreathingRate());
-			template.setInt(4, physical.getMedicalRecord_id());
+			template.setInt(1, saturation);
+			template.setInt(2, pulse);
+			template.setInt(3, breathingRate);
+			template.setInt(4, medicalRecord_id);
 			template.executeUpdate();
 			
 			String SQL_code = "SELECT last_insert_rowid() AS test_id";
@@ -270,6 +270,8 @@ public class SQLiteMethods implements Interface {
     
     public boolean Update_patient_info(Patient patient) {
     	try {
+    		//BUSCAR PACIENTE LLAMANDO AL METODO BUSCAR PACIENTE POR ID
+    		
     		String SQL_code = "UPDATE patient SET name = ?, surname = ?, birthdate = ?, age = ?, telephone = ?, height = ?, weight = ?, gender = ?, insurance_id = ? WHERE patient_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setString(1, patient.getName());
@@ -295,6 +297,32 @@ public class SQLiteMethods implements Interface {
     
 
 	// -----> SEARCH STORED ELEMENTS BY ID METHODS <-----
+    public Patient Search_stored_patient_by_id(Integer patient_id) {
+		try {
+			String SQL_code = "SELECT * FROM patient WHERE patient_id LIKE ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setInt(1, patient_id);
+			Patient patient= new Patient();
+			ResultSet result_set = template.executeQuery();
+			patient.setName(result_set.getString("name"));
+			patient.setSurname(result_set.getString("surname"));
+			patient.setBirth_date(result_set.getDate("name"));
+			patient.setHeight(result_set.getInt("height"));
+			patient.setWeight(result_set.getInt("weight"));
+			patient.setGender(result_set.getString("gender"));
+			patient.setTelephone(result_set.getInt("telephone"));
+			patient.setInsurance(result_set.getInsurance("insurance"));
+			template.close();
+			return patient;
+		} catch (SQLException search_patient_error) {
+			search_patient_error.printStackTrace();
+			return null;
+		}
+		
+	}
+    
+    
+    
 	public MedicalRecord Search_stored_record_by_id(Integer record_id) {
 		try {
 			String SQL_code = "SELECT * FROM medical_record WHERE medicalRecord_id LIKE ?";
