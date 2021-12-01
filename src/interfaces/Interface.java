@@ -33,7 +33,7 @@ public interface Interface {
 	public MedicalRecord Search_stored_record_by_id(Integer record_id);
 	public List<MedicalRecord> Search_stored_record_by_test(Integer test_id);
 	public Symptom Search_symptom_by_id(Integer symptom_id);
-	public Integer Search_stored_user_by_email(String email);
+	public Integer Search_stored_user_by_userName(String user_name);
 	
 	public List<MedicalRecord> Search_stored_record_by_date_ascendent();
 	public List<MedicalRecord> Search_stored_record_by_date_descendent();

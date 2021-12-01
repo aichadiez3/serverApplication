@@ -314,11 +314,11 @@ public class SQLiteMethods implements Interface {
 		
 	}
     
-    public Integer Search_stored_user_by_email(String email) {
+    public Integer Search_stored_user_by_userName(String user_name) {
 		try {
-			String SQL_code = "SELECT * FROM patient WHERE email LIKE ?";
+			String SQL_code = "SELECT * FROM patient WHERE user_name LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setString(1, email);
+			template.setString(1, user_name);
 			User user = new User();;
 			ResultSet result_set = template.executeQuery();
 		    user.setUserName(result_set.getString("user_name"));

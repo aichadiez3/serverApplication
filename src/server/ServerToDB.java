@@ -175,9 +175,9 @@ public class ServerToDB {
                         	int symptom_id = Integer.parseInt(parameters[1]);
                             methods.Search_symptom_by_id(symptom_id);
                         }
-                        if (parameters[0].equals("search_user_by_email")) {
-                        	String email = parameters[1];
-                            methods.Search_stored_user_by_email(email);
+                        if (parameters[0].equals("search_user_by_userName")) {
+                        	String user_name = parameters[1];
+                            methods.Search_stored_user_by_userName(user_name);
                         }
                         if (parameters[0].equals("search_record_by_date_ascendent")) {
                             methods.Search_stored_record_by_date_ascendent();
