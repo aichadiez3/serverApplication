@@ -140,8 +140,7 @@ public class SQLiteMethods implements Interface {
 			return null;
 		}
 	}
-    
-    
+     
     public Integer Insert_new_ecg(LinkedList<Integer> ecg_values, Integer test_id) {
 		try {
 			String table = "INSERT INTO ecg_test (values, test_id) " + "VALUES (?,?)";
@@ -246,10 +245,7 @@ public class SQLiteMethods implements Interface {
 			return null;
 		}
 	}
-    
-    
-	
-	
+ 	
 	// -----> UPDATE METHODS <-----
 	
     public void Change_password(String password, Integer user_id) {
@@ -293,8 +289,6 @@ public class SQLiteMethods implements Interface {
 		}
     }
     
-    
-
 	// -----> SEARCH STORED ELEMENTS BY ID METHODS <-----
     public Patient Search_stored_patient_by_id(Integer patient_id) {
 		try {
@@ -320,7 +314,25 @@ public class SQLiteMethods implements Interface {
 		
 	}
     
-    
+    public Integer Search_stored_user_by_email(String email) {
+		try {
+			String SQL_code = "SELECT * FROM patient WHERE email LIKE ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setString(1, email);
+			User user = new User();;
+			ResultSet result_set = template.executeQuery();
+		    user.setUserName(result_set.getString("user_name"));
+		    user.setPassword(result_set.getString("password"));
+		    user.setEmail(result_set.getString("email"));
+		    user.setUserId(result_set.getInt("user_id"));
+			template.close();
+			return user.getUserId();
+		} catch (SQLException search_patient_error) {
+			search_patient_error.printStackTrace();
+			return null;
+		}
+		
+	}
     
 	public MedicalRecord Search_stored_record_by_id(Integer record_id) {
 		try {
@@ -366,7 +378,6 @@ public class SQLiteMethods implements Interface {
 		
 	}
 	
-	
 	public Symptom Search_symptom_by_id(Integer symptom_id) {
 		try {
 			String SQL_code = "SELECT * FROM medicalRecord_symptom WHERE symptom_id LIKE ?";
@@ -401,7 +412,6 @@ public class SQLiteMethods implements Interface {
 			return null;
 		}
 	}
-	
 	
 	// -----> SEARCH BY DATE METHODS <-----
 	public List<MedicalRecord> Search_stored_record_by_date_ascendent() {
