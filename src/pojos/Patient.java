@@ -105,8 +105,13 @@ public class Patient implements Serializable {
 	}
 
 	public void setAge(Integer age) {
+		if(age != null) {
 		Period period = Period.between(this.birth_date, LocalDate.now());
 		this.age = period.getYears();
+		}
+		else {
+			this.age=null;
+		}
 	}
 
 	public Integer getHeight() {

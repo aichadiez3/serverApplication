@@ -1,6 +1,7 @@
 package interfaces;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public interface Interface {
 	
 	
 	public void Change_password(String password, Integer user_id);
-	public boolean Update_patient_info(Integer user_id);
+	public boolean Update_patient_info(Integer patient_id, String name, String surname, LocalDate birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
 	
 	public Patient Search_stored_patient_by_id(Integer patient_id);
 	public MedicalRecord Search_stored_record_by_id(Integer record_id);

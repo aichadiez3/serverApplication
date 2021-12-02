@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -261,24 +262,50 @@ public class SQLiteMethods implements Interface {
 		}
 	}
     
-    public boolean Update_patient_info(Integer patient_id) {
+    public boolean Update_patient_info(Integer patient_id, String name, String surname, LocalDate birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
     	try {
     		//BUSCAR PACIENTE LLAMANDO AL METODO BUSCAR PACIENTE POR ID
     		
     		Patient patient = Search_stored_patient_by_id(patient_id);
     		
-    		String SQL_code = "UPDATE patient SET name = ?, surname = ?, birthdate = ?, age = ?, telephone = ?, height = ?, weight = ?, gender = ?, insurance_id = ? WHERE patient_id = ?";
+    		String SQL_code = "UPDATE patient SET name = ?, surname = ?, birth_date = ?, age = ?, height = ?, weight = ?, gender = ?, telephone = ?, insurance_id = ? WHERE patient_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setString(1, patient.getName());
-			template.setString(2, patient.getSurname());
-			template.setDate(3, (Date) patient.getBirth_date());
-			template.setInt(4, patient.getAge());
-			template.setInt(5, patient.getTelephone());
-			template.setInt(6, patient.getHeight());
-			template.setInt(7, patient.getWeight());
-			template.setString(8, patient.getGender());
-			template.setInt(9, patient.getInsurance_id());
-			template.setInt(10, patient.getPatient_id());
+			if(name != null) {
+			template.setString(1, name);
+			}
+
+			if(surname != null) {
+				template.setString(2, surname);
+			}
+
+			if(birth_date !=null) {
+			template.setDate(3, (Date) patient.convert_LocalDate_to_Date(birth_date));
+			}
+			
+			if(age != null) {
+				template.setInt(4, age);
+			}
+			
+			if(height != null) {
+				template.setInt(5, height);
+			}
+			
+			if(weight != null) {
+				template.setInt(6, weight);
+			}
+			
+			if(gender != null) {
+				template.setString(7, gender);
+			}
+			
+			if(telephone != null) {
+				template.setInt(8, telephone);
+			}
+			
+			if(insurance_id != null) {
+				template.setInt(9, insurance_id);
+			}
+			template.setInt(10, patient_id);
 			template.executeUpdate();
 			template.close();
     		
@@ -297,9 +324,10 @@ public class SQLiteMethods implements Interface {
 			template.setInt(1, patient_id);
 			Patient patient= new Patient();
 			ResultSet result_set = template.executeQuery();
+			patient.setPatient_id(patient_id);
 			patient.setName(result_set.getString("name"));
 			patient.setSurname(result_set.getString("surname"));
-			patient.setBirth_date(result_set.getDate("name"));
+			patient.setBirth_date(result_set.getDate("birth_date"));
 			patient.setHeight(result_set.getInt("height"));
 			patient.setWeight(result_set.getInt("weight"));
 			patient.setGender(result_set.getString("gender"));
@@ -316,7 +344,7 @@ public class SQLiteMethods implements Interface {
     
     public Integer Search_stored_user_by_userName(String user_name) {
 		try {
-			String SQL_code = "SELECT * FROM patient WHERE user_name LIKE ?";
+			String SQL_code = "SELECT * FROM user WHERE user_name LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setString(1, user_name);
 			User user = new User();;
