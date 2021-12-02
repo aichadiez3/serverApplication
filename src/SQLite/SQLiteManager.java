@@ -55,110 +55,91 @@ public class SQLiteManager {
 
 	public boolean CreateTables() {
 		try {
-			Statement stmt0 = sqlite_connection.createStatement();
+			Statement stmt1 = sqlite_connection.createStatement();
 			String sql0 = "CREATE TABLE user " + "(user_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " user_name TEXT NOT NULL UNIQUE, " + " password TEXT NOT NULL, "+" email TEXT NOT NULL UNIQUE)";
-			stmt0.execute(sql0);
-			stmt0.close();
+			stmt1.execute(sql0);
 			
-			Statement stmt1 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql1 = "CREATE TABLE patient " + "(patient_id INTEGER PRIMARY KEY AUTOINCREMENT, " + " name TEXT NOT NULL, "
 					+ " surname TEXT NOT NULL, " + " birthdate DATETIME default NULL, " + " age INTEGER default NULL, " + " telephone INTEGER default NULL, "
 					+ " height INTEGER default NULL, " + " weight INTEGER default NULL, " + " gender TEXT default NULL, "
 					+ " insurance_id FOREING KEY REFERENCES insurance(insurance_id), " 
 					+ " user_id FOREING KEY REFERENCES user(user_id) ON DELETE CASCADE)";
 			stmt1.execute(sql1);
-			stmt1.close();
 			
-			
-			Statement stmt2 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql2 = "CREATE TABLE symptom " + "(symptom_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " name TEXT NOT NULL, " + " weight INTEGER default 0, "
 					+ " record_id FOREING KEY REFERENCES medical_record(medicalRecord_id))";
-			stmt2.execute(sql2);
-			stmt2.close();
+			stmt1.execute(sql2);
 			
-			Statement stmt3 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql3 = "CREATE TABLE medical_record " + "(medicalRecord_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " reference_number INTEGER UNIQUE, " + " record_date DATETIME NOT NULL, " + " bitalino_test_id FOREING KEY REFERENCES bitalino_test(test_id), "
 					+ " symptoms_list TEXT default NULL, "
 					+ " patient_id FOREING KEY REFERENCES patient(patient_id) ON UPDATE RESTRICT ON DELETE CASCADE)";
-			stmt3.execute(sql3);
-			stmt3.close();
+			stmt1.execute(sql3);
 			
-			Statement stmt4 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql4 = "CREATE TABLE bitalino_test " + "(test_id INTEGER PRIMARY KEY AUTOINCREMENT)";
-			stmt4.execute(sql4);
-			stmt4.close();
+			stmt1.execute(sql4);
 			
-			
-			Statement stmt5 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql5 = "CREATE TABLE ecg_test " + "(ecg_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " values TEXT default NULL, "
 					+ " test_id FOREING KEY REFERENCES bitalino_test(test_id))";
-			stmt5.execute(sql5);
-			stmt5.close();
+			stmt1.execute(sql5);
 			
-			Statement stmt6 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql6 = "CREATE TABLE eda_test " + "(eda_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " values TEXT default NULL, "
 					+ " test_id FOREING KEY REFERENCES bitalino_test(test_id))";
-			stmt6.execute(sql6);
-			stmt6.close();
+			stmt1.execute(sql6);
 			
-			
-			Statement stmt7 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql7 = "CREATE TABLE insurance " + "(insurance_id INTEGER PRIMARY KEY AUTOINCREMENT, " 
 					+ " name TEXT NOT NULL)";
-			stmt7.execute(sql7);
-			stmt7.close();
+			stmt1.execute(sql7);
 			
-			Statement stmt8 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql8 = "CREATE TABLE doctor " + "(doctor_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " name TEXT NOT NULL, " + " telephone INTEGER default NULL, " + " insurance_id FOREING KEY REFERENCES insurance(insurance_id), "
 					+ " user_id FOREING KEY REFERENCES user(user_id) ON DELETE CASCADE)";
-			stmt8.execute(sql8);
-			stmt8.close();
+			stmt1.execute(sql8);
 			
-			
-			Statement stmt9 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql9 = "CREATE TABLE psycho_test " + "(queries_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " positive_res TEXT NOT NULL, " + " negative_res TEXT NOT NULL, "
 					+ " medicalRecord_id FOREING KEY REFERENCES medical_record(medicalRecord_id))";
-			stmt9.execute(sql9);
-			stmt9.close();
+			stmt1.execute(sql9);
 			
-			Statement stmt13 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql13 = "CREATE TABLE physical_test " + "(test_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 					+ " saturation INTEGER default NULL, " + " pulse INTEGER default NULL, "
 					+ " breathingRate INTEGER default 0, "
 					+ " medicalRecord_id FOREING KEY REFERENCES medical_record(medicalRecord_id))";
-			stmt13.execute(sql13);
-			stmt13.close();
-			
-			
+			stmt1.execute(sql13);
 			
 			// -----------> ManyToMany relation tables go here
-			Statement stmt10 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql10 = "CREATE TABLE patient_doctor " + "(patient_id INTEGER REFERENCES patient(patient_id), "
 					+ " doctor_id INTEGER REFERENCES doctor(doctor_id),"
 					+ " PRIMARY KEY (patient_id, doctor_id))";
-			stmt10.execute(sql10);
-			stmt10.close();
+			stmt1.execute(sql10);
 		
-			Statement stmt11 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql11 = "CREATE TABLE medicalRecord_symptom " + "(medicalRecord_id INTEGER REFERENCES medical_record(medicalRecord_id), "
 					+ " symptom_id INTEGER REFERENCES symptom(symptom_id),"
 					+ " PRIMARY KEY (medicalRecord_id, symptom_id))";
-			stmt11.execute(sql11);
-			stmt11.close();
+			stmt1.execute(sql11);
 			
-			Statement stmt12 = sqlite_connection.createStatement();
+			stmt1 = sqlite_connection.createStatement();
 			String sql12 = "CREATE TABLE medicalRecord_bitalino " + "(medicalRecord_id INTEGER REFERENCES medical_record(medicalRecord_id), "
 					+ " test_id INTEGER REFERENCES bitalino_test(test_id),"
 					+ " PRIMARY KEY (medicalRecord_id, test_id))";
-			stmt12.execute(sql12);
-			stmt12.close();
+			stmt1.execute(sql12);
+			stmt1.close();
 			
 			return true;
 		}catch (SQLException tables_error) {

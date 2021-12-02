@@ -20,7 +20,7 @@ public static void main(String[] args) throws SQLException {
 		
 		SQLiteMethods methods = manager.getMethods();
 		User user = methods.Insert_new_user("name", "123", "aa@aa");
-		
+		Patient patient = methods.Insert_new_patient(user.getUserId(),"Pablo","Carnero");
 		System.out.println(methods.List_all_users());
 		
 		manager.Close_connection();
