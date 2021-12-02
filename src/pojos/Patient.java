@@ -84,10 +84,15 @@ public class Patient implements Serializable {
 	
 	
 	public void setBirth_date(Date birth_date) {
+		if(birth_date != null) {
 		Instant instant = birth_date.toInstant();
 		ZonedDateTime zone =instant.atZone(ZoneId.systemDefault());
 		LocalDate givenDate = zone.toLocalDate();
 		this.birth_date = givenDate;
+		}
+		else {
+			this.birth_date=null;
+		}
 	}
 	
 	public Date convert_LocalDate_to_Date(LocalDate localDate) {
