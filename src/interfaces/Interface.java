@@ -17,10 +17,10 @@ import pojos.User;
 
 public interface Interface {
 	
-	public User Insert_new_user(String user_name, String password, String email);
-	public Patient Insert_new_patient(Integer user_id, String name, String surname);
-	public Doctor Insert_new_doctor(Integer user_id, String name);
-	public MedicalRecord Insert_new_medical_record(Date record_date, Integer reference_number, Integer bitalino_test_id);
+	public Integer Insert_new_user(String user_name, String password, String email);
+	public Integer Insert_new_patient(Integer user_id, String name, String surname);
+	public Integer Insert_new_doctor(Integer user_id, String name);
+	public Integer Insert_new_medical_record(Date record_date, Integer reference_number, Integer bitalino_test_id);
 	public Integer Insert_new_ecg(LinkedList<Integer> ecg_values, Integer test_id);
 	public Integer Insert_new_eda(LinkedList<Integer> eda_values, Integer test_id);
 	public Integer Insert_new_psycho_test(LinkedList<Boolean> positive_res, LinkedList<Boolean> negative_res, Integer medicalRecord_id);

@@ -38,7 +38,7 @@ public class SQLiteMethods implements Interface {
 		this.sqlite_connection = sqlite_connection;
 	}
 
-	public User Insert_new_user(String user_name, String password, String email) {
+	public Integer Insert_new_user(String user_name, String password, String email) {
 		try {
 			String table = "INSERT INTO user (user_name, password, email) " + " VALUES(?,?,?);";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
@@ -56,14 +56,14 @@ public class SQLiteMethods implements Interface {
 		    user.setPassword(result_set.getString("password"));
 		    user.setEmail(result_set.getString("email"));
 		    user.setUserId(result_set.getInt("user_id"));
-		    return user;
+		    return user.getUserId();
 		} catch (SQLException insert_user_error) {
 			insert_user_error.printStackTrace();
 			return null;
 		}
 	}
 	
-	public MedicalRecord Insert_new_medical_record(Date record_date, Integer reference_number, Integer bitalino_test_id) {
+	public Integer Insert_new_medical_record(Date record_date, Integer reference_number, Integer bitalino_test_id) {
 		try {
 			String table = "INSERT INTO medical_record (reference_number, record_date, bitalino_test_id) " + " VALUES(?,?,?);";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
@@ -78,7 +78,7 @@ public class SQLiteMethods implements Interface {
 			Integer record_id = result_set.getInt("record_id");
 			MedicalRecord medical_record = new MedicalRecord(record_id, record_date, (Integer) reference_number, (Integer) bitalino_test_id);
 			template.close();
-			return medical_record;
+			return medical_record.getMedicalRecord_id();
 			
 		} catch (SQLException insert_record_error) {
 			insert_record_error.printStackTrace();
@@ -86,7 +86,7 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 	
-    public Patient Insert_new_patient(Integer user_id, String name, String surname) {
+    public Integer Insert_new_patient(Integer user_id, String name, String surname) {
     	try {
 			String table = "INSERT INTO patient (user_id, name, surname) " + "VALUES (?,?,?);";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
@@ -112,14 +112,14 @@ public class SQLiteMethods implements Interface {
 			patient.setTelephone(null);
 			patient.setInsurance_id(null);
 			
-			return patient;
+			return patient.getPatient_id();
 		} catch (SQLException new_client_account_error) {
 			new_client_account_error.printStackTrace();
 			return null;
 		}
     }
      
-    public Doctor Insert_new_doctor(Integer user_id, String name) {
+    public Integer Insert_new_doctor(Integer user_id, String name) {
 		try {
 			String table = "INSERT INTO doctor (user_id, name) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
@@ -135,7 +135,7 @@ public class SQLiteMethods implements Interface {
 			doctor.setDoctor_id(result_set.getInt("director_id"));
 			doctor.setName(result_set.getString("name"));
 			doctor.setTelephone(result_set.getInt("telephone"));
-			return doctor;
+			return doctor.getDoctor_id();
 		} catch(SQLException new_director_error) {
 			new_director_error.printStackTrace();
 			return null;
@@ -347,7 +347,7 @@ public class SQLiteMethods implements Interface {
 			String SQL_code = "SELECT * FROM user WHERE user_name LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setString(1, user_name);
-			User user = new User();;
+			User user = new User();
 			ResultSet result_set = template.executeQuery();
 		    user.setUserName(result_set.getString("user_name"));
 		    user.setPassword(result_set.getString("password"));
@@ -369,6 +369,7 @@ public class SQLiteMethods implements Interface {
 			template.setInt(1, record_id);
 			MedicalRecord record=new MedicalRecord();
 			ResultSet result_set = template.executeQuery();
+			record.setMedicalRecord_id(record_id);
 			record.setReferenceNumber(result_set.getInt("reference_number"));
 			record.setRecordDate(result_set.getDate("record_date"));
 			record.setBitalinoTestId(result_set.getInt("bitalino_test_id"));
