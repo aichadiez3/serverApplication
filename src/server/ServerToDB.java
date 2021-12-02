@@ -2,6 +2,7 @@ package server;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -38,7 +39,6 @@ public class ServerToDB {
             
             //This executes when we have a client
         	InputStream inputStream = null;
-    		ObjectOutputStream objectOutputStream = null;
             byte[] byteRead;
             String instruction;
             SQLiteMethods methods;
@@ -49,6 +49,8 @@ public class ServerToDB {
             PsychoTest psycho = null;
             PhysicalTest physical = null;
             Patient patient = null;
+            Integer userId;
+            
 
             try {
             	serverSocket = new ServerSocket(9000);
@@ -59,9 +61,9 @@ public class ServerToDB {
                 	
                 try {
                 	DataInputStream dataInputStream  = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-                	ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
                 	
-        			objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                    DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
                 	
             		boolean stopClient = false;
                     while (!stopClient) {
@@ -158,7 +160,7 @@ public class ServerToDB {
                         }
                         if (parameters[0].equals("change_password")) {
                         	String password = parameters[1];
-                        	int user_id = Integer.parseInt(parameters[2]);
+                        	Integer user_id = Integer.parseInt(parameters[2]);
                             methods.Change_password(password, user_id);
                         }
                         if (parameters[0].equals("update_patient")) {
@@ -183,7 +185,9 @@ public class ServerToDB {
                         }
                         if (parameters[0].equals("search_user_by_userName")) {
                         	String user_name = parameters[1];
-                            methods.Search_stored_user_by_userName(user_name);
+                            userId = methods.Search_stored_user_by_userName(user_name);
+                            dataOutputStream.writeUTF(userId.toString());
+                            
                         }
                         if (parameters[0].equals("search_record_by_date_ascendent")) {
                             methods.Search_stored_record_by_date_ascendent();
