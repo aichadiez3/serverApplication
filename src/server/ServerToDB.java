@@ -114,7 +114,13 @@ public class ServerToDB {
                         
                         if (parameters[0].equals("new_medical_record")) {
                     		Integer record_id = Integer.parseInt(parameters[1]);
-                    		Date record_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[2]);
+                    		Date record_date = null;
+							try {
+								record_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[2]);
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
                     		Integer reference_number = Integer.parseInt(parameters[3]);
                     		Integer bitalino_test_id = Integer.parseInt(parameters[4]);
                             methods.Insert_new_medical_record((java.sql.Date) record_date, reference_number, bitalino_test_id);
