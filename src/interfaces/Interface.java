@@ -25,7 +25,7 @@ public interface Interface {
 	public Integer Insert_new_eda(LinkedList<Integer> eda_values, Integer test_id);
 	public Integer Insert_new_psycho_test(LinkedList<Boolean> positive_res, LinkedList<Boolean> negative_res, Integer medicalRecord_id);
 	public Integer Insert_new_physical_test(Integer saturation, Integer pulse, Integer breathingRate,Integer medicalRecord_id);
-	
+	public Integer Insert_new_bitalino_test();
 	
 	public void Change_password(String password, Integer user_id);
 	public boolean Update_patient_info(Integer patient_id, String name, String surname, LocalDate birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);

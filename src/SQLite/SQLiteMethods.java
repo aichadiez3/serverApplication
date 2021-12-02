@@ -247,6 +247,24 @@ public class SQLiteMethods implements Interface {
 		}
 	}
  	
+    public Integer Insert_new_bitalino_test() {
+    	Integer test_id = null;
+    	try {
+    		String table = "INSERT INTO bitalino_test";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
+			template.executeUpdate();
+			String SQL_code = "SELECT last_insert_rowid() AS test_id";
+			template = this.sqlite_connection.prepareStatement(SQL_code);
+			ResultSet result_set = template.executeQuery();
+			test_id = result_set.getInt("test_id");
+			template.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return test_id;
+    }
+    
 	// -----> UPDATE METHODS <-----
 	
     public void Change_password(String password, Integer user_id) {
