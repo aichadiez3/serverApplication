@@ -20,7 +20,7 @@ public class Patient implements Serializable {
 	private Integer user_id;
 	private String name;
 	private String surname;
-	private LocalDate birth_date;
+	private Date birth_date;
 	private Integer age;
 	private Integer height;
 	private Integer weight;
@@ -33,7 +33,7 @@ public class Patient implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Patient(String name, String surname, LocalDate birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
+	public Patient(String name, String surname, Date birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -78,21 +78,12 @@ public class Patient implements Serializable {
 	}
 
 	public Date getBirth_date() {
-		Date birthday = convert_LocalDate_to_Date(birth_date);
-		return birthday;
+		return birth_date;
 	}
 	
 	
 	public void setBirth_date(Date birth_date) {
-		if(birth_date != null) {
-		Instant instant = birth_date.toInstant();
-		ZonedDateTime zone =instant.atZone(ZoneId.systemDefault());
-		LocalDate givenDate = zone.toLocalDate();
-		this.birth_date = givenDate;
-		}
-		else {
-			this.birth_date=null;
-		}
+		this.birth_date = birth_date;
 	}
 	
 	public Date convert_LocalDate_to_Date(LocalDate localDate) {
@@ -104,9 +95,11 @@ public class Patient implements Serializable {
 		return age;
 	}
 
-	public void setAge(Integer age) {
+	public void setAge() {
 		if(age != null) {
-		Period period = Period.between(this.birth_date, LocalDate.now());
+			
+		LocalDate date = this.birth_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		Period period = Period.between(date, LocalDate.now());
 		this.age = period.getYears();
 		}
 		else {

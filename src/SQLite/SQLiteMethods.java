@@ -105,7 +105,7 @@ public class SQLiteMethods implements Interface {
 			patient.setSurname(result_set.getString("surname"));
 			patient.setUser_id(user_id);
 			patient.setBirth_date(null);
-			patient.setAge(null);
+			patient.setAge();
 			patient.setHeight(null);
 			patient.setWeight(null);
 			patient.setGender(null);
