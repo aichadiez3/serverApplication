@@ -123,7 +123,8 @@ public class ServerToDB {
                         	
                         	Integer user_id = Integer.parseInt(parameters[1]);
                         	String name = parameters[2];
-                        	methods.Insert_new_doctor(user_id, name);
+                        	String telephone = parameters[3];
+                        	methods.Insert_new_doctor(user_id, name, telephone);
                         }
 
                         
@@ -200,7 +201,7 @@ public class ServerToDB {
 							Integer telephone = Integer.parseInt(parameters[8]);
 							Integer insurance_id = Integer.parseInt(parameters[9]);
 							//HAY QUE CAMBIAR DE LocalDate A Date
-                            methods.Update_patient_info(patientId, name, surname, birth_date, age, height, weight, gender, telephone, insurance_id);
+                            methods.Update_patient_info(patientId, name, surname, (java.sql.Date) birth_date, age, height, weight, gender, telephone, insurance_id);
                         }
                         if (parameters[0].equals("search_patient_by_id")) {
                         	int patient_id = Integer.parseInt(parameters[1]);

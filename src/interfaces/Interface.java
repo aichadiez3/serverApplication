@@ -19,7 +19,7 @@ public interface Interface {
 	
 	public Integer Insert_new_user(String user_name, String password, String email);
 	public Integer Insert_new_patient(Integer user_id, String name, String surname);
-	public Integer Insert_new_doctor(Integer user_id, String name);
+	public Integer Insert_new_doctor(Integer user_id, String name, String telephone);
 	public Integer Insert_new_medical_record(Date record_date, Integer reference_number, Integer bitalino_test_id);
 	public Integer Insert_new_ecg(LinkedList<Integer> ecg_values, Integer test_id);
 	public Integer Insert_new_eda(LinkedList<Integer> eda_values, Integer test_id);
@@ -29,7 +29,7 @@ public interface Interface {
 	public Integer Insert_new_insurance(String company_name);
 	
 	public void Change_password(String password, Integer user_id);
-	public boolean Update_patient_info(Integer patient_id, String name, String surname, LocalDate birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
+	public boolean Update_patient_info(Integer patient_id, String name, String surname, Date birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
 	
 	public Patient Search_stored_patient_by_id(Integer patient_id);
     public Integer Search_stored_patient_by_user_id(Integer user_id);
