@@ -121,12 +121,13 @@ public class SQLiteMethods implements Interface {
 		}
     }
      
-    public Integer Insert_new_doctor(Integer user_id, String name) {
+    public Integer Insert_new_doctor(Integer user_id, String name, String telephone) {
 		try {
-			String table = "INSERT INTO doctor (user_id, name) " + "VALUES (?,?)";
+			String table = "INSERT INTO doctor (user_id, name, telephone) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setInt(1, user_id);
 			template.setString(2, name);
+			template.setString(3, telephone);
 			template.executeUpdate();
 			
 			String SQL_code = "SELECT * FROM doctor WHERE user_id = ?";
@@ -134,13 +135,12 @@ public class SQLiteMethods implements Interface {
 			template.setInt(1, user_id);
 			ResultSet result_set = template.executeQuery();
 			Doctor doctor = new Doctor();
-			//estos atributos van a estar vacíos, porque estamos creando un nuevo doctor, por ahora solo con nombre y user_id
-			doctor.setDoctor_id(result_set.getInt("director_id"));
+			doctor.setDoctor_id(result_set.getInt("doctor_id"));
 			doctor.setName(result_set.getString("name"));
 			doctor.setTelephone(result_set.getInt("telephone"));
 			return doctor.getDoctor_id();
-		} catch(SQLException new_director_error) {
-			new_director_error.printStackTrace();
+		} catch(SQLException new_doctor_error) {
+			new_doctor_error.printStackTrace();
 			return null;
 		}
 	}
@@ -307,7 +307,7 @@ public class SQLiteMethods implements Interface {
 	}
     
     //funciona
-    public boolean Update_patient_info(Integer patient_id, String name, String surname, LocalDate birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
+    public boolean Update_patient_info(Integer patient_id, String name, String surname, Date birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
     	try {
     		//BUSCAR PACIENTE LLAMANDO AL METODO BUSCAR PACIENTE POR ID
     		
@@ -324,7 +324,7 @@ public class SQLiteMethods implements Interface {
 			}
 
 			if(birth_date !=null) {
-			template.setDate(3, (Date) patient.convert_LocalDate_to_Date(birth_date));
+			template.setDate(3, birth_date);
 			}
 			
 			if(age != null) {
@@ -605,5 +605,7 @@ public class SQLiteMethods implements Interface {
 			return null;
 		}
 	}
+
+	
 	
 }
