@@ -49,7 +49,11 @@ public class ServerToDB {
             PsychoTest psycho = null;
             PhysicalTest physical = null;
             Patient patient = null;
-            Integer userId;
+            Integer userId, patientId;
+            Integer medRecordId;
+            Integer ecgId;
+            Integer edaId, queriesId, physicalId;
+
             
 
             try {
@@ -80,10 +84,12 @@ public class ServerToDB {
                         	String user_name = parameters[1];
                         	String password = parameters[2];
                         	String email = parameters[3];
-                            methods.Insert_new_user(user_name, password, email);
+                            userId = methods.Insert_new_user(user_name, password, email);
+                    		dataOutputStream.writeUTF(userId.toString());
+
                         }
                         if (parameters[0].equals("new_patient")) {
-                    		String user_name = parameters[1];
+                    		/*String user_name = parameters[1];
                         	String password = parameters[2];
                         	String email = parameters[3];
                         	user = new User(user_name, password, email);
@@ -98,18 +104,25 @@ public class ServerToDB {
                         	Integer telephone = Integer.parseInt(parameters[11]);
                         	Integer insurance_id = Integer.parseInt(parameters[12]);
                         	String company_name = parameters[13];
-                        	Insurance_company company = new Insurance_company(insurance_id, company_name);
-                            methods.Insert_new_patient(user_id, name, surname);
+                        	Insurance_company company = new Insurance_company(insurance_id, company_name);*/
+                            
+                        	Integer user_id = Integer.parseInt(parameters[1]);
+                        	String name = parameters[2];
+                        	String surname = parameters[3];
+                        	methods.Insert_new_patient(user_id, name, surname);
                         }
 
 
                         if (parameters[0].equals("new_doctor")) {
-                    		String user_name = parameters[1];
+                    		/*String user_name = parameters[1];
                         	String password = parameters[2];
                         	String email = parameters[3];
                         	user = new User(user_name, password, email);
                         	Integer user_id = user.getUserId();
-                        	String name = parameters[4];
+                        	String name = parameters[4];*/
+                        	
+                        	Integer user_id = Integer.parseInt(parameters[1]);
+                        	String name = parameters[2];
                         	methods.Insert_new_doctor(user_id, name);
                         }
 
@@ -125,38 +138,43 @@ public class ServerToDB {
 							}
                     		Integer reference_number = Integer.parseInt(parameters[3]);
                     		Integer bitalino_test_id = Integer.parseInt(parameters[4]);
-                            methods.Insert_new_medical_record((java.sql.Date) record_date, reference_number, bitalino_test_id);
+                    		medRecordId = methods.Insert_new_medical_record((java.sql.Date) record_date, reference_number, bitalino_test_id);
+                    		dataOutputStream.writeUTF(medRecordId.toString());
                         }
                         if (parameters[0].equals("new_ecg")) {
-                    		Integer ecg_id = Integer.parseInt(parameters[1]);
+                    		//Integer ecg_id = Integer.parseInt(parameters[1]);
                     		Integer test_id = Integer.parseInt(parameters[2]);
-                    		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[3]));
+                    		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1]));
 							LinkedList<Integer> ecg_values = linkedList;
-                            methods.Insert_new_ecg(ecg_values, test_id);
+                            ecgId = methods.Insert_new_ecg(ecg_values, test_id);
+                    		dataOutputStream.writeUTF(ecgId.toString());
                         }
                         if (parameters[0].equals("new_eda")) {
-                    		Integer eda_id = Integer.parseInt(parameters[1]);
+                    		//Integer eda_id = Integer.parseInt(parameters[1]);
                     		Integer test_id = Integer.parseInt(parameters[2]);
-                    		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[3]));
+                    		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1]));
 							LinkedList<Integer> eda_values = linkedList;
-                            methods.Insert_new_eda(eda_values, test_id);
+                            edaId = methods.Insert_new_eda(eda_values, test_id);
+                    		dataOutputStream.writeUTF(edaId.toString());
                         }
                         if (parameters[0].equals("new_psycho")) {
-                    		Integer queries_id = Integer.parseInt(parameters[1]);
-                    		Integer medicalRecord_id = Integer.parseInt(parameters[2]);
-                    		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[3]));
+                    		//Integer queries_id = Integer.parseInt(parameters[1]);
+                    		Integer medicalRecord_id = Integer.parseInt(parameters[3]);
+                    		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1]));
 							LinkedList<Boolean> positive_res = linkedList;
-							LinkedList linkedList2 = new LinkedList(Arrays.asList(parameters[4]));
+							LinkedList linkedList2 = new LinkedList(Arrays.asList(parameters[2]));
 							LinkedList<Boolean> negative_res = linkedList2;
-                            methods.Insert_new_psycho_test(positive_res, negative_res, medicalRecord_id);
+                            queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, medicalRecord_id);
+                            dataOutputStream.writeUTF(queriesId.toString());
                         }
                         if (parameters[0].equals("new_physical")) {
-                    		Integer test_id = Integer.parseInt(parameters[1]);
-                    		Integer saturation = Integer.parseInt(parameters[2]);
-                    		Integer pulse = Integer.parseInt(parameters[3]);
-                    		Integer breathingRate = Integer.parseInt(parameters[4]);
-                    		Integer medicalRecord_id = Integer.parseInt(parameters[5]);
-                            methods.Insert_new_physical_test(saturation, pulse, breathingRate, medicalRecord_id);
+                    		//Integer test_id = Integer.parseInt(parameters[1]);
+                    		Integer saturation = Integer.parseInt(parameters[1]);
+                    		Integer pulse = Integer.parseInt(parameters[2]);
+                    		Integer breathingRate = Integer.parseInt(parameters[3]);
+                    		Integer medicalRecord_id = Integer.parseInt(parameters[6]);
+                            physicalId = methods.Insert_new_physical_test(saturation, pulse, breathingRate, medicalRecord_id);
+                            dataOutputStream.writeUTF(physicalId.toString());
                         }
                         if (parameters[0].equals("change_password")) {
                         	String password = parameters[1];
@@ -165,11 +183,33 @@ public class ServerToDB {
                         }
                         if (parameters[0].equals("update_patient")) {
                     		Integer user_id = Integer.parseInt(parameters[1]);
-                            methods.Update_patient_info(user_id);
+                    		patientId = methods.Search_stored_patient_by_user_id(user_id);
+                    		String name = parameters[1];
+                    		String surname = parameters[2];
+                    		Date birth_date = null;
+							try {
+								birth_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[3]);
+							} catch (ParseException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							Integer age = Integer.parseInt(parameters[4]);
+							Integer height = Integer.parseInt(parameters[5]);
+							Integer weight = Integer.parseInt(parameters[6]);
+							String gender = parameters[7];
+							Integer telephone = Integer.parseInt(parameters[8]);
+							Integer insurance_id = Integer.parseInt(parameters[9]);
+							//HAY QUE CAMBIAR DE LocalDate A Date
+                            methods.Update_patient_info(patientId, name, surname, birth_date, age, height, weight, gender, telephone, insurance_id);
                         }
                         if (parameters[0].equals("search_patient_by_id")) {
                         	int patient_id = Integer.parseInt(parameters[1]);
                             methods.Search_stored_patient_by_id(patient_id);
+                        }
+                        if (parameters[0].equals("search_patient_by_user_id")) {
+                        	int user_id = Integer.parseInt(parameters[1]);
+                            patientId = methods.Search_stored_patient_by_user_id(user_id);
+                            dataOutputStream.writeUTF(patientId.toString());
                         }
                         if (parameters[0].equals("search_record_by_id")) {
                         	int record_id = Integer.parseInt(parameters[1]);
@@ -187,7 +227,10 @@ public class ServerToDB {
                         	String user_name = parameters[1];
                             userId = methods.Search_stored_user_by_userName(user_name);
                             dataOutputStream.writeUTF(userId.toString());
-                            
+                        }
+                        if (parameters[0].equals("search_insurance_by_name")) {
+                        	String insurance_name = parameters[1];
+                            methods.Search_insurance_by_name(insurance_name);
                         }
                         if (parameters[0].equals("search_record_by_date_ascendent")) {
                             methods.Search_stored_record_by_date_ascendent();
@@ -202,7 +245,6 @@ public class ServerToDB {
                         if (parameters[0].equals("list_users")) {
                             methods.List_all_users();
                         }
-                        
                     }
                 
                 }  catch (IOException ex) {

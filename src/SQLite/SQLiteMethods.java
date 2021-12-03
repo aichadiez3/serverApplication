@@ -127,11 +127,12 @@ public class SQLiteMethods implements Interface {
 			template.setString(2, name);
 			template.executeUpdate();
 			
-			String SQL_code = "SELECT * FROM director WHERE user_id = ?";
+			String SQL_code = "SELECT * FROM doctor WHERE user_id = ?";
 			template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setInt(1, user_id);
 			ResultSet result_set = template.executeQuery();
 			Doctor doctor = new Doctor();
+			//estos atributos van a estar vacíos, porque estamos creando un nuevo doctor, por ahora solo con nombre y user_id
 			doctor.setDoctor_id(result_set.getInt("director_id"));
 			doctor.setName(result_set.getString("name"));
 			doctor.setTelephone(result_set.getInt("telephone"));
@@ -353,6 +354,32 @@ public class SQLiteMethods implements Interface {
 			patient.setInsurance_id(result_set.getInt("insurance_id"));
 			template.close();
 			return patient;
+		} catch (SQLException search_patient_error) {
+			search_patient_error.printStackTrace();
+			return null;
+		}
+		
+	}
+    
+    public Integer Search_stored_patient_by_user_id(Integer user_id) {
+		try {
+			String SQL_code = "SELECT * FROM patient WHERE user_id LIKE ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setInt(1, user_id);
+			Patient patient= new Patient();
+			ResultSet result_set = template.executeQuery();
+			patient.setPatient_id(result_set.getInt("patient_id"));
+			patient.setName(result_set.getString("name"));
+			patient.setSurname(result_set.getString("surname"));
+			patient.setBirth_date(result_set.getDate("birth_date"));
+			patient.setHeight(result_set.getInt("height"));
+			patient.setWeight(result_set.getInt("weight"));
+			patient.setGender(result_set.getString("gender"));
+			patient.setTelephone(result_set.getInt("telephone"));
+			patient.setInsurance_id(result_set.getInt("insurance_id"));
+			patient.setUser_id(user_id);
+			template.close();
+			return patient.getPatient_id();
 		} catch (SQLException search_patient_error) {
 			search_patient_error.printStackTrace();
 			return null;
