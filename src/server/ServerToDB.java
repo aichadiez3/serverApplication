@@ -51,7 +51,7 @@ public class ServerToDB {
             Patient patient = null;
             Integer userId, patientId;
             Integer medRecordId;
-            Integer ecgId;
+            Integer ecgId, bitalinoId;;
             Integer edaId, queriesId, physicalId;
 
             
@@ -142,6 +142,13 @@ public class ServerToDB {
                     		medRecordId = methods.Insert_new_medical_record((java.sql.Date) record_date, reference_number, bitalino_test_id);
                     		dataOutputStream.writeUTF(medRecordId.toString());
                         }
+                        
+                        if (parameters[0].equals("new_bitalino_test")) {
+                    		Integer test_id = Integer.parseInt(parameters[1]);
+                            bitalinoId = methods.Insert_new_bitalino_test();
+                    		dataOutputStream.writeUTF(bitalinoId.toString());
+                        }
+                        
                         if (parameters[0].equals("new_ecg")) {
                     		//Integer ecg_id = Integer.parseInt(parameters[1]);
                     		Integer test_id = Integer.parseInt(parameters[2]);
