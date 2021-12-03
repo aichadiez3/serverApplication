@@ -28,7 +28,7 @@ public interface Interface {
 	public Integer Insert_new_bitalino_test();
 	public Integer Insert_new_insurance(String company_name);
 	
-	public void Change_password(String password, Integer user_id);
+	public boolean Update_user_indo(String password, String email, Integer user_id);
 	public boolean Update_patient_info(Integer patient_id, String name, String surname, Date birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
 	
 	public Patient Search_stored_patient_by_id(Integer patient_id);

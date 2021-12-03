@@ -79,7 +79,7 @@ public class SQLiteMethods implements Interface {
 			Integer record_id = result_set.getInt("record_id");
 			MedicalRecord medical_record = new MedicalRecord(record_id, record_date, (Integer) reference_number, (Integer) bitalino_test_id);
 			template.close();
-			return medical_record.getMedicalRecord_id();
+			return medical_record.getMedicalRecord_id();	º
 			
 		} catch (SQLException insert_record_error) {
 			insert_record_error.printStackTrace();
@@ -293,23 +293,23 @@ public class SQLiteMethods implements Interface {
 	// -----> UPDATE METHODS <-----
 	
     //funciona
-    public void Change_password(String password, Integer user_id) {
+    public void Update_user_info(String password, String email, Integer user_id) {
 		try {
-			String SQL_code = "UPDATE user SET password = ? WHERE user_id = ?";
+			String SQL_code = "UPDATE user SET password = ?, email = ? WHERE user_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setString(1, password);
-			template.setInt(2, user_id);
+			template.setString(2, email);
+			template.setInt(3, user_id);
 			template.executeUpdate();
 			template.close();
-		} catch (SQLException update_password_error) {
-			update_password_error.printStackTrace();
+		} catch (SQLException update_user_error) {
+			update_user_error.printStackTrace();
 		}
 	}
     
     //funciona
     public boolean Update_patient_info(Integer patient_id, String name, String surname, Date birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
     	try {
-    		//BUSCAR PACIENTE LLAMANDO AL METODO BUSCAR PACIENTE POR ID
     		
     		Patient patient = Search_stored_patient_by_id(patient_id);
     		

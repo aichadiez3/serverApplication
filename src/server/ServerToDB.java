@@ -184,10 +184,11 @@ public class ServerToDB {
                             physicalId = methods.Insert_new_physical_test(saturation, pulse, breathingRate, medicalRecord_id);
                             dataOutputStream.writeUTF(physicalId.toString());
                         }
-                        if (parameters[0].equals("change_password")) {
+                        if (parameters[0].equals("change_user_info")) {
                         	String password = parameters[1];
-                        	Integer user_id = Integer.parseInt(parameters[2]);
-                            methods.Change_password(password, user_id);
+                        	String email = parameters[2];
+                        	Integer user_id = Integer.parseInt(parameters[3]);
+                            methods.Update_user_info(password, email, user_id);
                         }
                         if (parameters[0].equals("update_patient")) {
                     		Integer user_id = Integer.parseInt(parameters[1]);
