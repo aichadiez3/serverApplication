@@ -32,6 +32,8 @@ public static void main(String[] args) throws SQLException {
 //		methods.Change_password("telemed", user2_id);
 //		User user3 = methods.Insert_new_user("MrSocket","SoyDios","destruyesockets@gmail.com");
 //		System.out.println(methods.List_all_users());
+		methods.Insert_new_insurance("Iberdrola");
+		methods.Insert_new_insurance("Aicha Trading");
 		manager.Close_connection();
 		
 		

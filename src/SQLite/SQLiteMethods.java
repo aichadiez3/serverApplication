@@ -38,6 +38,7 @@ public class SQLiteMethods implements Interface {
 		this.sqlite_connection = sqlite_connection;
 	}
 
+	//funciona
 	public Integer Insert_new_user(String user_name, String password, String email) {
 		try {
 			String table = "INSERT INTO user (user_name, password, email) " + " VALUES(?,?,?);";
@@ -86,6 +87,7 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 	
+	//funciona
     public Integer Insert_new_patient(Integer user_id, String name, String surname) {
     	try {
 			String table = "INSERT INTO patient (user_id, name, surname) " + "VALUES (?,?,?);";
@@ -254,11 +256,12 @@ public class SQLiteMethods implements Interface {
     		String table = "INSERT INTO bitalino_test";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.executeUpdate();
-			String SQL_code = "SELECT last_insert_rowid() AS test_id";
+			String SQL_code = "SELECT last_insert_rowid() AS insurance_id";
 			template = this.sqlite_connection.prepareStatement(SQL_code);
 			ResultSet result_set = template.executeQuery();
-			test_id = result_set.getInt("test_id");
+			test_id = result_set.getInt("insurance_id");
 			template.close();
+			return test_id;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -266,8 +269,30 @@ public class SQLiteMethods implements Interface {
 		return test_id;
     }
     
+    //funciona
+	public Integer Insert_new_insurance(String company_name) {
+		Integer insurance_id;
+		String table = "INSERT INTO insurance (name) " + "VALUES (?)";
+		try {
+			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
+			template.setString(1, company_name);
+			template.executeUpdate();
+			String SQL_code = "SELECT last_insert_rowid() AS insurance_id";
+			template = this.sqlite_connection.prepareStatement(SQL_code);
+			ResultSet result_set = template.executeQuery();
+			insurance_id = result_set.getInt("insurance_id");
+			template.close();
+			return insurance_id;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+    
 	// -----> UPDATE METHODS <-----
 	
+    //funciona
     public void Change_password(String password, Integer user_id) {
 		try {
 			String SQL_code = "UPDATE user SET password = ? WHERE user_id = ?";
@@ -281,6 +306,7 @@ public class SQLiteMethods implements Interface {
 		}
 	}
     
+    //funciona
     public boolean Update_patient_info(Integer patient_id, String name, String surname, LocalDate birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
     	try {
     		//BUSCAR PACIENTE LLAMANDO AL METODO BUSCAR PACIENTE POR ID
@@ -336,6 +362,7 @@ public class SQLiteMethods implements Interface {
     }
     
 	// -----> SEARCH STORED ELEMENTS BY ID METHODS <-----
+    //funciona
     public Patient Search_stored_patient_by_id(Integer patient_id) {
 		try {
 			String SQL_code = "SELECT * FROM patient WHERE patient_id LIKE ?";
@@ -361,6 +388,7 @@ public class SQLiteMethods implements Interface {
 		
 	}
     
+    //funciona
     public Integer Search_stored_patient_by_user_id(Integer user_id) {
 		try {
 			String SQL_code = "SELECT * FROM patient WHERE user_id LIKE ?";
@@ -387,6 +415,7 @@ public class SQLiteMethods implements Interface {
 		
 	}
     
+    //funciona
     public Integer Search_stored_user_by_userName(String user_name) {
 		try {
 			String SQL_code = "SELECT * FROM user WHERE user_name LIKE ?";
