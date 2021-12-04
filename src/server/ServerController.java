@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import SQLite.SQLiteMethods;
 import SQLite.SQLiteManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,6 +36,7 @@ public class ServerController implements Initializable {
     private SQLiteManager controller;
     private ServerSocket serverSocket;
     private Socket socket;
+    private SQLiteMethods methods;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
@@ -51,8 +53,25 @@ public class ServerController implements Initializable {
 			controller.Connect();
 			controller.CreateTables();
 			controller = null;
-			*/
 			
+			
+			methods.Insert_new_insurance("Anthem");
+			methods.Insert_new_insurance("Centene");
+			methods.Insert_new_insurance("UnitedHealth");
+			methods.Insert_new_insurance("HCSC");
+			methods.Insert_new_insurance("DKV");
+			methods.Insert_new_insurance("Sanitas");
+			methods.Insert_new_insurance("Maphre");
+			methods.Insert_new_insurance("AXA");
+			methods.Insert_new_insurance("Asisa");
+			methods.Insert_new_insurance("Adeslas");
+			methods.Insert_new_insurance("Caser");
+			methods.Insert_new_insurance("Allianz");
+			methods.Insert_new_insurance("Aegon");
+			methods.Insert_new_insurance("Other");
+
+			*/
+
 			//hagamos este server
 			
 			serverSocket = null;
