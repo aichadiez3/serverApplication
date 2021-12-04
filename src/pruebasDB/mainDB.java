@@ -18,7 +18,7 @@ public static void main(String[] args) throws SQLException {
 		System.out.println(everything_ok + " ");
 			
 		SQLiteMethods methods = manager.getMethods();
-//		User user = methods.Insert_new_user("name", "123", "aa@aaa");
+//		Integer user = methods.Insert_new_user("a", "a", "aa@aa");
 //		Patient patient = methods.Insert_new_patient(user.getUserId(),"Pablo","Carnero");
 //		String userName = "name";
 //		Integer id = methods.Search_stored_user_by_userName(userName);
@@ -32,8 +32,8 @@ public static void main(String[] args) throws SQLException {
 //		methods.Change_password("telemed", user2_id);
 //		User user3 = methods.Insert_new_user("MrSocket","SoyDios","destruyesockets@gmail.com");
 //		System.out.println(methods.List_all_users());
-		methods.Insert_new_insurance("Iberdrola");
-		methods.Insert_new_insurance("Aicha Trading");
+//		methods.Insert_new_insurance("Iberdrola");
+//		methods.Insert_new_insurance("Aicha Trading");
 		manager.Close_connection();
 		
 		
