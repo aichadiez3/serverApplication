@@ -104,8 +104,7 @@ public class SQLiteManager {
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql8 = "CREATE TABLE doctor " + "(doctor_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ " name TEXT NOT NULL, " + " telephone INTEGER default NULL, " + " insurance_id FOREING KEY REFERENCES insurance(insurance_id), "
-					+ " user_id FOREING KEY REFERENCES user(user_id) ON DELETE CASCADE)";
+					+ " name TEXT NOT NULL, " + " telephone INTEGER default NULL, " + " insurance_id FOREING KEY REFERENCES insurance(insurance_id)";
 			stmt1.execute(sql8);
 			
 			stmt1 = sqlite_connection.createStatement();

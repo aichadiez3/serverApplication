@@ -121,18 +121,17 @@ public class SQLiteMethods implements Interface {
 		}
     }
      
-    public Integer Insert_new_doctor(Integer user_id, String name, String telephone) {
+    public Integer Insert_new_doctor(String name, String telephone) {
 		try {
-			String table = "INSERT INTO doctor (user_id, name, telephone) " + "VALUES (?,?)";
+			String table = "INSERT INTO doctor (name, telephone) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setInt(1, user_id);
-			template.setString(2, name);
-			template.setString(3, telephone);
+			template.setString(1, name);
+			template.setString(2, telephone);
 			template.executeUpdate();
 			
-			String SQL_code = "SELECT * FROM doctor WHERE user_id = ?";
+			String SQL_code = "SELECT * FROM doctor WHERE name = ?";
 			template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setInt(1, user_id);
+			template.setString(1, name);
 			ResultSet result_set = template.executeQuery();
 			Doctor doctor = new Doctor();
 			doctor.setDoctor_id(result_set.getInt("doctor_id"));

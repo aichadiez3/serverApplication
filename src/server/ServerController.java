@@ -69,8 +69,16 @@ public class ServerController implements Initializable {
 			methods.Insert_new_insurance("Allianz");
 			methods.Insert_new_insurance("Aegon");
 			methods.Insert_new_insurance("Other");
-
+			
+			methods.Insert_new_doctor("Jose Luis García", "UnitedHealth");
+			methods.Insert_new_doctor("Carlos Ruíz", "Maphre");
+			methods.Insert_new_doctor("Marta Martínez", "Anthem");
+			methods.Insert_new_doctor("Laura Esteban", "Centene");
+			methods.Insert_new_doctor("Julia Medea", "HCSC");
+			methods.Insert_new_doctor("Maria José García", "DKV");
+			
 			*/
+
 
 			//hagamos este server
 			

@@ -20,7 +20,7 @@ public interface Interface {
 	
 	public Integer Insert_new_user(String user_name, String password, String email);
 	public Integer Insert_new_patient(Integer user_id, String name, String surname);
-	public Integer Insert_new_doctor(Integer user_id, String name, String telephone);
+	public Integer Insert_new_doctor(String name, String telephone);
 	public Integer Insert_new_medical_record(Date record_date, Integer reference_number, Integer bitalino_test_id);
 	public Integer Insert_new_ecg(LinkedList<Integer> ecg_values, Integer test_id);
 	public Integer Insert_new_eda(LinkedList<Integer> eda_values, Integer test_id);
