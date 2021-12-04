@@ -104,10 +104,9 @@ public class ServerToDB implements Runnable{
                     	Integer user_id = user.getUserId();
                     	String name = parameters[4];*/
                     	
-                    	Integer user_id = Integer.parseInt(parameters[1]);
-                    	String name = parameters[2];
-                    	String telephone = parameters[3];
-                    	methods.Insert_new_doctor(user_id, name, telephone);
+                    	String name = parameters[1];
+                    	String telephone = parameters[2];
+                    	methods.Insert_new_doctor(name, telephone);
                     }
 
                     
@@ -250,10 +249,6 @@ public class ServerToDB implements Runnable{
             
             //aqui aïcha es donde decia de poner lo que yo he puesto donde esta el *!*, yo no se donde ponerlo, me acabo de dar cuenta
                             
-        } catch (IOException e) {
-        	e.printStackTrace();
-        	releaseResourcesClient(socket, inputStream);
-            System.out.println("\n\n\nClient finished");
         } finally {
         	releaseResourcesServer(socket);
         	
