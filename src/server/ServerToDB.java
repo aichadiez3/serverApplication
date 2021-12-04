@@ -195,24 +195,23 @@ public class ServerToDB {
                             methods.Update_patient_info(patientId, name, surname, (java.sql.Date) birth_date, age, height, weight, gender, telephone, insurance_id);
                         }
                         if (parameters[0].equals("search_patient_by_id")) {
-                        	int patient_id = Integer.parseInt(parameters[1]);
+                        	Integer patient_id = Integer.parseInt(parameters[1]);
                             methods.Search_stored_patient_by_id(patient_id);
                         }
                         if (parameters[0].equals("search_patient_by_user_id")) {
-                        	int user_id = Integer.parseInt(parameters[1]);
+                        	Integer user_id = Integer.parseInt(parameters[1]);
                             patientId = methods.Search_stored_patient_by_user_id(user_id);
                             dataOutputStream.writeUTF(patientId.toString());
                         }
                         if (parameters[0].equals("search_record_by_id")) {
-                        	int record_id = Integer.parseInt(parameters[1]);
+                        	Integer record_id = Integer.parseInt(parameters[1]);
                             methods.Search_stored_record_by_id(record_id);
                         }
-                        if (parameters[0].equals("search_record_by_test")) {
-                        	int test_id = Integer.parseInt(parameters[1]);
-                            methods.Search_stored_record_by_test(test_id);
+                        if (parameters[0].equals("list_all_medical_records")) {
+                            methods.List_all_medical_records();
                         }
                         if (parameters[0].equals("search_symptom_by_id")) {
-                        	int symptom_id = Integer.parseInt(parameters[1]);
+                        	Integer symptom_id = Integer.parseInt(parameters[1]);
                             methods.Search_symptom_by_id(symptom_id);
                         }
                         if (parameters[0].equals("search_user_by_userName")) {
@@ -225,6 +224,13 @@ public class ServerToDB {
                             methods.Search_insurance_by_name(insurance_name);
                         }
                         if (parameters[0].equals("search_record_by_date_ascendent")) {
+                        	Integer ref_number = Integer.parseInt(parameters[0]);
+                        	Date ref_date = null;
+                        	try {
+                        		ref_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[1]);
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
                             methods.Search_stored_record_by_date_ascendent();
                         }
                         if (parameters[0].equals("search_record_by_date_descendent")) {

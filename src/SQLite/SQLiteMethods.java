@@ -460,28 +460,6 @@ public class SQLiteMethods implements Interface {
 		
 	}
 	
-	public List<MedicalRecord> Search_stored_record_by_test(Integer test_id) {
-		List<MedicalRecord> records = new LinkedList<MedicalRecord>();
-		try {
-			String SQL_code = "SELECT * FROM medical_record WHERE bitalino_test_id LIKE ?";
-			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setInt(1, test_id);
-			ResultSet rs = template.executeQuery();
-			while(rs.next()) {
-				int id = rs.getInt("medicalRecord_id");
-				Date date = rs.getDate("record_date");
-				int referenceNumber = rs.getInt("reference_number");
-				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
-				List<Symptom> symptoms_list = (List<Symptom>) rs.getArray("symptoms_list");
-				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id, symptoms_list));
-			}
-			return records;
-		} catch (SQLException search_record_error) {
-			search_record_error.printStackTrace();
-			return null;
-		}
-		
-	}
 	
 	public Symptom Search_symptom_by_id(Integer symptom_id) {
 		try {
@@ -606,6 +584,28 @@ public class SQLiteMethods implements Interface {
 			list_users_error.printStackTrace();
 			return null;
 		}
+	}
+	
+	public List<MedicalRecord> List_all_medical_records() {
+		List<MedicalRecord> records = new LinkedList<MedicalRecord>();
+		try {
+			Statement statement = this.sqlite_connection.createStatement();
+			String SQL_code = "SELECT * FROM medical_record";
+			List<MedicalRecord> record_list = new LinkedList<MedicalRecord>();
+			ResultSet rs = statement.executeQuery(SQL_code);
+			while(rs.next()) {
+				Integer id = rs.getInt("medicalRecord_id");
+				Date date = rs.getDate("record_date");
+				Integer referenceNumber = rs.getInt("reference_number");
+				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
+				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id));
+			}
+			return records;
+		} catch (SQLException search_record_error) {
+			search_record_error.printStackTrace();
+			return null;
+		}
+		
 	}
 
 	
