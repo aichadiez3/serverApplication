@@ -89,23 +89,6 @@ public class ServerToDB {
 
                         }
                         if (parameters[0].equals("new_patient")) {
-                    		/*String user_name = parameters[1];
-                        	String password = parameters[2];
-                        	String email = parameters[3];
-                        	user = new User(user_name, password, email);
-                        	Integer user_id = user.getUserId();
-                        	String name = parameters[4];
-                        	String surname = parameters[5];
-                        	LocalDate date = LocalDate.parse(parameters[6]);
-                        	Integer age = Integer.parseInt(parameters[7]);
-                        	Integer height = Integer.parseInt(parameters[8]);
-                        	Integer weight = Integer.parseInt(parameters[9]);
-                        	String gender = parameters[10];
-                        	Integer telephone = Integer.parseInt(parameters[11]);
-                        	Integer insurance_id = Integer.parseInt(parameters[12]);
-                        	String company_name = parameters[13];
-                        	Insurance_company company = new Insurance_company(insurance_id, company_name);*/
-                            
                         	Integer user_id = Integer.parseInt(parameters[1]);
                         	String name = parameters[2];
                         	String surname = parameters[3];
