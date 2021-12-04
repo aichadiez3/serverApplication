@@ -22,8 +22,6 @@ public class ServerClient implements Runnable{
 		this.socket = socket;
 	}
 
-
-
 	@Override
 	public void run() {
 		DataInputStream dataInputStream = null;
@@ -57,7 +55,8 @@ public class ServerClient implements Runnable{
 
 			
 			while(true) {
-			instruction = dataInputStream.readUTF();
+			instruction = "new_patient,2,Pato,Pekin";//dataInputStream.readUTF();
+			System.out.println("Reconozco la instruccion");
 			dataOutputStream.writeUTF(instruction);
 			
 			object = objectInputStream.readObject();

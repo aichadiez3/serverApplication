@@ -48,6 +48,7 @@ public class ServerController implements Initializable {
 			// close the scene but the server still waiting for connections
 			main_menu_stage = (Stage) serverScene.getScene().getWindow();
 			main_menu_stage.setIconified(true);
+
 			
 			/*
 			controller.Connect();
@@ -92,7 +93,7 @@ public class ServerController implements Initializable {
 		            while (true) {
 		                //This executes when we have a patient
 		                socket = serverSocket.accept();
-		                new Thread(new ServerClient(socket)).start();		                
+		                new Thread(new ServerToDB(socket)).start();		                
 		                // condition receive a message from a close instruction from client application (button x, log_out..)
 		                releaseResources(socket);
 		            }

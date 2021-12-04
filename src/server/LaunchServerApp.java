@@ -39,7 +39,7 @@ public class LaunchServerApp extends Application {
 			primaryStage.setScene(scene);
 			stage = primaryStage;
 			primaryStage.show();
-			
+
 		} catch(IOException fatal_server_error) {
 			fatal_server_error.printStackTrace();
 			System.exit(0);
