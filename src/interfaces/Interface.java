@@ -8,6 +8,7 @@ import java.util.List;
 import pojos.Doctor;
 import pojos.EcgTest;
 import pojos.EdaTest;
+import pojos.Insurance_company;
 import pojos.MedicalRecord;
 import pojos.Patient;
 import pojos.PhysicalTest;
@@ -33,9 +34,11 @@ public interface Interface {
 	
 	public Patient Search_stored_patient_by_id(Integer patient_id);
     public Integer Search_stored_patient_by_user_id(Integer user_id);
-	public MedicalRecord Search_stored_record_by_id(Integer record_id);
-	public Symptom Search_symptom_by_id(Integer symptom_id);
 	public Integer Search_stored_user_by_userName(String user_name);
+	public Symptom Search_symptom_by_id(Integer symptom_id);
+	public Insurance_company Search_insurance_by_name(String insurance_name);
+	public Integer Search_associated_ecg(Integer bitalino_id);
+	public Integer Search_associated_eda(Integer bitalino_id);
 	
 	public List<MedicalRecord> Search_stored_record_by_date_ascendent();
 	public List<MedicalRecord> Search_stored_record_by_date_descendent();

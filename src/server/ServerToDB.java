@@ -203,10 +203,6 @@ public class ServerToDB {
                             patientId = methods.Search_stored_patient_by_user_id(user_id);
                             dataOutputStream.writeUTF(patientId.toString());
                         }
-                        if (parameters[0].equals("search_record_by_id")) {
-                        	Integer record_id = Integer.parseInt(parameters[1]);
-                            methods.Search_stored_record_by_id(record_id);
-                        }
                         if (parameters[0].equals("list_all_medical_records")) {
                             methods.List_all_medical_records();
                         }
@@ -235,6 +231,14 @@ public class ServerToDB {
                         }
                         if (parameters[0].equals("list_users")) {
                             methods.List_all_users();
+                        }
+                        if (parameters[0].equals("search_associated_ecg")) {
+                        	Integer bitalino_id = Integer.parseInt(parameters[1]);
+                        	methods.Search_associated_ecg(bitalino_id);
+                        }
+                        if (parameters[0].equals("search_associated_eda")) {
+                        	Integer bitalino_id = Integer.parseInt(parameters[1]);
+                        	methods.Search_associated_eda(bitalino_id);
                         }
                     }
                 

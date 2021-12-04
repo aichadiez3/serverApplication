@@ -496,6 +496,40 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 	
+	public Integer Search_associated_ecg(Integer bitalino_id) {
+		try {
+			String SQL_code = "SELECT * FROM ecg_test WHERE test_id LIKE ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setInt(1, bitalino_id);
+			EcgTest test = new EcgTest();
+			ResultSet result_set = template.executeQuery();
+			test.setEcg_id(result_set.getInt("ecg_id"));
+			test.setEcg_values((LinkedList<Integer>) result_set.getArray("ecg_values")); // ESTO PUEDE CAMBIAR NO ME GUSTA
+			template.close();
+			return test.getEcg_id();
+		} catch (SQLException search_ecg_error) {
+			search_ecg_error.printStackTrace();
+			return null;
+		}
+	}
+	public Integer Search_associated_eda(Integer bitalino_id) {
+		try {
+			String SQL_code = "SELECT * FROM eda_test WHERE test_id LIKE ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setInt(1, bitalino_id);
+			EdaTest test = new EdaTest();
+			ResultSet result_set = template.executeQuery();
+			test.setEda_id(result_set.getInt("eda_id"));
+			test.setEda_values((LinkedList<Integer>) result_set.getArray("eda_values")); // ESTO PUEDE CAMBIAR NO ME GUSTA
+			template.close();
+			return test.getEda_id();
+		} catch (SQLException search_eda_error) {
+			search_eda_error.printStackTrace();
+			return null;
+		}
+	}
+	
+	
 	// -----> SEARCH BY DATE METHODS <-----
 	public List<MedicalRecord> Search_stored_record_by_date_ascendent() {
 		List<MedicalRecord> records = new LinkedList<MedicalRecord>();
