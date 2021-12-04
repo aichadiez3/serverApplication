@@ -224,13 +224,6 @@ public class ServerToDB {
                             methods.Search_insurance_by_name(insurance_name);
                         }
                         if (parameters[0].equals("search_record_by_date_ascendent")) {
-                        	Integer ref_number = Integer.parseInt(parameters[0]);
-                        	Date ref_date = null;
-                        	try {
-                        		ref_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[1]);
-							} catch (ParseException e) {
-								e.printStackTrace();
-							}
                             methods.Search_stored_record_by_date_ascendent();
                         }
                         if (parameters[0].equals("search_record_by_date_descendent")) {
