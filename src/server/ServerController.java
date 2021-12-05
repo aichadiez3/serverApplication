@@ -42,11 +42,10 @@ public class ServerController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1){
 		
 		controller = new SQLiteManager();
-		/*
 		controller.Connect();
 		controller.CreateTables();
-		controller = null;
 		
+		/*
 		// PREDETERMINED USEFUL INFORMATION FOR THE APPLICATION. NEED TO BE INSIDE THE DATABASE ONCE
 		
 		methods.Insert_new_insurance("Anthem");
@@ -110,7 +109,7 @@ public class ServerController implements Initializable {
 		});
 		
 		stopButton.setOnMouseClicked((MouseEvent event) -> {
-			//controller.Close_connection(); // esto devuelve null
+			controller.Close_connection(); 
 			releaseResourcesServer(serverSocket);
 			System.exit(0);
 		});

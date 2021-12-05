@@ -144,12 +144,12 @@ public class SQLiteManager {
 		}catch (SQLException tables_error) {
 			if (tables_error.getMessage().contains("already exists")) {
 				System.out.println("Ya existe la DB");
+				return false;
 			} else {
+				System.out.println("No puedo crear tablas");
 				tables_error.printStackTrace();
 				return false;
 			}
-			System.out.println("No puedo crear tablas");
-			return false;
 		}
 	}
 	
