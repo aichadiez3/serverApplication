@@ -28,7 +28,6 @@ public class SQLiteMethods implements Interface {
 	private Connection sqlite_connection;
 	
 	public SQLiteMethods() {
-		super();
 		// TODO Auto-generated constructor stub
 	}
 

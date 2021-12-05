@@ -30,7 +30,7 @@ public class LaunchServerApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		
 		Parent root = FXMLLoader.load(getClass().getResource("ServerApplicationView.fxml"));
-		primaryStage.setTitle("Log in page");
+		primaryStage.setTitle("Server menu");
 		Scene scene = new Scene(root);
 		scene.getStylesheets().addAll(getClass().getResource("dark-theme.css").toExternalForm());
 		primaryStage.initStyle(StageStyle.UNDECORATED);
