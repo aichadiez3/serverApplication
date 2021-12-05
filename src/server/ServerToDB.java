@@ -136,7 +136,6 @@ public class ServerToDB implements Runnable{
                 		dataOutputStream.writeUTF(edaId.toString());
                     }
                     if (parameters[0].equals("new_psycho")) {
-                		//Integer queries_id = Integer.parseInt(parameters[1]);
                 		Integer medicalRecord_id = Integer.parseInt(parameters[3]);
                 		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1])); // ----------> ESTO NO ME DA FE
 						LinkedList<Boolean> positive_res = linkedList;
@@ -146,11 +145,10 @@ public class ServerToDB implements Runnable{
                         dataOutputStream.writeUTF(queriesId.toString());
                     }
                     if (parameters[0].equals("new_physical")) {
-                		//Integer test_id = Integer.parseInt(parameters[1]);
                 		Integer saturation = Integer.parseInt(parameters[1]);
                 		Integer pulse = Integer.parseInt(parameters[2]);
                 		Integer breathingRate = Integer.parseInt(parameters[3]);
-                		Integer medicalRecord_id = Integer.parseInt(parameters[6]);
+                		Integer medicalRecord_id = Integer.parseInt(parameters[4]);
                         physicalId = methods.Insert_new_physical_test(saturation, pulse, breathingRate, medicalRecord_id);
                         dataOutputStream.writeUTF(physicalId.toString());
                     }
@@ -163,21 +161,21 @@ public class ServerToDB implements Runnable{
                     if (parameters[0].equals("update_patient")) {
                 		Integer user_id = Integer.parseInt(parameters[1]);
                 		patientId = methods.Search_stored_patient_by_user_id(user_id);
-                		String name = parameters[1];
-                		String surname = parameters[2];
+                		String name = parameters[2];
+                		String surname = parameters[3];
                 		Date birth_date = null;
 						try {
-							birth_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[3]);
+							birth_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[4]);
 						} catch (ParseException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						Integer age = Integer.parseInt(parameters[4]);
-						Integer height = Integer.parseInt(parameters[5]);
-						Integer weight = Integer.parseInt(parameters[6]);
-						String gender = parameters[7];
-						Integer telephone = Integer.parseInt(parameters[8]);
-						Integer insurance_id = Integer.parseInt(parameters[9]);
+						Integer age = Integer.parseInt(parameters[5]);
+						Integer height = Integer.parseInt(parameters[6]);
+						Integer weight = Integer.parseInt(parameters[7]);
+						String gender = parameters[8];
+						Integer telephone = Integer.parseInt(parameters[9]);
+						Integer insurance_id = Integer.parseInt(parameters[10]);
                         Boolean upToDate = methods.Update_patient_info(patientId, name, surname, (java.sql.Date) birth_date, age, height, weight, gender, telephone, insurance_id);
                         dataOutputStream.writeUTF(upToDate.toString());
                     }
