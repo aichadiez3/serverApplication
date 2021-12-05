@@ -90,10 +90,12 @@ public class ServerController implements Initializable {
 		            while (true) {
 		                //This executes when we have a patient
 		                socket = serverSocket.accept();
-		                new Thread(new ServerToDB(socket)).start();		
+		                new Thread(new ServerToDB(socket)).start();	
+		                
+		                System.out.println("Server received a socket: " + socket.getLocalAddress().toString());
 		                
 		                // condition receive a message from a close instruction from client application (button x, log_out..)
-		                releaseResources(socket);
+		                //releaseResources(socket);
 		            }
 		        } catch (IOException e) {
 		        	Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, e);
