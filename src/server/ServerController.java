@@ -96,7 +96,7 @@ public class ServerController implements Initializable {
 		                releaseResources(socket);
 		            }
 		        } catch (IOException e) {
-		        	Logger.getLogger(LaunchServerApp.class.getName()).log(Level.SEVERE, null, e);
+		        	Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, e);
 				}
 				finally {
 					releaseResourcesServer(socket, serverSocket);
