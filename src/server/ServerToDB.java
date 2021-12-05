@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import SQLite.SQLiteManager;
 import SQLite.SQLiteMethods;
 import pojos.EcgTest;
 import pojos.EdaTest;
@@ -50,7 +51,12 @@ public class ServerToDB implements Runnable{
         Integer ecgId, bitalinoId;;
         Integer edaId, queriesId, physicalId;
         
-            methods = new SQLiteMethods();
+        
+        SQLiteManager manager = new SQLiteManager();
+        manager.Connect();
+        manager.CreateTables();
+        methods = manager.getMethods();
+            
             //while true, lee el mensaje y hacemos los métodos que nos pida el mensaje
             	
             try {
@@ -224,6 +230,7 @@ public class ServerToDB implements Runnable{
                 }
             
             }  catch (IOException ex) {
+            	manager.Close_connection();
                 Logger.getLogger(ServerToDB.class.getName()).log(Level.SEVERE, null, ex);
                  
             } 

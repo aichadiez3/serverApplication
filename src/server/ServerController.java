@@ -41,10 +41,6 @@ public class ServerController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
 		
-		controller = new SQLiteManager();
-		controller.Connect();
-		controller.CreateTables();
-		
 		/*
 		// PREDETERMINED USEFUL INFORMATION FOR THE APPLICATION. NEED TO BE INSIDE THE DATABASE ONCE
 		
