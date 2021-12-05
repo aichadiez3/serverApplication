@@ -23,6 +23,7 @@ public class ServerController implements Initializable {
 
 	private SQLiteManager controller;
     private SQLiteMethods methods;
+    ServerSocket serverSocket;
 	
 	@FXML
     private Pane serverScene;
@@ -80,7 +81,7 @@ public class ServerController implements Initializable {
 			
 			// SERVER CREATION
 			
-			ServerSocket serverSocket = null;
+			serverSocket = null;
 		
 			while(true){
 	            //This executes when we have a client
@@ -92,7 +93,7 @@ public class ServerController implements Initializable {
 		                socket = serverSocket.accept();
 		                new Thread(new ServerToDB(socket)).start();	
 		                
-		                System.out.println("Server received a socket: " + socket.getLocalAddress().toString());
+		                System.out.println("Server received a socket: " + socket.getLocalSocketAddress());
 		                
 		                // condition receive a message from a close instruction from client application (button x, log_out..)
 		                //releaseResources(socket);
@@ -101,15 +102,16 @@ public class ServerController implements Initializable {
 		        	Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, e);
 				}
 				finally {
-					releaseResourcesServer(socket, serverSocket);
+					//releaseResourcesServer(serverSocket);
+					System.out.println("Client finished.");
 				}
 			}
 			
 		});
 		
 		stopButton.setOnMouseClicked((MouseEvent event) -> {
-			controller.Close_connection();
-			//LaunchServerApp.releaseResourcesServer(LaunchServerApp.socket,LaunchServerApp.serverSocket); //--------> Esto no funchiona
+			//controller.Close_connection(); // esto devuelve null
+			releaseResourcesServer(serverSocket);
 			System.exit(0);
 		});
 	
@@ -124,13 +126,7 @@ public class ServerController implements Initializable {
 	    }
 	}
 	
-	public static void releaseResourcesServer(Socket socket, ServerSocket serverSocket) {
-		try {
-	        socket.close();
-	    } catch (IOException ex) {
-	        Logger.getLogger(LaunchServerApp.class.getName()).log(Level.SEVERE, null, ex);
-	    }
-		
+	public static void releaseResourcesServer(ServerSocket serverSocket) {
 		try {
 			serverSocket.close();
 	    } catch (IOException ex) {
