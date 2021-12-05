@@ -12,14 +12,14 @@ public class EcgTest implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer ecg_id;
 	private Integer test_id;
-	private LinkedList<Integer> ecg_values = new LinkedList<Integer>();
+	private String ecg_values;
 	
 	public EcgTest() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public EcgTest(LinkedList<Integer> ecg_values) {
+	public EcgTest(String ecg_values) {
 		super();
 		this.ecg_values = ecg_values;
 	}
@@ -32,11 +32,11 @@ public class EcgTest implements Serializable {
 		this.ecg_id = ecg_id;
 	}
 
-	public LinkedList<Integer> getEcg_values() {
+	public String getEcg_values() {
 		return ecg_values;
 	}
 
-	public void setEcg_values(LinkedList<Integer> ecg_values) {
+	public void setEcg_values(String ecg_values) {
 		this.ecg_values = ecg_values;
 	}
 	

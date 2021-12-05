@@ -126,16 +126,13 @@ public class ServerToDB implements Runnable{
                     
                     if (parameters[0].equals("new_ecg")) {
                 		Integer test_id = Integer.parseInt(parameters[2]);
-                		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1])); // ----------> ESTO TIENE QUE CAMBIAR
-						LinkedList<Integer> ecg_values = linkedList;
+						String ecg_values = parameters[1];
                         ecgId = methods.Insert_new_ecg(ecg_values, test_id);
                 		dataOutputStream.writeUTF(ecgId.toString());
                     }
                     if (parameters[0].equals("new_eda")) {
-                		//Integer eda_id = Integer.parseInt(parameters[1]);
                 		Integer test_id = Integer.parseInt(parameters[2]);
-                		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1])); // ----------> ESTO TIENE QUE CAMBIAR
-						LinkedList<Integer> eda_values = linkedList;
+						String eda_values = parameters[1];
                         edaId = methods.Insert_new_eda(eda_values, test_id);
                 		dataOutputStream.writeUTF(edaId.toString());
                     }

@@ -11,14 +11,14 @@ public class EdaTest implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer eda_id;
 	private Integer test_id;
-	private LinkedList<Integer> eda_values = new LinkedList<Integer>();
+	private String eda_values;
 	
 	public EdaTest() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public EdaTest(LinkedList<Integer> eda_values) {
+	public EdaTest(String eda_values) {
 		super();
 		this.eda_values = eda_values;
 	}
@@ -31,11 +31,11 @@ public class EdaTest implements Serializable {
 		this.eda_id = eda_id;
 	}
 
-	public LinkedList<Integer> getEda_values() {
+	public String getEda_values() {
 		return eda_values;
 	}
 
-	public void setEda_values(LinkedList<Integer> eda_values) {
+	public void setEda_values(String eda_values) {
 		this.eda_values = eda_values;
 	}
 

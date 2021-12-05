@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -143,11 +142,11 @@ public class SQLiteMethods implements Interface {
 		}
 	}
      
-    public Integer Insert_new_ecg(LinkedList<Integer> ecg_values, Integer test_id) {
+    public Integer Insert_new_ecg(String ecg_values, Integer test_id) {
 		try {
 			String table = "INSERT INTO ecg_test (values, test_id) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setArray(1, (Array) ecg_values);
+			template.setString(1, ecg_values);
 			template.setInt(2, test_id);
 			template.executeUpdate();
 			
@@ -163,11 +162,11 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 
-    public Integer Insert_new_eda(LinkedList<Integer> eda_values, Integer test_id) {
+    public Integer Insert_new_eda(String eda_values, Integer test_id) {
 		try {
 			String table = "INSERT INTO eda_test (values, test_id) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setArray(1, (Array) eda_values);
+			template.setString(1, eda_values);
 			template.setInt(2, test_id);
 			template.executeUpdate();
 			
@@ -502,7 +501,7 @@ public class SQLiteMethods implements Interface {
 			EcgTest test = new EcgTest();
 			ResultSet result_set = template.executeQuery();
 			test.setEcg_id(result_set.getInt("ecg_id"));
-			test.setEcg_values((LinkedList<Integer>) result_set.getArray("ecg_values")); // ESTO PUEDE CAMBIAR NO ME GUSTA
+			test.setEcg_values(result_set.getString("ecg_values"));
 			template.close();
 			return test.getEcg_id();
 		} catch (SQLException search_ecg_error) {
@@ -518,7 +517,7 @@ public class SQLiteMethods implements Interface {
 			EdaTest test = new EdaTest();
 			ResultSet result_set = template.executeQuery();
 			test.setEda_id(result_set.getInt("eda_id"));
-			test.setEda_values((LinkedList<Integer>) result_set.getArray("eda_values")); // ESTO PUEDE CAMBIAR NO ME GUSTA
+			test.setEda_values(result_set.getString("eda_values"));
 			template.close();
 			return test.getEda_id();
 		} catch (SQLException search_eda_error) {
