@@ -431,7 +431,7 @@ public class SQLiteMethods implements Interface {
 			return user.getUserId();
 		} catch (SQLException search_patient_error) {
 			search_patient_error.printStackTrace();
-			return null;
+			return -1;
 		}
 		
 	}

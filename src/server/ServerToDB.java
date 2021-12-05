@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,6 +18,7 @@ import SQLite.SQLiteManager;
 import SQLite.SQLiteMethods;
 import pojos.EcgTest;
 import pojos.EdaTest;
+import pojos.Insurance_company;
 import pojos.MedicalRecord;
 import pojos.Patient;
 import pojos.PhysicalTest;
@@ -40,12 +42,14 @@ public class ServerToDB implements Runnable{
 		//This executes when we have a client
         String instruction;
         User user = null;
+        List<MedicalRecord> list_records;
         MedicalRecord record = null;
         EcgTest ecg = null;
         EdaTest eda = null;
         PsychoTest psycho = null;
         PhysicalTest physical = null;
         Patient patient = null;
+        Insurance_company insurance = null;
         Integer userId, patientId;
         Integer medRecordId;
         Integer ecgId, bitalinoId;;
@@ -178,54 +182,62 @@ public class ServerToDB implements Runnable{
 						String gender = parameters[7];
 						Integer telephone = Integer.parseInt(parameters[8]);
 						Integer insurance_id = Integer.parseInt(parameters[9]);
-						//HAY QUE CAMBIAR DE LocalDate A Date
-                        methods.Update_patient_info(patientId, name, surname, (java.sql.Date) birth_date, age, height, weight, gender, telephone, insurance_id);
+                        Boolean upToDate = methods.Update_patient_info(patientId, name, surname, (java.sql.Date) birth_date, age, height, weight, gender, telephone, insurance_id);
+                        dataOutputStream.writeUTF(upToDate.toString());
                     }
                     if (parameters[0].equals("search_patient_by_id")) {
                     	Integer patient_id = Integer.parseInt(parameters[1]);
-                        methods.Search_stored_patient_by_id(patient_id);
+                        patient = methods.Search_stored_patient_by_id(patient_id);
+                        dataOutputStream.writeUTF(patient.toString());
                     }
                     if (parameters[0].equals("search_patient_by_user_id")) {
                     	Integer user_id = Integer.parseInt(parameters[1]);
                         patientId = methods.Search_stored_patient_by_user_id(user_id);
-                        dataOutputStream.writeUTF(patientId.toString());
+                        dataOutputStream.writeUTF(String.valueOf(patientId));
                     }
                     if (parameters[0].equals("list_all_medical_records")) {
                         methods.List_all_medical_records();
+                        // FALTA EL DATAOUTPUTSTREAM
                     }
-                    if (parameters[0].equals("search_symptom_by_id")) {
+                    if (parameters[0].equals("search_symptom_by_id")) {    // UNUSED METHOD
                     	Integer symptom_id = Integer.parseInt(parameters[1]);
                         methods.Search_symptom_by_id(symptom_id);
                     }
                     if (parameters[0].equals("search_user_by_userName")) {
                     	String user_name = parameters[1];
                         userId = methods.Search_stored_user_by_userName(user_name);
-                        dataOutputStream.writeUTF(userId.toString());
+                        dataOutputStream.writeUTF(String.valueOf(userId));
                     }
                     if (parameters[0].equals("search_insurance_by_name")) {
                     	String insurance_name = parameters[1];
-                        methods.Search_insurance_by_name(insurance_name);
+                        insurance = methods.Search_insurance_by_name(insurance_name);
+                        dataOutputStream.writeUTF(insurance.toString());
                     }
                     if (parameters[0].equals("search_record_by_date_ascendent")) {
-                        methods.Search_stored_record_by_date_ascendent();
+                    	list_records = methods.Search_stored_record_by_date_ascendent();
+                    	dataOutputStream.writeUTF(list_records.toString());
                     }
                     if (parameters[0].equals("search_record_by_date_descendent")) {
-                        methods.Search_stored_record_by_date_descendent();
+                    	list_records = methods.Search_stored_record_by_date_descendent();
+                    	dataOutputStream.writeUTF(list_records.toString());
                     }
-                    if (parameters[0].equals("search_all_symptoms_from_record")) {
+                    if (parameters[0].equals("search_all_symptoms_from_record")) {   // UNUSED METHOD
                     	int record_id = Integer.parseInt(parameters[1]);
                         methods.Search_all_symptoms_from_record(record_id);
                     }
                     if (parameters[0].equals("list_users")) {
                         methods.List_all_users();
+                        // FALTA DATAOUTPUTSTREAM
                     }
                     if (parameters[0].equals("search_associated_ecg")) {
                     	Integer bitalino_id = Integer.parseInt(parameters[1]);
-                    	methods.Search_associated_ecg(bitalino_id);
+                    	ecgId = methods.Search_associated_ecg(bitalino_id);
+                    	dataOutputStream.writeUTF(String.valueOf(ecgId));
                     }
                     if (parameters[0].equals("search_associated_eda")) {
                     	Integer bitalino_id = Integer.parseInt(parameters[1]);
-                    	methods.Search_associated_eda(bitalino_id);
+                    	edaId = methods.Search_associated_eda(bitalino_id);
+                    	dataOutputStream.writeUTF(String.valueOf(edaId));
                     }
                 }
             
