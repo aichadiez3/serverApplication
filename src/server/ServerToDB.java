@@ -4,15 +4,9 @@ import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
@@ -22,7 +16,6 @@ import java.util.logging.Logger;
 import SQLite.SQLiteMethods;
 import pojos.EcgTest;
 import pojos.EdaTest;
-import pojos.Insurance_company;
 import pojos.MedicalRecord;
 import pojos.Patient;
 import pojos.PhysicalTest;
@@ -32,6 +25,9 @@ import pojos.User;
 public class ServerToDB implements Runnable{
 
 	Socket socket;
+	SQLiteMethods methods;
+	DataInputStream dataInputStream;
+	DataOutputStream dataOutputStream;
 	
 	public ServerToDB(Socket socket) {
 		super();
@@ -41,10 +37,7 @@ public class ServerToDB implements Runnable{
 	@Override
 	public void run() {
 		//This executes when we have a client
-    	InputStream inputStream = null;
-        byte[] byteRead;
         String instruction;
-        SQLiteMethods methods;
         User user = null;
         MedicalRecord record = null;
         EcgTest ecg = null;
@@ -57,18 +50,16 @@ public class ServerToDB implements Runnable{
         Integer ecgId, bitalinoId;;
         Integer edaId, queriesId, physicalId;
         
-        try {
             methods = new SQLiteMethods();
-            
             //while true, lee el mensaje y hacemos los métodos que nos pida el mensaje
             	
             try {
-            	DataInputStream dataInputStream  = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+            	dataInputStream  = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
             	
-                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
             	
-        		boolean stopClient = false;
+        		boolean stopClient = false;     // A ESTO HAY QUE DARLE OTRA VUELTA
                 while (!stopClient) {
                 	instruction = dataInputStream.readUTF();
                     //We read until is finished the connection or character 'x'
@@ -97,13 +88,6 @@ public class ServerToDB implements Runnable{
 
 
                     if (parameters[0].equals("new_doctor")) {
-                		/*String user_name = parameters[1];
-                    	String password = parameters[2];
-                    	String email = parameters[3];
-                    	user = new User(user_name, password, email);
-                    	Integer user_id = user.getUserId();
-                    	String name = parameters[4];*/
-                    	
                     	String name = parameters[1];
                     	String telephone = parameters[2];
                     	methods.Insert_new_doctor(name, telephone);
@@ -111,12 +95,11 @@ public class ServerToDB implements Runnable{
 
                     
                     if (parameters[0].equals("new_medical_record")) {
-                		Integer record_id = Integer.parseInt(parameters[1]);
+                    	Integer test_id = Integer.parseInt(parameters[1]); // -----------> UNUSED
                 		Date record_date = null;
 						try {
 							record_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[2]);
 						} catch (ParseException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
                 		Integer reference_number = Integer.parseInt(parameters[3]);
@@ -132,9 +115,8 @@ public class ServerToDB implements Runnable{
                     }
                     
                     if (parameters[0].equals("new_ecg")) {
-                		//Integer ecg_id = Integer.parseInt(parameters[1]);
                 		Integer test_id = Integer.parseInt(parameters[2]);
-                		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1]));
+                		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1])); // ----------> ESTO TIENE QUE CAMBIAR
 						LinkedList<Integer> ecg_values = linkedList;
                         ecgId = methods.Insert_new_ecg(ecg_values, test_id);
                 		dataOutputStream.writeUTF(ecgId.toString());
@@ -142,7 +124,7 @@ public class ServerToDB implements Runnable{
                     if (parameters[0].equals("new_eda")) {
                 		//Integer eda_id = Integer.parseInt(parameters[1]);
                 		Integer test_id = Integer.parseInt(parameters[2]);
-                		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1]));
+                		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1])); // ----------> ESTO TIENE QUE CAMBIAR
 						LinkedList<Integer> eda_values = linkedList;
                         edaId = methods.Insert_new_eda(eda_values, test_id);
                 		dataOutputStream.writeUTF(edaId.toString());
@@ -150,9 +132,9 @@ public class ServerToDB implements Runnable{
                     if (parameters[0].equals("new_psycho")) {
                 		//Integer queries_id = Integer.parseInt(parameters[1]);
                 		Integer medicalRecord_id = Integer.parseInt(parameters[3]);
-                		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1]));
+                		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1])); // ----------> ESTO NO ME DA FE
 						LinkedList<Boolean> positive_res = linkedList;
-						LinkedList linkedList2 = new LinkedList(Arrays.asList(parameters[2]));
+						LinkedList linkedList2 = new LinkedList(Arrays.asList(parameters[2])); // ----------> ESTO NO ME DA FE
 						LinkedList<Boolean> negative_res = linkedList2;
                         queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, medicalRecord_id);
                         dataOutputStream.writeUTF(queriesId.toString());
@@ -243,46 +225,28 @@ public class ServerToDB implements Runnable{
             
             }  catch (IOException ex) {
                 Logger.getLogger(ServerToDB.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                releaseResourcesClient(socket, inputStream);
+                 
+            } 
+            /*
+            finally {
+                releaseResourcesClient(socket, dataOutputStream); 
             }
-            
-            //aqui aïcha es donde decia de poner lo que yo he puesto donde esta el *!*, yo no se donde ponerlo, me acabo de dar cuenta
-                            
-        } finally {
-        	releaseResourcesServer(socket);
-        	
-        }		
-	}
-
-	public static void main(String args[]) throws IOException {
-		
-		Socket socket = null;
-            
-            
+           	*/
 	}
 	
-	private static void releaseResourcesClient(Socket socket, InputStream inputStream) {
+	private static void releaseResourcesClient(Socket socket, DataOutputStream dataOutputStream) {
 		try {
-            inputStream.close();
+			dataOutputStream.close();
         } catch (IOException ex) {
-            Logger.getLogger(ServerToDB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
             socket.close();
         } catch (IOException ex) {
-            Logger.getLogger(ServerToDB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 	
-	
-	private static void releaseResourcesServer(Socket socket) {
-		try {
-            socket.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ServerToDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 	
 }
