@@ -89,7 +89,6 @@ public class ServerToDB implements Runnable{
 
                     }
                     if (parameters[0].equals("new_patient")) {
-                    	System.out.println("He leido la instruccion");
                     	Integer user_id = Integer.parseInt(parameters[1]);
                     	String name = parameters[2];
                     	String surname = parameters[3];
