@@ -18,8 +18,8 @@ public static void main(String[] args) throws SQLException {
 		System.out.println(everything_ok + " ");
 			
 		SQLiteMethods methods = manager.getMethods();
-//		Integer user = methods.Insert_new_user("a", "a", "aa@aa");
-//		Patient patient = methods.Insert_new_patient(user.getUserId(),"Pablo","Carnero");
+		Integer user = methods.Insert_new_user("a", "a", "aa@aa");
+		Integer patient = methods.Insert_new_patient(user,"Pablo","Carnero");
 //		String userName = "name";
 //		Integer id = methods.Search_stored_user_by_userName(userName);
 //		Patient patient2 = methods.Insert_new_patient(id, "Chochi", "Palizote");
