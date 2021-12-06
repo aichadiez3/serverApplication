@@ -5,10 +5,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -104,36 +105,31 @@ public class ServerToDB implements Runnable{
 
                     
                     if (parameters[0].equals("new_medical_record")) {
-                    	Integer test_id = Integer.parseInt(parameters[1]); // -----------> UNUSED
-                		Date record_date = null;
-						try {
-							record_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[2]);
-						} catch (ParseException e) {
-							e.printStackTrace();
-						}
+                    	userId = Integer.parseInt(parameters[1]);
+                    	Date record_date = Date.valueOf(parameters[2]);
                 		Integer reference_number = Integer.parseInt(parameters[3]);
-                		Integer bitalino_test_id = Integer.parseInt(parameters[4]);
-                		medRecordId = methods.Insert_new_medical_record((java.sql.Date) record_date, reference_number, bitalino_test_id);
-                		dataOutputStream.writeUTF(medRecordId.toString());
+                		patientId = methods.Search_stored_patient_by_user_id(userId);
+                		medRecordId = methods.Insert_new_medical_record(record_date, reference_number, patientId);
+                		dataOutputStream.writeUTF(String.valueOf(medRecordId));
                     }
                     
                     if (parameters[0].equals("new_bitalino_test")) {
                 		Integer test_id = Integer.parseInt(parameters[1]);
-                        bitalinoId = methods.Insert_new_bitalino_test();
-                		dataOutputStream.writeUTF(bitalinoId.toString());
+                        bitalinoId = methods.Insert_new_bitalino_test(test_id);
+                		dataOutputStream.writeUTF(String.valueOf(bitalinoId));
                     }
                     
                     if (parameters[0].equals("new_ecg")) {
+                		String ecg_values = parameters[1];
                 		Integer test_id = Integer.parseInt(parameters[2]);
-						String ecg_values = parameters[1];
                         ecgId = methods.Insert_new_ecg(ecg_values, test_id);
-                		dataOutputStream.writeUTF(ecgId.toString());
+                		dataOutputStream.writeUTF(String.valueOf(ecgId));
                     }
                     if (parameters[0].equals("new_eda")) {
                 		Integer test_id = Integer.parseInt(parameters[2]);
 						String eda_values = parameters[1];
                         edaId = methods.Insert_new_eda(eda_values, test_id);
-                		dataOutputStream.writeUTF(edaId.toString());
+                		dataOutputStream.writeUTF(String.valueOf(edaId));
                     }
                     if (parameters[0].equals("new_psycho")) {
                 		Integer medicalRecord_id = Integer.parseInt(parameters[3]);
@@ -142,7 +138,7 @@ public class ServerToDB implements Runnable{
 						LinkedList linkedList2 = new LinkedList(Arrays.asList(parameters[2])); // ----------> ESTO NO ME DA FE
 						LinkedList<Boolean> negative_res = linkedList2;
                         queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, medicalRecord_id);
-                        dataOutputStream.writeUTF(queriesId.toString());
+                        dataOutputStream.writeUTF(String.valueOf(queriesId));
                     }
                     if (parameters[0].equals("new_physical")) {
                 		Integer saturation = Integer.parseInt(parameters[1]);
@@ -150,7 +146,7 @@ public class ServerToDB implements Runnable{
                 		Integer breathingRate = Integer.parseInt(parameters[3]);
                 		Integer medicalRecord_id = Integer.parseInt(parameters[4]);
                         physicalId = methods.Insert_new_physical_test(saturation, pulse, breathingRate, medicalRecord_id);
-                        dataOutputStream.writeUTF(physicalId.toString());
+                        dataOutputStream.writeUTF(String.valueOf(physicalId));
                     }
                     if (parameters[0].equals("change_user_info")) {
                     	String password = parameters[1];
@@ -163,13 +159,7 @@ public class ServerToDB implements Runnable{
                 		patientId = methods.Search_stored_patient_by_user_id(user_id);
                 		String name = parameters[2];
                 		String surname = parameters[3];
-                		Date birth_date = null;
-						try {
-							birth_date = new SimpleDateFormat("dd/MM/yyyy").parse(parameters[4]);
-						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+                		Date birth_date =  Date.valueOf(parameters[4]);
 						Integer age = Integer.parseInt(parameters[5]);
 						Integer height = Integer.parseInt(parameters[6]);
 						Integer weight = Integer.parseInt(parameters[7]);

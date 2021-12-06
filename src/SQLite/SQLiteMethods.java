@@ -62,21 +62,22 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 	
-	public Integer Insert_new_medical_record(Date record_date, Integer reference_number, Integer bitalino_test_id) {
+	public Integer Insert_new_medical_record(Date record_date, Integer reference_number, Integer patient_id) {
 		try {
-			String table = "INSERT INTO medical_record (reference_number, record_date, bitalino_test_id) " + " VALUES(?,?,?);";
+			String table = "INSERT INTO medical_record (reference_number, record_date, patient_id) " + " VALUES(?,?,?);";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setDate(1, (Date) record_date);
 			template.setInt(2, reference_number);
-			template.setInt(3, bitalino_test_id);
+			template.setInt(3, patient_id);
 			template.executeUpdate();
 			
-			String SQL_code = "SELECT last_insert_rowid() AS record_id";
-			template = this.sqlite_connection.prepareStatement(SQL_code);
+			String SQL_code1 = "SELECT last_insert_rowid() AS record_id";
+			template = this.sqlite_connection.prepareStatement(SQL_code1);
 			ResultSet result_set = template.executeQuery();
 			Integer record_id = result_set.getInt("record_id");
-			MedicalRecord medical_record = new MedicalRecord(record_id, record_date, (Integer) reference_number, (Integer) bitalino_test_id);
+			MedicalRecord medical_record = new MedicalRecord(record_id, record_date, reference_number, patient_id);
 			template.close();
+			
 			return medical_record.getMedicalRecord_id();	
 			
 		} catch (SQLException insert_record_error) {
@@ -182,6 +183,8 @@ public class SQLiteMethods implements Interface {
 		}
 	}
     
+    
+    // CREO QUE HABRÁ QUE CAMBIAR LOS TIPOS A STRING PARA EXPORTARLOS A TEXTO Y QUE SEA ENTENDIBLE
     public Integer Insert_new_psycho_test(LinkedList<Boolean> positive_res, LinkedList<Boolean> negative_res, Integer medicalRecord_id) {
 		try {
 			String table = "INSERT INTO psycho_test (positive_res, negative_res, medicalRecord_id) " + "VALUES (?,?,?)";
@@ -247,7 +250,7 @@ public class SQLiteMethods implements Interface {
 		}
 	}
  	
-    public Integer Insert_new_bitalino_test() {
+    public Integer Insert_new_bitalino_test(Integer medicalRecord_id) {
     	Integer test_id = null;
     	try {
     		String table = "INSERT INTO bitalino_test";
@@ -446,8 +449,8 @@ public class SQLiteMethods implements Interface {
 			record.setReferenceNumber(result_set.getInt("reference_number"));
 			record.setRecordDate(result_set.getDate("record_date"));
 			record.setBitalinoTestId(result_set.getInt("bitalino_test_id"));
-			List<Symptom> symptoms_list = Search_all_symptoms_from_record(record_id);
-			record.setSymptoms_list(symptoms_list);
+			//List<Symptom> symptoms_list = Search_all_symptoms_from_record(record_id);
+			//record.setSymptoms_list(symptoms_list);
 			template.close();
 			return record;
 		} catch (SQLException search_record_error) {
@@ -540,8 +543,12 @@ public class SQLiteMethods implements Interface {
 				Date date = rs.getDate("record_date");
 				int referenceNumber = rs.getInt("reference_number");
 				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
-				List<Symptom> symptoms_list = (List<Symptom>) rs.getArray("symptoms_list"); // PUEDE QUE ESTO VAYA A DAR UN ERROR CON EL TIPO DE DATO DE LA TABLA medical_record
-				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id, symptoms_list));
+				
+				Integer ecg_id = Search_associated_ecg(bitalino_test_id);
+				Integer eda_id = Search_associated_eda(bitalino_test_id);
+				
+				//List<Symptom> symptoms_list = (List<Symptom>) rs.getArray("symptoms_list"); // PUEDE QUE ESTO VAYA A DAR UN ERROR CON EL TIPO DE DATO DE LA TABLA medical_record
+				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id));
 			}
 			return records;
 		} catch (SQLException search_record_error) {
@@ -563,8 +570,8 @@ public class SQLiteMethods implements Interface {
 				Date date = rs.getDate("record_date");
 				int referenceNumber = rs.getInt("reference_number");
 				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
-				List<Symptom> symptoms_list = (List<Symptom>) rs.getArray("symptoms_list"); // PUEDE QUE ESTO VAYA A DAR UN ERROR CON EL TIPO DE DATO DE LA TABLA medical_record
-				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id, symptoms_list));
+				//List<Symptom> symptoms_list = (List<Symptom>) rs.getArray("symptoms_list"); // PUEDE QUE ESTO VAYA A DAR UN ERROR CON EL TIPO DE DATO DE LA TABLA medical_record
+				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id));
 			}
 			return records;
 		} catch (SQLException search_record_error) {

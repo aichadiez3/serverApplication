@@ -56,7 +56,11 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.7.jar"/>
+	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.7.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/jfoenix-9.0.10.jar"/>
 	<classpathentry kind="lib" path="lib/jfoenix-8.0.10.jar"/>
 	<classpathentry kind="output" path="bin"/>

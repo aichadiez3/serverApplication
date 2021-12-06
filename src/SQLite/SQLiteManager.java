@@ -75,8 +75,8 @@ public class SQLiteManager {
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql3 = "CREATE TABLE medical_record " + "(medicalRecord_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ " reference_number INTEGER UNIQUE, " + " record_date DATETIME NOT NULL, " + " bitalino_test_id FOREING KEY REFERENCES bitalino_test(test_id), "
-					+ " symptoms_list TEXT default NULL, "
+					+ " reference_number INTEGER UNIQUE, " + " record_date DATETIME NOT NULL, " 
+					+ " bitalino_test_id FOREING KEY REFERENCES bitalino_test(test_id), "
 					+ " patient_id FOREING KEY REFERENCES patient(patient_id) ON UPDATE RESTRICT ON DELETE CASCADE)";
 			stmt1.execute(sql3);
 			
@@ -103,7 +103,7 @@ public class SQLiteManager {
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql8 = "CREATE TABLE doctor " + "(doctor_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ " name TEXT NOT NULL, " + " telephone INTEGER default NULL, " + " insurance_id FOREING KEY REFERENCES insurance(insurance_id)";
+					+ " name TEXT NOT NULL, " + " telephone INTEGER default NULL, " + " insurance_id FOREING KEY REFERENCES insurance(insurance_id))";
 			stmt1.execute(sql8);
 			
 			stmt1 = sqlite_connection.createStatement();
@@ -142,10 +142,10 @@ public class SQLiteManager {
 			return true;
 		}catch (SQLException tables_error) {
 			if (tables_error.getMessage().contains("already exists")) {
-				System.out.println("Ya existe la DB");
+				System.out.println("Database already exists.");
 				return false;
 			} else {
-				System.out.println("No puedo crear tablas");
+				System.out.println("Error creating tables! Abort.");
 				tables_error.printStackTrace();
 				return false;
 			}
