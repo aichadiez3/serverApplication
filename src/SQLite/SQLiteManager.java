@@ -61,7 +61,7 @@ public class SQLiteManager {
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql1 = "CREATE TABLE patient " + "(patient_id INTEGER PRIMARY KEY AUTOINCREMENT, " + " name TEXT NOT NULL, "
-					+ " surname TEXT NOT NULL, " + " birth_date DATETIME default NULL, " + " age INTEGER default NULL, " + " telephone INTEGER default NULL, "
+					+ " surname TEXT NOT NULL, " + " birth_date DATETIME default NULL, " + " telephone INTEGER default NULL, "
 					+ " height INTEGER default NULL, " + " weight INTEGER default NULL, " + " gender TEXT default NULL, "
 					+ " insurance_id FOREING KEY REFERENCES insurance(insurance_id), " 
 					+ " user_id FOREING KEY REFERENCES user(user_id) ON DELETE CASCADE)";

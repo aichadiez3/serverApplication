@@ -29,7 +29,7 @@ public interface Interface {
 	public Integer Insert_new_insurance(String company_name);
 	
 	public boolean Update_user_info(String password, String email, Integer user_id);
-	public boolean Update_patient_info(Integer patient_id, String name, String surname, Date birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
+	public boolean Update_patient_info(Integer patient_id, String name, String surname, Date birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
 	
 	public Patient Search_stored_patient_by_id(Integer patient_id);
     public Integer Search_stored_patient_by_user_id(Integer user_id);

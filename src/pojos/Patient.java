@@ -21,7 +21,7 @@ public class Patient implements Serializable {
 	private String name;
 	private String surname;
 	private Date birth_date;
-	private Integer age;
+	//private Integer age;
 	private Integer height;
 	private Integer weight;
 	private String gender;
@@ -91,7 +91,7 @@ public class Patient implements Serializable {
 	}
 	
 
-	public Integer getAge() {
+	/*public Integer getAge() {
 		return age;
 	}
 
@@ -106,6 +106,7 @@ public class Patient implements Serializable {
 			this.age=null;
 		}
 	}
+	*/
 
 	public Integer getHeight() {
 		return height;
@@ -169,7 +170,7 @@ public class Patient implements Serializable {
 	@Override
 	public String toString() {
 		return "Patient [patient_id=" + patient_id + ", user_id=" + user_id + ", name=" + name + ", surname=" + surname
-				+ ", birth_date=" + birth_date + ", age=" + age + ", height=" + height + ", weight=" + weight
+				+ ", birth_date=" + birth_date + ", height=" + height + ", weight=" + weight
 				+ ", gender=" + gender + ", telephone=" + telephone + ", insurance_id=" + insurance_id + "]";
 	}
 	

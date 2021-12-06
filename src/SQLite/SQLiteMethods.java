@@ -106,7 +106,7 @@ public class SQLiteMethods implements Interface {
 			patient.setSurname(result_set.getString("surname"));
 			patient.setUser_id(user_id);
 			patient.setBirth_date(null);
-			patient.setAge();
+			//patient.setAge();
 			patient.setHeight(null);
 			patient.setWeight(null);
 			patient.setGender(null);
@@ -314,12 +314,12 @@ public class SQLiteMethods implements Interface {
 	}
     
     //funciona
-    public boolean Update_patient_info(Integer patient_id, String name, String surname, Date birth_date, Integer age, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
+    public boolean Update_patient_info(Integer patient_id, String name, String surname, Date birth_date/*, Integer age*/, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
     	try {
     		
     		Patient patient = Search_stored_patient_by_id(patient_id);
     		
-    		String SQL_code = "UPDATE patient SET name = ?, surname = ?, birth_date = ?, age = ?, height = ?, weight = ?, gender = ?, telephone = ?, insurance_id = ? WHERE patient_id = ?";
+    		String SQL_code = "UPDATE patient SET name = ?, surname = ?, birth_date = ?, height = ?, weight = ?, gender = ?, telephone = ?, insurance_id = ? WHERE patient_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			if(!name.equals("")) {
 			template.setString(1, name);
@@ -333,30 +333,30 @@ public class SQLiteMethods implements Interface {
 			template.setDate(3, birth_date);
 			}
 			
-			if(!age.equals("")) {
+			/*if(!age.equals("")) {
 				template.setInt(4, age);
-			}
+			}*/
 			
 			if(!height.equals("")) {
-				template.setInt(5, height);
+				template.setInt(4, height);
 			}
 			
 			if(!weight.equals("")) {
-				template.setInt(6, weight);
+				template.setInt(5, weight);
 			}
 			
 			if(!gender.equals("")) {
-				template.setString(7, gender);
+				template.setString(6, gender);
 			}
 			
 			if(!telephone.equals("")) {
-				template.setInt(8, telephone);
+				template.setInt(7, telephone);
 			}
 			
 			if(!insurance_id.equals("")) {
-				template.setInt(9, insurance_id);
+				template.setInt(8, insurance_id);
 			}
-			template.setInt(10, patient_id);
+			template.setInt(9, patient_id);
 			template.executeUpdate();
 			template.close();
     		

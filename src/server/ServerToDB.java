@@ -161,13 +161,13 @@ public class ServerToDB implements Runnable{
                 		String name = parameters[2];
                 		String surname = parameters[3];
                 		Date birth_date =  Date.valueOf(parameters[4]);
-						Integer age = Integer.parseInt(parameters[5]);
-						Integer height = Integer.parseInt(parameters[6]);
-						Integer weight = Integer.parseInt(parameters[7]);
-						String gender = parameters[8];
-						Integer telephone = Integer.parseInt(parameters[9]);
-						Integer insurance_id = Integer.parseInt(parameters[10]);
-                        Boolean upToDate = methods.Update_patient_info(patientId, name, surname, (java.sql.Date) birth_date, age, height, weight, gender, telephone, insurance_id);
+						//Integer age = Integer.parseInt(parameters[5]);
+						Integer height = Integer.parseInt(parameters[5]);
+						Integer weight = Integer.parseInt(parameters[6]);
+						String gender = parameters[7];
+						Integer telephone = Integer.parseInt(parameters[8]);
+						Integer insurance_id = Integer.parseInt(parameters[9]);
+                        Boolean upToDate = methods.Update_patient_info(patientId, name, surname, (java.sql.Date) birth_date, height, weight, gender, telephone, insurance_id);
                         dataOutputStream.writeUTF(upToDate.toString());
                     }
                     if (parameters[0].equals("search_patient_by_id")) {
