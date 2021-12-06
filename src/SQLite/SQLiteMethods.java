@@ -297,11 +297,11 @@ public class SQLiteMethods implements Interface {
 		try {
 			String SQL_code = "UPDATE user SET password = ?, email = ? WHERE user_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setString(1, password);
-			
+			if(!password.equals("")) {
+				template.setString(1, password);
+			}
 			if(!email.equals("")) {
 				template.setString(2, email);
-			}
 			
 			template.setInt(3, user_id);
 			template.executeUpdate();
