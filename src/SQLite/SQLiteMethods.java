@@ -299,7 +299,7 @@ public class SQLiteMethods implements Interface {
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setString(1, password);
 			
-			if(email != null) {
+			if(!email.equals("")) {
 				template.setString(2, email);
 			}
 			
@@ -321,39 +321,39 @@ public class SQLiteMethods implements Interface {
     		
     		String SQL_code = "UPDATE patient SET name = ?, surname = ?, birth_date = ?, age = ?, height = ?, weight = ?, gender = ?, telephone = ?, insurance_id = ? WHERE patient_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-			if(name != null) {
+			if(!name.equals("")) {
 			template.setString(1, name);
 			}
 
-			if(surname != null) {
+			if(!surname.equals("")) {
 				template.setString(2, surname);
 			}
 
-			if(birth_date !=null) {
+			if(!birth_date.equals("")) {
 			template.setDate(3, birth_date);
 			}
 			
-			if(age != null) {
+			if(!age.equals(null)) {
 				template.setInt(4, age);
 			}
 			
-			if(height != null) {
+			if(!height.equals(null)) {
 				template.setInt(5, height);
 			}
 			
-			if(weight != null) {
+			if(!weight.equals(null)) {
 				template.setInt(6, weight);
 			}
 			
-			if(gender != null) {
+			if(!gender.equals("")) {
 				template.setString(7, gender);
 			}
 			
-			if(telephone != null) {
+			if(!telephone.equals(null)) {
 				template.setInt(8, telephone);
 			}
 			
-			if(insurance_id != null) {
+			if(!insurance_id.equals(null)) {
 				template.setInt(9, insurance_id);
 			}
 			template.setInt(10, patient_id);
