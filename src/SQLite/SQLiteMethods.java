@@ -302,7 +302,7 @@ public class SQLiteMethods implements Interface {
 			}
 			if(!email.equals("")) {
 				template.setString(2, email);
-			
+			}
 			template.setInt(3, user_id);
 			template.executeUpdate();
 			template.close();
