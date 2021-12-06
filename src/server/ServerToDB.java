@@ -223,6 +223,15 @@ public class ServerToDB implements Runnable{
                     	edaId = methods.Search_associated_eda(bitalino_id);
                     	dataOutputStream.writeUTF(String.valueOf(edaId));
                     }
+                    if (parameters[0].equals("compare_passwords")) {
+                    	String user_name = parameters[1];
+                    	String true_password = methods.Get_user_password(user_name);
+                    	if(parameters[2].equals(true_password)) {
+                        	dataOutputStream.writeUTF("okay");
+                    	} else {
+                        	dataOutputStream.writeUTF("wrong");
+                    	}
+                    }
                 }
             
             }  catch (IOException ex) {

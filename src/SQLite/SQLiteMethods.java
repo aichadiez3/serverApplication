@@ -438,6 +438,26 @@ public class SQLiteMethods implements Interface {
 		
 	}
     
+    public String Get_user_password (String user_name) {
+		try {
+			String SQL_code = "SELECT * FROM user WHERE user_name LIKE ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setString(1, user_name);
+			User user = new User();
+			ResultSet result_set = template.executeQuery();
+		    user.setUserName(result_set.getString("user_name"));
+		    user.setPassword(result_set.getString("password"));
+		    user.setEmail(result_set.getString("email"));
+		    user.setUserId(result_set.getInt("user_id"));
+			template.close();
+			return user.getPassword();
+		} catch (SQLException search_patient_error) {
+			search_patient_error.printStackTrace();
+			return null;
+		}
+		
+	}
+    
 	public MedicalRecord Search_stored_record_by_id(Integer record_id) {
 		try {
 			String SQL_code = "SELECT * FROM medical_record WHERE medicalRecord_id LIKE ?";

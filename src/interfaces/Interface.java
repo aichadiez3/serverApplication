@@ -45,5 +45,6 @@ public interface Interface {
 	public List<Symptom> Search_all_symptoms_from_record(Integer record_id);
 	public List<User> List_all_users();
 	public List<MedicalRecord> List_all_medical_records();
+	public String Get_user_password (String user_name);
 	
 }
