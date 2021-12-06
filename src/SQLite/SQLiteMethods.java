@@ -333,15 +333,15 @@ public class SQLiteMethods implements Interface {
 			template.setDate(3, birth_date);
 			}
 			
-			if(!age.equals(null)) {
+			if(!age.equals("")) {
 				template.setInt(4, age);
 			}
 			
-			if(!height.equals(null)) {
+			if(!height.equals("")) {
 				template.setInt(5, height);
 			}
 			
-			if(!weight.equals(null)) {
+			if(!weight.equals("")) {
 				template.setInt(6, weight);
 			}
 			
@@ -349,11 +349,11 @@ public class SQLiteMethods implements Interface {
 				template.setString(7, gender);
 			}
 			
-			if(!telephone.equals(null)) {
+			if(!telephone.equals("")) {
 				template.setInt(8, telephone);
 			}
 			
-			if(!insurance_id.equals(null)) {
+			if(!insurance_id.equals("")) {
 				template.setInt(9, insurance_id);
 			}
 			template.setInt(10, patient_id);
