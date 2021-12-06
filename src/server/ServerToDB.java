@@ -132,11 +132,16 @@ public class ServerToDB implements Runnable{
                 		dataOutputStream.writeUTF(String.valueOf(edaId));
                     }
                     if (parameters[0].equals("new_psycho")) {
+                    	String[] psychotest = instruction.split("[");
+                    	psychotest[0].replace("new_psycho,[","");
+                    	psychotest[0].replace("]","");
+                    	psychotest[1].replace("[","");
+                    	psychotest[1].replace("]","");
                 		Integer medicalRecord_id = Integer.parseInt(parameters[3]);
-                		LinkedList linkedList = new LinkedList(Arrays.asList(parameters[1])); // ----------> ESTO NO ME DA FE
-						LinkedList<Boolean> positive_res = linkedList;
-						LinkedList linkedList2 = new LinkedList(Arrays.asList(parameters[2])); // ----------> ESTO NO ME DA FE
-						LinkedList<Boolean> negative_res = linkedList2;
+                		LinkedList linkedList = new LinkedList(Arrays.asList(psychotest[0])); // ----------> ESTO NO ME DA FE
+						LinkedList<String> positive_res = linkedList;
+						LinkedList linkedList2 = new LinkedList(Arrays.asList(psychotest[1])); // ----------> ESTO NO ME DA FE
+						LinkedList<String> negative_res = linkedList2;
                         queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, medicalRecord_id);
                         dataOutputStream.writeUTF(String.valueOf(queriesId));
                     }

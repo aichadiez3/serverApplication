@@ -23,7 +23,7 @@ public interface Interface {
 	public Integer Insert_new_medical_record(Date record_date, Integer reference_number, Integer patient_id);
 	public Integer Insert_new_ecg(String ecg_values, Integer test_id);
 	public Integer Insert_new_eda(String eda_values, Integer test_id);
-	public Integer Insert_new_psycho_test(LinkedList<Boolean> positive_res, LinkedList<Boolean> negative_res, Integer medicalRecord_id);
+	public Integer Insert_new_psycho_test(LinkedList<String> positive_res, LinkedList<String> negative_res, Integer medicalRecord_id);
 	public Integer Insert_new_physical_test(Integer saturation, Integer pulse, Integer breathingRate,Integer medicalRecord_id);
 	public Integer Insert_new_bitalino_test(Integer medicalRecord_id);
 	public Integer Insert_new_insurance(String company_name);

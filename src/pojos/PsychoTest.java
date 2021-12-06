@@ -12,8 +12,8 @@ public class PsychoTest implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer queries_id;
 	private Integer medicalRecord_id;
-	private LinkedList<Boolean> positive_res = new LinkedList<Boolean>();
-	private LinkedList<Boolean> negative_res = new LinkedList<Boolean>();
+	private LinkedList<String> positive_res = new LinkedList<String>();
+	private LinkedList<String> negative_res = new LinkedList<String>();
 	public Integer getQueries_id() {
 		return queries_id;
 	}
@@ -26,16 +26,16 @@ public class PsychoTest implements Serializable {
 	public void setMedicalRecord_id(Integer medicalRecord_id) {
 		this.medicalRecord_id = medicalRecord_id;
 	}
-	public LinkedList<Boolean> getPositive_res() {
+	public LinkedList<String> getPositive_res() {
 		return positive_res;
 	}
-	public void setPositive_res(LinkedList<Boolean> positive_res) {
+	public void setPositive_res(LinkedList<String> positive_res) {
 		this.positive_res = positive_res;
 	}
-	public LinkedList<Boolean> getNegative_res() {
+	public LinkedList<String> getNegative_res() {
 		return negative_res;
 	}
-	public void setNegative_res(LinkedList<Boolean> negative_res) {
+	public void setNegative_res(LinkedList<String> negative_res) {
 		this.negative_res = negative_res;
 	}
 	
