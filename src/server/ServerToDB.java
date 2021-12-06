@@ -232,6 +232,15 @@ public class ServerToDB implements Runnable{
                         	dataOutputStream.writeUTF("wrong");
                     	}
                     }
+                    if (parameters[0].equals("search_existent_email")) {
+                    	String email = parameters[1];
+                    	boolean check = methods.Search_existent_email(email);
+                    	if(check == false) {
+                        	dataOutputStream.writeUTF("okay");
+                    	} else {
+                        	dataOutputStream.writeUTF("wrong");
+                    	}
+                    }
                 }
             
             }  catch (IOException ex) {
