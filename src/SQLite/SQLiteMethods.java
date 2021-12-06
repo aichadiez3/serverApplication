@@ -298,7 +298,11 @@ public class SQLiteMethods implements Interface {
 			String SQL_code = "UPDATE user SET password = ?, email = ? WHERE user_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setString(1, password);
-			template.setString(2, email);
+			
+			if(email != null) {
+				template.setString(2, email);
+			}
+			
 			template.setInt(3, user_id);
 			template.executeUpdate();
 			template.close();
@@ -437,6 +441,29 @@ public class SQLiteMethods implements Interface {
 		}
 		
 	}
+    
+    
+	  //funciona
+	    public boolean Search_existent_email(String email) {
+			try {
+				String SQL_code = "SELECT * FROM user WHERE email LIKE ?";
+				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+				template.setString(1, email);
+				User user = new User();
+				ResultSet result_set = template.executeQuery();
+			    user.setUserName(result_set.getString("user_name"));
+			    user.setPassword(result_set.getString("password"));
+			    user.setEmail(result_set.getString("email"));
+			    user.setUserId(result_set.getInt("user_id"));
+				template.close();
+				return true;
+			} catch (SQLException search_patient_error) {
+				search_patient_error.printStackTrace();
+				return false;
+			}
+			
+		}
+    
     
     public String Get_user_password (String user_name) {
 		try {
