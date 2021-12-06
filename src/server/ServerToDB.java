@@ -152,7 +152,8 @@ public class ServerToDB implements Runnable{
                     	String password = parameters[1];
                     	String email = parameters[2];
                     	Integer user_id = Integer.parseInt(parameters[3]);
-                        methods.Update_user_info(password, email, user_id);
+                        boolean check = methods.Update_user_info(password, email, user_id);
+                        dataOutputStream.writeUTF(String.valueOf(check));
                     }
                     if (parameters[0].equals("update_patient")) {
                 		Integer user_id = Integer.parseInt(parameters[1]);
