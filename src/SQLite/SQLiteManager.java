@@ -61,7 +61,7 @@ public class SQLiteManager {
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql1 = "CREATE TABLE patient " + "(patient_id INTEGER PRIMARY KEY AUTOINCREMENT, " + " name TEXT NOT NULL, "
-					+ " surname TEXT NOT NULL, " + " birth_date DATETIME default NULL, " + " telephone INTEGER default NULL, "
+					+ " surname TEXT NOT NULL, " + " birth_date TEXT default NULL, " + " telephone INTEGER default NULL, "
 					+ " height INTEGER default NULL, " + " weight INTEGER default NULL, " + " gender TEXT default NULL, "
 					+ " insurance_id FOREING KEY REFERENCES insurance(insurance_id), " 
 					+ " user_id FOREING KEY REFERENCES user(user_id) ON DELETE CASCADE)";
@@ -75,7 +75,7 @@ public class SQLiteManager {
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql3 = "CREATE TABLE medical_record " + "(medicalRecord_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ " reference_number INTEGER UNIQUE, " + " record_date DATETIME NOT NULL, " 
+					+ " reference_number INTEGER UNIQUE, " + " record_date TEXT NOT NULL, " 
 					+ " bitalino_test_id FOREING KEY REFERENCES bitalino_test(test_id), "
 					+ " patient_id FOREING KEY REFERENCES patient(patient_id) ON UPDATE RESTRICT ON DELETE CASCADE)";
 			stmt1.execute(sql3);

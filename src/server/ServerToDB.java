@@ -106,7 +106,7 @@ public class ServerToDB implements Runnable{
                     
                     if (parameters[0].equals("new_medical_record")) {
                     	userId = Integer.parseInt(parameters[1]);
-                    	Date record_date = Date.valueOf(parameters[2]);
+                    	String record_date = parameters[2];
                 		Integer reference_number = Integer.parseInt(parameters[3]);
                 		patientId = methods.Search_stored_patient_by_user_id(userId);
                 		medRecordId = methods.Insert_new_medical_record(record_date, reference_number, patientId);
@@ -165,14 +165,14 @@ public class ServerToDB implements Runnable{
                 		patientId = methods.Search_stored_patient_by_user_id(user_id);
                 		String name = parameters[2];
                 		String surname = parameters[3];
-                		Date birth_date =  Date.valueOf(parameters[4]);
+                		String birth_date =  parameters[4];
 						//Integer age = Integer.parseInt(parameters[5]);
 						Integer height = Integer.parseInt(parameters[5]);
 						Integer weight = Integer.parseInt(parameters[6]);
 						String gender = parameters[7];
 						Integer telephone = Integer.parseInt(parameters[8]);
 						Integer insurance_id = Integer.parseInt(parameters[9]);
-                        Boolean upToDate = methods.Update_patient_info(patientId, name, surname, (java.sql.Date) birth_date, height, weight, gender, telephone, insurance_id);
+                        Boolean upToDate = methods.Update_patient_info(patientId, name, surname, birth_date, height, weight, gender, telephone, insurance_id);
                         dataOutputStream.writeUTF(upToDate.toString());
                     }
                     if (parameters[0].equals("search_patient_by_id")) {

@@ -62,11 +62,11 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 	
-	public Integer Insert_new_medical_record(Date record_date, Integer reference_number, Integer patient_id) {
+	public Integer Insert_new_medical_record(String record_date, Integer reference_number, Integer patient_id) {
 		try {
 			String table = "INSERT INTO medical_record (reference_number, record_date, patient_id) " + " VALUES(?,?,?);";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setDate(1, (Date) record_date);
+			template.setString(1, record_date);
 			template.setInt(2, reference_number);
 			template.setInt(3, patient_id);
 			template.executeUpdate();
@@ -314,7 +314,7 @@ public class SQLiteMethods implements Interface {
 	}
     
     //funciona
-    public boolean Update_patient_info(Integer patient_id, String name, String surname, Date birth_date/*, Integer age*/, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
+    public boolean Update_patient_info(Integer patient_id, String name, String surname, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
     	try {
     		
     		Patient patient = Search_stored_patient_by_id(patient_id);
@@ -330,12 +330,8 @@ public class SQLiteMethods implements Interface {
 			}
 
 			if(!birth_date.equals("")) {
-			template.setDate(3, birth_date);
+			template.setString(3, birth_date);
 			}
-			
-			/*if(!age.equals("")) {
-				template.setInt(4, age);
-			}*/
 			
 			if(!height.equals("")) {
 				template.setInt(4, height);
@@ -379,7 +375,7 @@ public class SQLiteMethods implements Interface {
 			patient.setPatient_id(patient_id);
 			patient.setName(result_set.getString("name"));
 			patient.setSurname(result_set.getString("surname"));
-			patient.setBirth_date(result_set.getDate("birth_date"));
+			patient.setBirth_date(result_set.getString("birth_date"));
 			patient.setHeight(result_set.getInt("height"));
 			patient.setWeight(result_set.getInt("weight"));
 			patient.setGender(result_set.getString("gender"));
@@ -405,7 +401,7 @@ public class SQLiteMethods implements Interface {
 			patient.setPatient_id(result_set.getInt("patient_id"));
 			patient.setName(result_set.getString("name"));
 			patient.setSurname(result_set.getString("surname"));
-			patient.setBirth_date(result_set.getDate("birth_date"));
+			patient.setBirth_date(result_set.getString("birth_date"));
 			patient.setHeight(result_set.getInt("height"));
 			patient.setWeight(result_set.getInt("weight"));
 			patient.setGender(result_set.getString("gender"));
@@ -494,7 +490,7 @@ public class SQLiteMethods implements Interface {
 			ResultSet result_set = template.executeQuery();
 			record.setMedicalRecord_id(record_id);
 			record.setReferenceNumber(result_set.getInt("reference_number"));
-			record.setRecordDate(result_set.getDate("record_date"));
+			record.setRecordDate(result_set.getString("record_date"));
 			record.setBitalinoTestId(result_set.getInt("bitalino_test_id"));
 			//List<Symptom> symptoms_list = Search_all_symptoms_from_record(record_id);
 			//record.setSymptoms_list(symptoms_list);
@@ -587,7 +583,7 @@ public class SQLiteMethods implements Interface {
 			
 			while(rs.next()) {
 				int id = rs.getInt("medicalRecord_id");
-				Date date = rs.getDate("record_date");
+				String date = rs.getString("record_date");
 				int referenceNumber = rs.getInt("reference_number");
 				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
 				
@@ -614,7 +610,7 @@ public class SQLiteMethods implements Interface {
 			
 			while(rs.next()) {
 				int id = rs.getInt("medicalRecord_id");
-				Date date = rs.getDate("record_date");
+				String date = rs.getString("record_date");
 				int referenceNumber = rs.getInt("reference_number");
 				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
 				//List<Symptom> symptoms_list = (List<Symptom>) rs.getArray("symptoms_list"); // PUEDE QUE ESTO VAYA A DAR UN ERROR CON EL TIPO DE DATO DE LA TABLA medical_record
@@ -680,7 +676,7 @@ public class SQLiteMethods implements Interface {
 			ResultSet rs = statement.executeQuery(SQL_code);
 			while(rs.next()) {
 				Integer id = rs.getInt("medicalRecord_id");
-				Date date = rs.getDate("record_date");
+				String date = rs.getString("record_date");
 				Integer referenceNumber = rs.getInt("reference_number");
 				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
 				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id));

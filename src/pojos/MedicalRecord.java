@@ -12,7 +12,7 @@ public class MedicalRecord implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private Integer patient_id;
 	private Integer medicalRecord_id;
-	private Date recordDate;
+	private String recordDate;
 	private Integer referenceNumber;
 	private Integer bitalino_test_id;
 	private Integer ecg_id;
@@ -25,14 +25,14 @@ public class MedicalRecord implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public MedicalRecord(Date recordDate, Integer referenceNumber, Integer patient_id) {
+	public MedicalRecord(String recordDate, Integer referenceNumber, Integer patient_id) {
 		super();
 		this.recordDate = recordDate;
 		this.referenceNumber = referenceNumber;
 		this.patient_id = patient_id;
 	}
 
-	public MedicalRecord(Integer medicalRecord_id, Date recordDate, Integer referenceNumber, Integer patient_id) {
+	public MedicalRecord(Integer medicalRecord_id, String recordDate, Integer referenceNumber, Integer patient_id) {
 		super();
 		this.medicalRecord_id = medicalRecord_id;
 		this.recordDate = recordDate;
@@ -48,11 +48,11 @@ public class MedicalRecord implements Serializable{
 		this.medicalRecord_id = medicalRecord_id;
 	}
 
-	public Date getRecordDate() {
+	public String getRecordDate() {
 		return recordDate;
 	}
 
-	public void setRecordDate(Date recordDate) {
+	public void setRecordDate(String recordDate) {
 		this.recordDate = recordDate;
 	}
 
