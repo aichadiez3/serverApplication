@@ -194,7 +194,7 @@ public class ServerToDB implements Runnable{
                     }
                     if (parameters[0].equals("list_all_insurances")) {
                         List<Insurance_company> list = methods.List_all_insurances();
-                        dataOutputStream.writeUTF(list.toString());
+                        dataOutputStream.writeUTF(Arrays.toString(list.toArray()));
                     }
                     if (parameters[0].equals("search_symptom_by_id")) {    // UNUSED METHOD
                     	Integer symptom_id = Integer.parseInt(parameters[1]);
