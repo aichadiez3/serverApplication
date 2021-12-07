@@ -123,7 +123,6 @@ public class ServerToDB implements Runnable{
 
                     
                     if (parameters[0].equals("new_medical_record")) {
-                    	//userId = Integer.parseInt(parameters[1]);
                     	String record_date = parameters[1];
                 		Integer reference_number = Integer.parseInt(parameters[2]);
                 		patientId =userId = Integer.parseInt(parameters[3]);;
@@ -237,6 +236,12 @@ public class ServerToDB implements Runnable{
                         methods.List_all_users();
                         // FALTA DATAOUTPUTSTREAM
                     }
+                    
+                    if (parameters[0].equals("search_existent_refNumber")) {
+                    	Integer ref_number = methods.Search_existent_reference_number(parameters[1]);
+                    	dataOutputStream.writeUTF(String.valueOf(ref_number));
+                    }
+                    
                     if (parameters[0].equals("search_associated_ecg")) {
                     	Integer bitalino_id = Integer.parseInt(parameters[1]);
                     	ecgId = methods.Search_associated_ecg(bitalino_id);

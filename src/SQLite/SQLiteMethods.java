@@ -459,6 +459,28 @@ public class SQLiteMethods implements Interface {
 			}
 			
 		}
+
+	    
+	    public Integer Search_existent_reference_number(String number) {
+			try {
+				String SQL_code = "SELECT * FROM medical_record WHERE reference_number LIKE ?";
+				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+				template.setString(1, number);
+				MedicalRecord record = new MedicalRecord();
+				ResultSet result_set = template.executeQuery();
+				record.setRecordDate(result_set.getString("record_date"));
+				record.setReferenceNumber(result_set.getInt("reference_number"));
+				record.setPatient_id(result_set.getInt("patient_id"));
+				record.setBitalinoTestId(result_set.getInt("bitalino_id"));
+				template.close();
+				return record.getReferenceNumber();
+				
+			} catch (SQLException search_refnumber_error) {
+				search_refnumber_error.printStackTrace();
+				return 0;
+			}
+			
+		}
     
     
     public String Get_user_password (String user_name) {

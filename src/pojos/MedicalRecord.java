@@ -29,7 +29,7 @@ public class MedicalRecord implements Serializable{
 		super();
 		this.recordDate = recordDate;
 		this.referenceNumber = referenceNumber;
-		this.patient_id = patient_id;
+		this.setPatient_id(patient_id);
 	}
 
 	public MedicalRecord(Integer medicalRecord_id, String recordDate, Integer referenceNumber, Integer patient_id) {
@@ -37,7 +37,7 @@ public class MedicalRecord implements Serializable{
 		this.medicalRecord_id = medicalRecord_id;
 		this.recordDate = recordDate;
 		this.referenceNumber = referenceNumber;
-		this.patient_id = patient_id;
+		this.setPatient_id(patient_id);
 	}
 	
 	public Integer getMedicalRecord_id() {
@@ -71,6 +71,15 @@ public class MedicalRecord implements Serializable{
 	public void setBitalinoTestId(Integer bitalino_test_id) {
 		this.bitalino_test_id = bitalino_test_id;
 	}
+	
+	public Integer getPatient_id() {
+		return patient_id;
+	}
+
+	public void setPatient_id(Integer patient_id) {
+		this.patient_id = patient_id;
+	}
+	
 
 	@Override
 	public int hashCode() {
@@ -88,6 +97,8 @@ public class MedicalRecord implements Serializable{
 		MedicalRecord other = (MedicalRecord) obj;
 		return Objects.equals(medicalRecord_id, other.medicalRecord_id);
 	}
+
+	
 
 	
 	

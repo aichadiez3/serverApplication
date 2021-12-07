@@ -35,6 +35,7 @@ public interface Interface {
     public Integer Search_stored_patient_by_user_id(Integer user_id);
 	public Integer Search_stored_user_by_userName(String user_name);
 	public boolean Search_existent_email(String email);
+	public Integer Search_existent_reference_number(String number);
 	public String Get_user_password (String user_name);
 	
 	public Symptom Search_symptom_by_id(Integer symptom_id);
