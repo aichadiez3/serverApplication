@@ -388,11 +388,12 @@ public class SQLiteMethods implements Interface {
     }
     
     
-    public boolean Update_medical_record_with_bitalino(Integer record_id) {
+    public boolean Update_medical_record_with_bitalino(Integer bitalino_id, Integer medRecord_id) {
     	try {
-			String SQL_code = "UPDATE medical_record SET bitalino_test_id WHERE medicalRecord_id = ?";
+			String SQL_code = "UPDATE medical_record SET bitalino_test_id = ? WHERE  medicalRecord_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setInt(1, record_id);
+			template.setInt(1, bitalino_id);
+			template.setInt(2, medRecord_id);
 			template.executeUpdate();
 			template.close();
 			return true;
@@ -603,13 +604,11 @@ public class SQLiteMethods implements Interface {
 	
 	public String Search_associated_ecg(Integer bitalino_id) {
 		try {
-			String SQL_code = "SELECT * FROM ecg_test WHERE test_id LIKE ?";
+			String SQL_code = "SELECT ecg_root FROM ecg_test WHERE test_id LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setInt(1, bitalino_id);
 			EcgTest test = new EcgTest();
-			ResultSet result_set = template.executeQuery();
-			test.setEcg_id(result_set.getInt("ecg_id"));
-			test.setEcg_values(result_set.getString("ecg_root"));
+			template.executeQuery();
 			template.close();
 			return test.getEcg_values();
 		} catch (SQLException search_ecg_error) {
@@ -619,13 +618,11 @@ public class SQLiteMethods implements Interface {
 	}
 	public String Search_associated_eda(Integer bitalino_id) {
 		try {
-			String SQL_code = "SELECT * FROM eda_test WHERE test_id LIKE ?";
+			String SQL_code = "SELECT eda_root FROM eda_test WHERE test_id LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setInt(1, bitalino_id);
 			EdaTest test = new EdaTest();
-			ResultSet result_set = template.executeQuery();
-			test.setEda_id(result_set.getInt("eda_id"));
-			test.setEda_values(result_set.getString("eda_root"));
+			template.executeQuery();
 			template.close();
 			return test.getEda_values();
 		} catch (SQLException search_eda_error) {

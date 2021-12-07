@@ -25,7 +25,7 @@ public interface Interface {
 	
 	public boolean Update_user_info(String password, String email, Integer user_id);
 	public boolean Update_patient_info(Integer patient_id, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
-	public boolean Update_medical_record_with_bitalino(Integer record_id);
+	public boolean Update_medical_record_with_bitalino(Integer bitalino_id, Integer medRecord_id);
 	
 	public Patient Search_stored_patient_by_id(Integer patient_id);
     public Integer Search_stored_patient_by_user_id(Integer user_id);

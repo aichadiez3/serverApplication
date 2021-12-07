@@ -106,6 +106,7 @@ public class ServerToDB implements Runnable{
                     
                     if (parameters[0].equals("new_bitalino_test")) {
                         bitalinoId = methods.Insert_new_bitalino_test();
+                        System.out.println("soy db:"+String.valueOf(bitalinoId));
                 		dataOutputStream.writeUTF(String.valueOf(bitalinoId));
                     }
                     
@@ -164,8 +165,9 @@ public class ServerToDB implements Runnable{
                     }
                     
                     if (parameters[0].equals("update_medRecord_bitalino")){
-                    	Integer medicalRecordId = Integer.parseInt(parameters[1]);
-                    	methods.Update_medical_record_with_bitalino(medicalRecordId);
+                    	Integer medicalRecordId = Integer.parseInt(parameters[2]);
+                    	Integer bitalino = Integer.parseInt(parameters[1]);
+                    	methods.Update_medical_record_with_bitalino(bitalino, medicalRecordId);
                     }
                     
                     if (parameters[0].equals("search_patient_by_id")) {
@@ -189,7 +191,7 @@ public class ServerToDB implements Runnable{
                         	String ecg_root = methods.Search_associated_ecg(bitId);
                         	String eda_root = methods.Search_associated_eda(bitId);
                         	
-                        	String out = date+","+String.valueOf(ref)+","+String.valueOf(ecg_root)+","+String.valueOf(eda_root);
+                        	String out = date+","+String.valueOf(ref)+","+String.valueOf(ecg_root)+","+String.valueOf(eda_root)+";";
                         	records.add(out);
                         }
                         dataOutputStream.writeUTF(Arrays.toString(records.toArray()));
