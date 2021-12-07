@@ -3,6 +3,7 @@ package interfaces;
 import java.util.LinkedList;
 import java.util.List;
 
+import pojos.Insurance_company;
 import pojos.MedicalRecord;
 import pojos.Patient;
 import pojos.Symptom;
@@ -45,5 +46,6 @@ public interface Interface {
 	public List<Symptom> Search_all_symptoms_from_record(Integer record_id);
 	public List<User> List_all_users();
 	public List<MedicalRecord> List_all_medical_records();
+	public List<Insurance_company> List_all_insurances();
 	
 }
