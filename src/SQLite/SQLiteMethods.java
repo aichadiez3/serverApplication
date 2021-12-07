@@ -167,7 +167,7 @@ public class SQLiteMethods implements Interface {
      
     public Integer Insert_new_ecg(String ecg_values, Integer test_id) {
 		try {
-			String table = "INSERT INTO ecg_test (values, test_id) " + "VALUES (?,?)";
+			String table = "INSERT INTO ecg_test (ecg_values, test_id) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setString(1, ecg_values);
 			template.setInt(2, test_id);
@@ -187,7 +187,7 @@ public class SQLiteMethods implements Interface {
 
     public Integer Insert_new_eda(String eda_values, Integer test_id) {
 		try {
-			String table = "INSERT INTO eda_test (values, test_id) " + "VALUES (?,?)";
+			String table = "INSERT INTO eda_test (eda_values, test_id) " + "VALUES (?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setString(1, eda_values);
 			template.setInt(2, test_id);
