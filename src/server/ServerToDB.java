@@ -132,16 +132,16 @@ public class ServerToDB implements Runnable{
                 		dataOutputStream.writeUTF(String.valueOf(edaId));
                     }
                     if (parameters[0].equals("new_psycho")) {
-                    	String[] psychotest = instruction.split("[");
-                    	psychotest[0].replace("new_psycho,[","");
-                    	psychotest[0].replace("]","");
-                    	psychotest[1].replace("[","");
-                    	psychotest[1].replace("]","");
-                		Integer medicalRecord_id = Integer.parseInt(parameters[3]);
-                		LinkedList linkedList = new LinkedList(Arrays.asList(psychotest[0])); // ----------> ESTO NO ME DA FE
-						LinkedList<String> positive_res = linkedList;
-						LinkedList linkedList2 = new LinkedList(Arrays.asList(psychotest[1])); // ----------> ESTO NO ME DA FE
-						LinkedList<String> negative_res = linkedList2;
+                    	String[] psychotest = instruction.split("]");
+                    	String temp = psychotest[0].replace("new_psycho,[","");
+                    	System.out.println(temp);
+                    	String temp2 = psychotest[1].replace("[","");
+                    	System.out.println(temp2);
+                    	String[] positives = temp.split(",");
+                    	String[] negatives = temp2.split(",");
+                		Integer medicalRecord_id = Integer.parseInt(parameters[parameters.length-1]);
+                		LinkedList<String> positive_res = new LinkedList<String>(Arrays.asList(positives)); // ----------> ESTO NO ME DA FE
+						LinkedList<String> negative_res = new LinkedList<String>(Arrays.asList(negatives)); // ----------> ESTO NO ME DA FE
                         queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, medicalRecord_id);
                         dataOutputStream.writeUTF(String.valueOf(queriesId));
                     }

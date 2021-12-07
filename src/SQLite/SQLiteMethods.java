@@ -221,8 +221,8 @@ public class SQLiteMethods implements Interface {
 		try {
 			String table = "INSERT INTO psycho_test (positive_res, negative_res, medicalRecord_id) " + "VALUES (?,?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
-			template.setArray(1, (Array) positive_res);
-			template.setArray(2, (Array) negative_res);
+			template.setString(1, positive_res.toString());
+			template.setString(2, negative_res.toString());
 			template.setInt(3, medicalRecord_id);
 			template.executeUpdate();
 			
