@@ -729,25 +729,42 @@ public class SQLiteMethods implements Interface {
 	}
 	
 	public List<MedicalRecord> List_all_medical_records() {
-		List<MedicalRecord> records = new LinkedList<MedicalRecord>();
+		List<MedicalRecord> record_list = new LinkedList<MedicalRecord>();
 		try {
 			Statement statement = this.sqlite_connection.createStatement();
 			String SQL_code = "SELECT * FROM medical_record";
-			List<MedicalRecord> record_list = new LinkedList<MedicalRecord>();
 			ResultSet rs = statement.executeQuery(SQL_code);
 			while(rs.next()) {
 				Integer id = rs.getInt("medicalRecord_id");
 				String date = rs.getString("record_date");
 				Integer referenceNumber = rs.getInt("reference_number");
 				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
-				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id));
+				record_list.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id));
 			}
-			return records;
+			return record_list;
 		} catch (SQLException search_record_error) {
 			search_record_error.printStackTrace();
 			return null;
 		}
 		
+	}
+	
+	public List<Insurance_company> List_all_insurances(){
+		List<Insurance_company> list = new LinkedList<Insurance_company>();
+		try {
+			Statement statement = this.sqlite_connection.createStatement();
+			String SQL_code = "SELECT * FROM insurance";
+			ResultSet rs = statement.executeQuery(SQL_code);
+			while(rs.next()) {
+				Integer id = rs.getInt("insurance_id");
+				String name = rs.getString("name");
+				list.add(new Insurance_company(id, name));
+			}
+			return list;
+		} catch (SQLException list_insurances) {
+			list_insurances.printStackTrace();
+			return null;
+		}
 	}
 
 	
