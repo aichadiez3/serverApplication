@@ -41,32 +41,6 @@ public class ServerController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1){
 		
-		/*
-		// PREDETERMINED USEFUL INFORMATION FOR THE APPLICATION. NEED TO BE INSIDE THE DATABASE ONCE
-		
-		methods.Insert_new_insurance("Anthem");
-		methods.Insert_new_insurance("Centene");
-		methods.Insert_new_insurance("UnitedHealth");
-		methods.Insert_new_insurance("HCSC");
-		methods.Insert_new_insurance("DKV");
-		methods.Insert_new_insurance("Sanitas");
-		methods.Insert_new_insurance("Maphre");
-		methods.Insert_new_insurance("AXA");
-		methods.Insert_new_insurance("Asisa");
-		methods.Insert_new_insurance("Adeslas");
-		methods.Insert_new_insurance("Caser");
-		methods.Insert_new_insurance("Allianz");
-		methods.Insert_new_insurance("Aegon");
-		methods.Insert_new_insurance("Other");
-		
-		methods.Insert_new_doctor("Jose Luis García", "UnitedHealth");
-		methods.Insert_new_doctor("Carlos Ruíz", "Maphre");
-		methods.Insert_new_doctor("Marta Martínez", "Anthem");
-		methods.Insert_new_doctor("Laura Esteban", "Centene");
-		methods.Insert_new_doctor("Julia Medea", "HCSC");
-		methods.Insert_new_doctor("Maria José García", "DKV");
-		
-		*/
 		
 		startButton.setOnMouseClicked((MouseEvent event) -> {
 			

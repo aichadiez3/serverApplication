@@ -49,12 +49,20 @@ public class SQLiteMethods implements Interface {
 		Insert_new_insurance("Aegon");
 		Insert_new_insurance("Other");
 		
-		Insert_new_doctor("Jose Luis García", "55566778");
-		Insert_new_doctor("Carlos Ruíz", "59987765");
-		Insert_new_doctor("Marta Martínez", "56734037");
-		Insert_new_doctor("Laura Esteban", "53445465");
-		Insert_new_doctor("Julia Medea", "53064387");
-		Insert_new_doctor("Maria José García", "55334580");
+		Insert_new_doctor("Jose Luis García", "55566778", 1);
+		Insert_new_doctor("Carlos Ruíz", "59987765", 2);
+		Insert_new_doctor("Marta Martínez", "56734037", 3);
+		Insert_new_doctor("Laura Esteban", "53445465", 4);
+		Insert_new_doctor("Julia Medea", "53064387", 5);
+		Insert_new_doctor("Maria José García", "55334580", 6);
+		Insert_new_doctor("Mariano Lopez", "56489225", 7);
+		Insert_new_doctor("Richard Gansey", "56637910", 8);
+		Insert_new_doctor("Carolina Gonzalez", "59887098", 9);
+		Insert_new_doctor("Zoe Belladona", "54286551", 10);
+		Insert_new_doctor("Samanta Díaz", "5745309", 11);
+		Insert_new_doctor("Rodrigo  Lupin", "50008247", 12);
+		Insert_new_doctor("Ricardo Esteban", "57738954", 13);
+		Insert_new_doctor("Sara Girod", "56846304", 14);
 	}
 	
 	
@@ -142,12 +150,13 @@ public class SQLiteMethods implements Interface {
 		}
     }
      
-    public Integer Insert_new_doctor(String name, String telephone) {
+    public Integer Insert_new_doctor(String name, String telephone, Integer insurance_id) {
 		try {
-			String table = "INSERT INTO doctor (name, telephone) " + "VALUES (?,?)";
+			String table = "INSERT INTO doctor (name, telephone, insurance_id) " + "VALUES (?,?,?)";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setString(1, name);
 			template.setString(2, telephone);
+			template.setInt(3, insurance_id);
 			template.executeUpdate();
 			
 			String SQL_code = "SELECT * FROM doctor WHERE name = ?";
@@ -158,6 +167,7 @@ public class SQLiteMethods implements Interface {
 			doctor.setDoctor_id(result_set.getInt("doctor_id"));
 			doctor.setName(result_set.getString("name"));
 			doctor.setTelephone(result_set.getInt("telephone"));
+			doctor.setInsurance_id(result_set.getInt("insurance_id"));
 			return doctor.getDoctor_id();
 		} catch(SQLException new_doctor_error) {
 			new_doctor_error.printStackTrace();

@@ -120,12 +120,6 @@ public class SQLiteManager {
 			
 			// -----------> ManyToMany relation tables go here
 			stmt1 = sqlite_connection.createStatement();
-			String sql10 = "CREATE TABLE patient_doctor " + "(patient_id INTEGER REFERENCES patient(patient_id), "
-					+ " doctor_id INTEGER REFERENCES doctor(doctor_id),"
-					+ " PRIMARY KEY (patient_id, doctor_id))";
-			stmt1.execute(sql10);
-		
-			stmt1 = sqlite_connection.createStatement();
 			String sql11 = "CREATE TABLE medicalRecord_symptom " + "(medicalRecord_id INTEGER REFERENCES medical_record(medicalRecord_id), "
 					+ " symptom_id INTEGER REFERENCES symptom(symptom_id),"
 					+ " PRIMARY KEY (medicalRecord_id, symptom_id))";

@@ -101,7 +101,8 @@ public class ServerToDB implements Runnable{
                     if (parameters[0].equals("new_doctor")) {
                     	String name = parameters[1];
                     	String telephone = parameters[2];
-                    	methods.Insert_new_doctor(name, telephone);
+                    	Integer insurance_id = Integer.parseInt(parameters[3]);
+                    	methods.Insert_new_doctor(name, telephone,insurance_id);
                     }
 
                     

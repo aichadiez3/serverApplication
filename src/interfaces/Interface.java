@@ -13,7 +13,7 @@ public interface Interface {
 	public void Insert_default_elements_toDB();
 	public Integer Insert_new_user(String user_name, String password, String email);
 	public Integer Insert_new_patient(Integer user_id, String name, String surname);
-	public Integer Insert_new_doctor(String name, String telephone);
+	public Integer Insert_new_doctor(String name, String telephone, Integer insurance_id);
 	public Integer Insert_new_medical_record(String record_date, Integer reference_number, Integer patient_id);
 	public Integer Insert_new_ecg(String ecg_values, Integer test_id);
 	public Integer Insert_new_eda(String eda_values, Integer test_id);

@@ -10,7 +10,14 @@ public class Doctor implements Serializable {
 	private Integer doctor_id;
 	private String name;
 	private Integer telephone;
+	private Integer insurance_id;
 	
+	public Integer getInsurance_id() {
+		return insurance_id;
+	}
+	public void setInsurance_id(Integer insurance_id) {
+		this.insurance_id = insurance_id;
+	}
 	public Integer getDoctor_id() {
 		return doctor_id;
 	}
@@ -29,11 +36,12 @@ public class Doctor implements Serializable {
 	public void setTelephone(Integer telephone) {
 		this.telephone = telephone;
 	}
-	public Doctor(Integer doctor_id, String name, Integer telephone) {
+	public Doctor(Integer doctor_id, String name, Integer telephone, Integer insurance_id) {
 		super();
 		this.doctor_id = doctor_id;
 		this.name = name;
 		this.telephone = telephone;
+		this.insurance_id = insurance_id;
 	}
 	public Doctor() {
 		super();
