@@ -25,11 +25,12 @@ public interface Interface {
 	public Integer Insert_new_eda(String eda_values, Integer test_id);
 	public Integer Insert_new_psycho_test(LinkedList<String> positive_res, LinkedList<String> negative_res, Integer medicalRecord_id);
 	public Integer Insert_new_physical_test(Integer saturation, Integer pulse, Integer breathingRate,Integer medicalRecord_id);
-	public Integer Insert_new_bitalino_test(Integer medicalRecord_id);
+	public Integer Insert_new_bitalino_test();
 	public Integer Insert_new_insurance(String company_name);
 	
 	public boolean Update_user_info(String password, String email, Integer user_id);
 	public boolean Update_patient_info(Integer patient_id, String name, String surname, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
+	public boolean Update_medical_record_with_bitalino(Integer record_id);
 	
 	public Patient Search_stored_patient_by_id(Integer patient_id);
     public Integer Search_stored_patient_by_user_id(Integer user_id);
@@ -37,6 +38,7 @@ public interface Interface {
 	public boolean Search_existent_email(String email);
 	public Integer Search_existent_reference_number(String number);
 	public String Get_user_password (String user_name);
+	public Integer Search_stored_record_by_id(Integer record_id);
 	
 	public Symptom Search_symptom_by_id(Integer symptom_id);
 	public Integer Search_insurance_by_name(String insurance_name);

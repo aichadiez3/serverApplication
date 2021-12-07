@@ -131,8 +131,7 @@ public class ServerToDB implements Runnable{
                     }
                     
                     if (parameters[0].equals("new_bitalino_test")) {
-                		Integer test_id = Integer.parseInt(parameters[1]);
-                        bitalinoId = methods.Insert_new_bitalino_test(test_id);
+                        bitalinoId = methods.Insert_new_bitalino_test();
                 		dataOutputStream.writeUTF(String.valueOf(bitalinoId));
                     }
                     
@@ -192,6 +191,12 @@ public class ServerToDB implements Runnable{
                         Boolean upToDate = methods.Update_patient_info(patientId, name, surname, birth_date, height, weight, gender, telephone, insurance_id);
                         dataOutputStream.writeUTF(upToDate.toString());
                     }
+                    
+                    if (parameters[0].equals("update_medRecord_bitalino")){
+                    	Integer medicalRecordId = Integer.parseInt(parameters[1]);
+                    	methods.Update_medical_record_with_bitalino(medicalRecordId);
+                    }
+                    
                     if (parameters[0].equals("search_patient_by_id")) {
                     	Integer patient_id = Integer.parseInt(parameters[1]);
                         patient = methods.Search_stored_patient_by_id(patient_id);

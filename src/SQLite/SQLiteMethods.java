@@ -247,23 +247,21 @@ public class SQLiteMethods implements Interface {
 		}
 	}
  	
-    public Integer Insert_new_bitalino_test(Integer medicalRecord_id) {
-    	Integer test_id = null;
+    public Integer Insert_new_bitalino_test() {
     	try {
     		String table = "INSERT INTO bitalino_test";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.executeUpdate();
-			String SQL_code = "SELECT last_insert_rowid() AS insurance_id";
+			String SQL_code = "SELECT last_insert_rowid() AS test_id";
 			template = this.sqlite_connection.prepareStatement(SQL_code);
 			ResultSet result_set = template.executeQuery();
-			test_id = result_set.getInt("insurance_id");
+			Integer test_id = result_set.getInt("test_id");
 			template.close();
 			return test_id;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException new_bitalino_error) {
+			new_bitalino_error.printStackTrace();
+			return -1;
 		}
-		return test_id;
     }
     
     //funciona
@@ -356,6 +354,21 @@ public class SQLiteMethods implements Interface {
 			return true;
 		} catch (SQLException update_patient_error) {
 			update_patient_error.printStackTrace();
+			return false;
+		}
+    }
+    
+    
+    public boolean Update_medical_record_with_bitalino(Integer record_id) {
+    	try {
+			String SQL_code = "UPDATE medical_record SET bitalino_tes_id WHERE medicalRecord_id = ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setInt(1, record_id);
+			template.executeUpdate();
+			template.close();
+			return true;
+		} catch (SQLException update_medRecord_error) {
+			update_medRecord_error.printStackTrace();
 			return false;
 		}
     }
@@ -500,7 +513,7 @@ public class SQLiteMethods implements Interface {
 		
 	}
     
-	public MedicalRecord Search_stored_record_by_id(Integer record_id) {
+	public Integer Search_stored_record_by_id(Integer record_id) {
 		try {
 			String SQL_code = "SELECT * FROM medical_record WHERE medicalRecord_id LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
@@ -510,14 +523,15 @@ public class SQLiteMethods implements Interface {
 			record.setMedicalRecord_id(record_id);
 			record.setReferenceNumber(result_set.getInt("reference_number"));
 			record.setRecordDate(result_set.getString("record_date"));
+			record.setPatient_id(result_set.getInt("patient_id"));
 			record.setBitalinoTestId(result_set.getInt("bitalino_test_id"));
 			//List<Symptom> symptoms_list = Search_all_symptoms_from_record(record_id);
 			//record.setSymptoms_list(symptoms_list);
 			template.close();
-			return record;
+			return record.getMedicalRecord_id();
 		} catch (SQLException search_record_error) {
 			search_record_error.printStackTrace();
-			return null;
+			return -1;
 		}
 		
 	}
