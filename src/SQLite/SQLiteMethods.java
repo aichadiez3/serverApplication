@@ -522,7 +522,7 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 	
-	public Insurance_company Search_insurance_by_name(String insurance_name) {
+	public Integer Search_insurance_by_name(String insurance_name) {
 		try {
 			String SQL_code = "SELECT * FROM insurance WHERE name LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
@@ -532,7 +532,7 @@ public class SQLiteMethods implements Interface {
 			insurance.setInsurance_id(result_set.getInt("insurance_id"));
 			insurance.setCompany_name(insurance_name);
 			template.close(); 
-			return insurance;
+			return insurance.getInsurance_id();
 		} catch (SQLException search_insurance_error) {
 			search_insurance_error.printStackTrace();
 			return null;

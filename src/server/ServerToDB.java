@@ -61,6 +61,28 @@ public class ServerToDB implements Runnable{
         manager.Connect();
         manager.CreateTables();
         methods = manager.getMethods();
+        
+		methods.Insert_new_insurance("Anthem");
+		methods.Insert_new_insurance("Centene");
+		methods.Insert_new_insurance("UnitedHealth");
+		methods.Insert_new_insurance("HCSC");
+		methods.Insert_new_insurance("DKV");
+		methods.Insert_new_insurance("Sanitas");
+		methods.Insert_new_insurance("Maphre");
+		methods.Insert_new_insurance("AXA");
+		methods.Insert_new_insurance("Asisa");
+		methods.Insert_new_insurance("Adeslas");
+		methods.Insert_new_insurance("Caser");
+		methods.Insert_new_insurance("Allianz");
+		methods.Insert_new_insurance("Aegon");
+		methods.Insert_new_insurance("Other");
+		
+		methods.Insert_new_doctor("Jose Luis García", "UnitedHealth");
+		methods.Insert_new_doctor("Carlos Ruíz", "Maphre");
+		methods.Insert_new_doctor("Marta Martínez", "Anthem");
+		methods.Insert_new_doctor("Laura Esteban", "Centene");
+		methods.Insert_new_doctor("Julia Medea", "HCSC");
+		methods.Insert_new_doctor("Maria José García", "DKV");
             
             //while true, lee el mensaje y hacemos los métodos que nos pida el mensaje
             	
@@ -200,8 +222,8 @@ public class ServerToDB implements Runnable{
                     }
                     if (parameters[0].equals("search_insurance_by_name")) {
                     	String insurance_name = parameters[1];
-                        insurance = methods.Search_insurance_by_name(insurance_name);
-                        dataOutputStream.writeUTF(insurance.toString());
+                        Integer insurance_id = methods.Search_insurance_by_name(insurance_name);
+                        dataOutputStream.writeUTF(insurance_id.toString());
                     }
                     if (parameters[0].equals("search_record_by_date_ascendent")) {
                     	list_records = methods.Search_stored_record_by_date_ascendent();
