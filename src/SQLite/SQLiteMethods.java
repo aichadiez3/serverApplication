@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,8 +16,6 @@ import pojos.EdaTest;
 import pojos.Insurance_company;
 import pojos.MedicalRecord;
 import pojos.Patient;
-import pojos.PhysicalTest;
-import pojos.PsychoTest;
 import pojos.Symptom;
 import pojos.User;
 
@@ -473,7 +470,7 @@ public class SQLiteMethods implements Interface {
 				record.setPatient_id(result_set.getInt("patient_id"));
 				record.setBitalinoTestId(result_set.getInt("bitalino_id"));
 				template.close();
-				return record.getReferenceNumber();
+				return 1;
 				
 			} catch (SQLException search_refnumber_error) {
 				search_refnumber_error.printStackTrace();
