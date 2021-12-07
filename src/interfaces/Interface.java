@@ -23,7 +23,7 @@ public interface Interface {
 	public Integer Insert_new_insurance(String company_name);
 	
 	public boolean Update_user_info(String password, String email, Integer user_id);
-	public boolean Update_patient_info(Integer patient_id, String name, String surname, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
+	public boolean Update_patient_info(Integer patient_id, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
 	public boolean Update_medical_record_with_bitalino(Integer record_id);
 	
 	public Patient Search_stored_patient_by_id(Integer patient_id);
