@@ -334,20 +334,13 @@ public class SQLiteMethods implements Interface {
 	}
     
     //funciona
-    public boolean Update_patient_info(Integer patient_id, String name, String surname, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
+    public boolean Update_patient_info(Integer patient_id, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
     	try {
     		
     		Patient patient = Search_stored_patient_by_id(patient_id);
     		
     		String SQL_code = "UPDATE patient SET name = ?, surname = ?, birth_date = ?, height = ?, weight = ?, gender = ?, telephone = ?, insurance_id = ? WHERE patient_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-			if(!name.equals("")) {
-			template.setString(1, name);
-			}
-
-			if(!surname.equals("")) {
-				template.setString(2, surname);
-			}
 
 			if(!birth_date.equals("")) {
 			template.setString(3, birth_date);

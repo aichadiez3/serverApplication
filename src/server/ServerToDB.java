@@ -162,16 +162,13 @@ public class ServerToDB implements Runnable{
                     if (parameters[0].equals("update_patient")) {
                 		Integer user_id = Integer.parseInt(parameters[1]);
                 		patientId = methods.Search_stored_patient_by_user_id(user_id);
-                		String name = parameters[2];
-                		String surname = parameters[3];
-                		String birth_date =  parameters[4];
-						//Integer age = Integer.parseInt(parameters[5]);
-						Integer height = Integer.parseInt(parameters[5]);
-						Integer weight = Integer.parseInt(parameters[6]);
-						String gender = parameters[7];
-						Integer telephone = Integer.parseInt(parameters[8]);
-						Integer insurance_id = Integer.parseInt(parameters[9]);
-                        Boolean upToDate = methods.Update_patient_info(patientId, name, surname, birth_date, height, weight, gender, telephone, insurance_id);
+                		String birth_date =  parameters[2];
+						Integer height = Integer.parseInt(parameters[3]);
+						Integer weight = Integer.parseInt(parameters[4]);
+						String gender = parameters[5];
+						Integer telephone = Integer.parseInt(parameters[6]);
+						Integer insurance_id = Integer.parseInt(parameters[7]);
+                        Boolean upToDate = methods.Update_patient_info(patientId, birth_date, height, weight, gender, telephone, insurance_id);
                         dataOutputStream.writeUTF(upToDate.toString());
                     }
                     
