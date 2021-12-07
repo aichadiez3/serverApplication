@@ -32,12 +32,40 @@ public class MedicalRecord implements Serializable{
 		this.setPatient_id(patient_id);
 	}
 
+	public MedicalRecord(Integer medicalRecord_id, String recordDate, Integer referenceNumber, Integer bitalino_test_id, Integer patient_id) {
+		super();
+		this.medicalRecord_id = medicalRecord_id;
+		this.recordDate = recordDate;
+		this.referenceNumber = referenceNumber;
+		this.setPatient_id(patient_id);
+		this.bitalino_test_id = bitalino_test_id;
+		
+	}
+	
 	public MedicalRecord(Integer medicalRecord_id, String recordDate, Integer referenceNumber, Integer patient_id) {
 		super();
 		this.medicalRecord_id = medicalRecord_id;
 		this.recordDate = recordDate;
 		this.referenceNumber = referenceNumber;
 		this.setPatient_id(patient_id);
+		
+	}
+	
+	public MedicalRecord(Integer referenceNumber, String recordDate, Integer patient_id) {
+		super();
+		this.recordDate = recordDate;
+		this.referenceNumber = referenceNumber;
+		this.setPatient_id(patient_id);
+		
+	}
+	
+	
+	public MedicalRecord(Integer medRecod_id, Integer referenceNumber,String recordDate, Integer bitalino_id) {
+		this.medicalRecord_id = medRecod_id;
+		this.recordDate = recordDate;
+		this.referenceNumber = referenceNumber;
+		this.bitalino_test_id = bitalino_id;
+		
 	}
 	
 	public Integer getMedicalRecord_id() {

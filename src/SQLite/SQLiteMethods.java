@@ -98,6 +98,7 @@ public class SQLiteMethods implements Interface {
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setString(1, record_date);
 			template.setInt(2, reference_number);
+			//template.setInt(3, bitalino_test_id);
 			template.setInt(3, patient_id);
 			template.executeUpdate();
 			
@@ -389,7 +390,7 @@ public class SQLiteMethods implements Interface {
     
     public boolean Update_medical_record_with_bitalino(Integer record_id) {
     	try {
-			String SQL_code = "UPDATE medical_record SET bitalino_tes_id WHERE medicalRecord_id = ?";
+			String SQL_code = "UPDATE medical_record SET bitalino_test_id WHERE medicalRecord_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setInt(1, record_id);
 			template.executeUpdate();
@@ -647,8 +648,9 @@ public class SQLiteMethods implements Interface {
 				String date = rs.getString("record_date");
 				int referenceNumber = rs.getInt("reference_number");
 				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
+				Integer patient_id = rs.getInt("patient_id");
 				//List<Symptom> symptoms_list = (List<Symptom>) rs.getArray("symptoms_list"); // PUEDE QUE ESTO VAYA A DAR UN ERROR CON EL TIPO DE DATO DE LA TABLA medical_record
-				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id));
+				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id, patient_id));
 			}
 			return records;
 		} catch (SQLException search_record_error) {
@@ -670,8 +672,9 @@ public class SQLiteMethods implements Interface {
 				String date = rs.getString("record_date");
 				int referenceNumber = rs.getInt("reference_number");
 				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
+				Integer patient_id = rs.getInt("patient_id");
 				//List<Symptom> symptoms_list = (List<Symptom>) rs.getArray("symptoms_list"); // PUEDE QUE ESTO VAYA A DAR UN ERROR CON EL TIPO DE DATO DE LA TABLA medical_record
-				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id));
+				records.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id, patient_id));
 			}
 			return records;
 		} catch (SQLException search_record_error) {
@@ -735,7 +738,7 @@ public class SQLiteMethods implements Interface {
 				String date = rs.getString("record_date");
 				Integer referenceNumber = rs.getInt("reference_number");
 				Integer bitalino_test_id = rs.getInt("bitalino_test_id");
-				record_list.add(new MedicalRecord(id, date, referenceNumber, bitalino_test_id));
+				record_list.add(new MedicalRecord(id, referenceNumber, date, bitalino_test_id));
 			}
 			return record_list;
 		} catch (SQLException search_record_error) {
