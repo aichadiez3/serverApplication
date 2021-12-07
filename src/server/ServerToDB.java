@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -194,7 +195,13 @@ public class ServerToDB implements Runnable{
                     }
                     if (parameters[0].equals("list_all_insurances")) {
                         List<Insurance_company> list = methods.List_all_insurances();
-                        dataOutputStream.writeUTF(Arrays.toString(list.toArray()));
+                        List<String> ins_name = new ArrayList<String>();
+                        String name="";
+                        for(int i=0;i<list.size();i++) {
+                        	name = list.get(i).getCompany_name();
+                        	ins_name.add(name);
+                        }
+                        dataOutputStream.writeUTF(Arrays.toString(ins_name.toArray()));
                     }
                     if (parameters[0].equals("search_symptom_by_id")) {    // UNUSED METHOD
                     	Integer symptom_id = Integer.parseInt(parameters[1]);
