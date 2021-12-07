@@ -85,13 +85,13 @@ public class SQLiteManager {
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql5 = "CREATE TABLE ecg_test " + "(ecg_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ " ecg_values TEXT default NULL, "
+					+ " ecg_root TEXT NOT NULL, "
 					+ " test_id FOREING KEY REFERENCES bitalino_test(test_id))";
 			stmt1.execute(sql5);
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql6 = "CREATE TABLE eda_test " + "(eda_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ " eda_values TEXT default NULL, "
+					+ " eda_root TEXT NOT NULL, "
 					+ " test_id FOREING KEY REFERENCES bitalino_test(test_id))";
 			stmt1.execute(sql6);
 			

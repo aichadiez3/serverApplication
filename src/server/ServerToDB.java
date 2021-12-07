@@ -141,8 +141,8 @@ public class ServerToDB implements Runnable{
                     	String[] positives = temp.split(",");
                     	String[] negatives = temp2.split(",");
                 		Integer medicalRecord_id = Integer.parseInt(parameters[parameters.length-1]);
-                		LinkedList<String> positive_res = new LinkedList<String>(Arrays.asList(positives)); // ----------> ESTO NO ME DA FE
-						LinkedList<String> negative_res = new LinkedList<String>(Arrays.asList(negatives)); // ----------> ESTO NO ME DA FE
+                		LinkedList<String> positive_res = new LinkedList<String>(Arrays.asList(positives));
+						LinkedList<String> negative_res = new LinkedList<String>(Arrays.asList(negatives)); 
                         queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, medicalRecord_id);
                         dataOutputStream.writeUTF(String.valueOf(queriesId));
                     }
