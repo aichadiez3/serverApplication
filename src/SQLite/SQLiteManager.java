@@ -75,7 +75,7 @@ public class SQLiteManager {
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql3 = "CREATE TABLE medical_record " + "(medicalRecord_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ " reference_number INTEGER UNIQUE, " + " record_date TEXT NOT NULL, " 
+					+ " record_date TEXT NOT NULL, " + " reference_number INTEGER UNIQUE, "
 					+ " bitalino_test_id FOREING KEY REFERENCES bitalino_test(test_id), "
 					+ " patient_id FOREING KEY REFERENCES patient(patient_id) ON UPDATE RESTRICT ON DELETE CASCADE)";
 			stmt1.execute(sql3);
