@@ -1,22 +1,16 @@
 package interfaces;
 
-import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import pojos.Doctor;
-import pojos.EcgTest;
-import pojos.EdaTest;
-import pojos.Insurance_company;
 import pojos.MedicalRecord;
 import pojos.Patient;
-import pojos.PhysicalTest;
-import pojos.PsychoTest;
 import pojos.Symptom;
 import pojos.User;
 
 public interface Interface {
 	
+	public void Insert_default_elements_toDB();
 	public Integer Insert_new_user(String user_name, String password, String email);
 	public Integer Insert_new_patient(Integer user_id, String name, String surname);
 	public Integer Insert_new_doctor(String name, String telephone);

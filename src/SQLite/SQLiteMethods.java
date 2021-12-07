@@ -33,6 +33,31 @@ public class SQLiteMethods implements Interface {
 		this.sqlite_connection = sqlite_connection;
 	}
 
+	public void Insert_default_elements_toDB() {
+		Insert_new_insurance("Anthem");
+		Insert_new_insurance("Centene");
+		Insert_new_insurance("UnitedHealth");
+		Insert_new_insurance("HCSC");
+		Insert_new_insurance("DKV");
+		Insert_new_insurance("Sanitas");
+		Insert_new_insurance("Maphre");
+		Insert_new_insurance("AXA");
+		Insert_new_insurance("Asisa");
+		Insert_new_insurance("Adeslas");
+		Insert_new_insurance("Caser");
+		Insert_new_insurance("Allianz");
+		Insert_new_insurance("Aegon");
+		Insert_new_insurance("Other");
+		
+		Insert_new_doctor("Jose Luis García", "55566778");
+		Insert_new_doctor("Carlos Ruíz", "59987765");
+		Insert_new_doctor("Marta Martínez", "56734037");
+		Insert_new_doctor("Laura Esteban", "53445465");
+		Insert_new_doctor("Julia Medea", "53064387");
+		Insert_new_doctor("Maria José García", "55334580");
+	}
+	
+	
 	//funciona
 	public Integer Insert_new_user(String user_name, String password, String email) {
 		try {
@@ -249,7 +274,7 @@ public class SQLiteMethods implements Interface {
  	
     public Integer Insert_new_bitalino_test() {
     	try {
-    		String table = "INSERT INTO bitalino_test";
+    		String table = "INSERT INTO bitalino_test DEFAULT VALUES";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.executeUpdate();
 			String SQL_code = "SELECT last_insert_rowid() AS test_id";

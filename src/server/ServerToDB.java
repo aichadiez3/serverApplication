@@ -49,36 +49,19 @@ public class ServerToDB implements Runnable{
         Insurance_company insurance = null;
         Integer userId, patientId;
         Integer medRecordId;
-        Integer ecgId, bitalinoId;;
+        Integer ecgId, bitalinoId;
         Integer edaId, queriesId, physicalId;
         
         
         SQLiteManager manager = new SQLiteManager();
         manager.Connect();
-        manager.CreateTables();
+        Boolean tables = manager.CreateTables();
         methods = manager.getMethods();
+        if(tables==true) {
+        	methods.Insert_default_elements_toDB();
+        }
         
-		methods.Insert_new_insurance("Anthem");
-		methods.Insert_new_insurance("Centene");
-		methods.Insert_new_insurance("UnitedHealth");
-		methods.Insert_new_insurance("HCSC");
-		methods.Insert_new_insurance("DKV");
-		methods.Insert_new_insurance("Sanitas");
-		methods.Insert_new_insurance("Maphre");
-		methods.Insert_new_insurance("AXA");
-		methods.Insert_new_insurance("Asisa");
-		methods.Insert_new_insurance("Adeslas");
-		methods.Insert_new_insurance("Caser");
-		methods.Insert_new_insurance("Allianz");
-		methods.Insert_new_insurance("Aegon");
-		methods.Insert_new_insurance("Other");
 		
-		methods.Insert_new_doctor("Jose Luis García", "UnitedHealth");
-		methods.Insert_new_doctor("Carlos Ruíz", "Maphre");
-		methods.Insert_new_doctor("Marta Martínez", "Anthem");
-		methods.Insert_new_doctor("Laura Esteban", "Centene");
-		methods.Insert_new_doctor("Julia Medea", "HCSC");
-		methods.Insert_new_doctor("Maria José García", "DKV");
             
             //while true, lee el mensaje y hacemos los métodos que nos pida el mensaje
             	

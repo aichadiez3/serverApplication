@@ -42,7 +42,6 @@ public class SQLiteManager {
 			this.sqlite_connection = DriverManager.getConnection("jdbc:sqlite:./db/database.db");//hay que poner nuestra database
 			sqlite_connection.createStatement().execute("PRAGMA foreign_keys=ON");
 			this.methods = new SQLiteMethods(sqlite_connection);
-			
 			return true;
 
 		} catch (ClassNotFoundException | SQLException connection_error) {
