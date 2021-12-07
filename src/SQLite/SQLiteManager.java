@@ -113,7 +113,7 @@ public class SQLiteManager {
 			
 			stmt1 = sqlite_connection.createStatement();
 			String sql13 = "CREATE TABLE physical_test " + "(test_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-					+ " saturation INTEGER default NULL, " + " pulse INTEGER default NULL, "
+					+ " saturation INTEGER default 0, " + " pulse INTEGER default 0, "
 					+ " breathingRate INTEGER default 0, "
 					+ " medicalRecord_id FOREING KEY REFERENCES medical_record(medicalRecord_id))";
 			stmt1.execute(sql13);

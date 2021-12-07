@@ -37,8 +37,8 @@ public interface Interface {
 	
 	public Symptom Search_symptom_by_id(Integer symptom_id);
 	public Integer Search_insurance_by_name(String insurance_name);
-	public Integer Search_associated_ecg(Integer bitalino_id);
-	public Integer Search_associated_eda(Integer bitalino_id);
+	public String Search_associated_ecg(Integer bitalino_id);
+	public String Search_associated_eda(Integer bitalino_id);
 	
 	public List<MedicalRecord> Search_stored_record_by_date_ascendent();
 	public List<MedicalRecord> Search_stored_record_by_date_descendent();

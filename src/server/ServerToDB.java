@@ -14,13 +14,9 @@ import java.util.logging.Logger;
 
 import SQLite.SQLiteManager;
 import SQLite.SQLiteMethods;
-import pojos.EcgTest;
-import pojos.EdaTest;
 import pojos.Insurance_company;
 import pojos.MedicalRecord;
 import pojos.Patient;
-import pojos.PhysicalTest;
-import pojos.PsychoTest;
 import pojos.User;
 
 public class ServerToDB implements Runnable{
@@ -41,13 +37,7 @@ public class ServerToDB implements Runnable{
         String instruction;
         User user = null;
         List<MedicalRecord> list_records;
-        MedicalRecord record = null;
-        EcgTest ecg = null;
-        EdaTest eda = null;
-        PsychoTest psycho = null;
-        PhysicalTest physical = null;
         Patient patient = null;
-        Insurance_company insurance = null;
         Integer userId, patientId;
         Integer medRecordId;
         Integer ecgId, bitalinoId;
@@ -72,16 +62,15 @@ public class ServerToDB implements Runnable{
                 dataOutputStream = new DataOutputStream(socket.getOutputStream());
 
             	
-        		boolean stopClient = false;     // A ESTO HAY QUE DARLE OTRA VUELTA
+        		boolean stopClient = false;     
                 while (!stopClient) {
                 	instruction = dataInputStream.readUTF();
-                    //We read until is finished the connection or character 'x'
+                    //We read until is finished the connection
                     if (instruction.equals("end_client")) {
-                        //System.out.println("Client character reception finished");
+                        //System.out.println("Client finished");
                         stopClient = true;
                     }
                     
-                    //todo lo que he hecho, aïcha habia puesto esto mas adelante, donde comentare *!*, no se donde habrá que colocarlo para que funcione
                     String[] parameters = instruction.split(",");
                     if (parameters[0].equals("new_user")) {
                     	String user_name = parameters[1];
@@ -110,7 +99,7 @@ public class ServerToDB implements Runnable{
                     if (parameters[0].equals("new_medical_record")) {
                     	String record_date = parameters[1];
                 		Integer reference_number = Integer.parseInt(parameters[2]);
-                		patientId =userId = Integer.parseInt(parameters[3]);;
+                		patientId =userId = Integer.parseInt(parameters[3]);
                 		medRecordId = methods.Insert_new_medical_record(record_date, reference_number, patientId);
                 		dataOutputStream.writeUTF(String.valueOf(medRecordId));
                     }
@@ -190,8 +179,20 @@ public class ServerToDB implements Runnable{
                         dataOutputStream.writeUTF(String.valueOf(patientId));
                     }
                     if (parameters[0].equals("list_all_medical_records")) {
-                        methods.List_all_medical_records();
-                        // FALTA EL DATAOUTPUTSTREAM
+                        List<MedicalRecord> record_list = methods.List_all_medical_records();
+                        List<String> records = new ArrayList<String>();
+                        String record="";
+                        for(int i=0;i<record_list.size();i++) {
+                        	String date = record_list.get(i).getRecordDate();
+                        	Integer ref = record_list.get(i).getReferenceNumber();
+                        	Integer bitId = record_list.get(i).getBitalinoTestId();
+                        	String ecg_root = methods.Search_associated_ecg(bitId);
+                        	String eda_root = methods.Search_associated_eda(bitId);
+                        	
+                        	String out = date+","+String.valueOf(ref)+","+String.valueOf(bitId)+","+String.valueOf(ecg_root)+","+String.valueOf(eda_root);
+                        	records.add(out);
+                        }
+                        dataOutputStream.writeUTF(Arrays.toString(records.toArray()));
                     }
                     if (parameters[0].equals("list_all_insurances")) {
                         List<Insurance_company> list = methods.List_all_insurances();
@@ -230,8 +231,14 @@ public class ServerToDB implements Runnable{
                         methods.Search_all_symptoms_from_record(record_id);
                     }
                     if (parameters[0].equals("list_users")) {
-                        methods.List_all_users();
-                        // FALTA DATAOUTPUTSTREAM
+                    	List<User> users = methods.List_all_users();
+                        List<String> list = new ArrayList<String>();
+                        String userName="";
+                        for(int i=0;i<users.size();i++) {
+                        	userName = users.get(i).getUserName();
+                        	list.add(userName);
+                        }
+                        dataOutputStream.writeUTF(Arrays.toString(list.toArray()));
                     }
                     
                     if (parameters[0].equals("search_existent_refNumber")) {
@@ -241,14 +248,15 @@ public class ServerToDB implements Runnable{
                     
                     if (parameters[0].equals("search_associated_ecg")) {
                     	Integer bitalino_id = Integer.parseInt(parameters[1]);
-                    	ecgId = methods.Search_associated_ecg(bitalino_id);
-                    	dataOutputStream.writeUTF(String.valueOf(ecgId));
+                    	String ecg_root = methods.Search_associated_ecg(bitalino_id);
+                    	dataOutputStream.writeUTF(ecg_root);
                     }
                     if (parameters[0].equals("search_associated_eda")) {
                     	Integer bitalino_id = Integer.parseInt(parameters[1]);
-                    	edaId = methods.Search_associated_eda(bitalino_id);
-                    	dataOutputStream.writeUTF(String.valueOf(edaId));
+                    	String eda_root = methods.Search_associated_eda(bitalino_id);
+                    	dataOutputStream.writeUTF(eda_root);
                     }
+                    
                     if (parameters[0].equals("compare_passwords")) {
                     	String user_name = parameters[1];
                     	String true_password = methods.Get_user_password(user_name);
