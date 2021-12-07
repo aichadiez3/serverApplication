@@ -64,7 +64,7 @@ public class SQLiteMethods implements Interface {
 	
 	public Integer Insert_new_medical_record(String record_date, Integer reference_number, Integer patient_id) {
 		try {
-			String table = "INSERT INTO medical_record (reference_number, record_date, patient_id) " + " VALUES(?,?,?);";
+			String table = "INSERT INTO medical_record (record_date, reference_number, patient_id) " + " VALUES(?,?,?);";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setString(1, record_date);
 			template.setInt(2, reference_number);
