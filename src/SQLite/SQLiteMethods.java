@@ -349,33 +349,33 @@ public class SQLiteMethods implements Interface {
     		
     		Patient patient = Search_stored_patient_by_id(patient_id);
     		
-    		String SQL_code = "UPDATE patient SET name = ?, surname = ?, birth_date = ?, height = ?, weight = ?, gender = ?, telephone = ?, insurance_id = ? WHERE patient_id = ?";
+    		String SQL_code = "UPDATE patient SET birth_date = ?, height = ?, weight = ?, gender = ?, telephone = ?, insurance_id = ? WHERE patient_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 
 			if(!birth_date.equals("")) {
-			template.setString(3, birth_date);
+			template.setString(1, birth_date);
 			}
 			
 			if(!height.equals("")) {
-				template.setInt(4, height);
+				template.setInt(2, height);
 			}
 			
 			if(!weight.equals("")) {
-				template.setInt(5, weight);
+				template.setInt(3, weight);
 			}
 			
 			if(!gender.equals("")) {
-				template.setString(6, gender);
+				template.setString(4, gender);
 			}
 			
 			if(!telephone.equals("")) {
-				template.setInt(7, telephone);
+				template.setInt(5, telephone);
 			}
 			
 			if(!insurance_id.equals("")) {
-				template.setInt(8, insurance_id);
+				template.setInt(6, insurance_id);
 			}
-			template.setInt(9, patient_id);
+			template.setInt(7, patient_id);
 			template.executeUpdate();
 			template.close();
     		
