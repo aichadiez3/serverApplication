@@ -127,10 +127,10 @@ public class ServerToDB implements Runnable{
 
                     
                     if (parameters[0].equals("new_medical_record")) {
-                    	userId = Integer.parseInt(parameters[1]);
-                    	String record_date = parameters[2];
-                		Integer reference_number = Integer.parseInt(parameters[3]);
-                		patientId = methods.Search_stored_patient_by_user_id(userId);
+                    	//userId = Integer.parseInt(parameters[1]);
+                    	String record_date = parameters[1];
+                		Integer reference_number = Integer.parseInt(parameters[2]);
+                		patientId =userId = Integer.parseInt(parameters[3]);;
                 		medRecordId = methods.Insert_new_medical_record(record_date, reference_number, patientId);
                 		dataOutputStream.writeUTF(String.valueOf(medRecordId));
                     }
