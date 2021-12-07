@@ -156,7 +156,7 @@ public class SQLiteMethods implements Interface {
 			return ecg_id;
 		} catch(SQLException new_ecg_error) {
 			new_ecg_error.printStackTrace();
-			return null;
+			return -1;
 		}
 	}
 
