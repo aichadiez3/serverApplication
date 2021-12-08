@@ -125,12 +125,6 @@ public class SQLiteManager {
 					+ " PRIMARY KEY (medicalRecord_id, symptom_id))";
 			stmt1.execute(sql11);
 			
-			stmt1 = sqlite_connection.createStatement();
-			String sql12 = "CREATE TABLE medicalRecord_bitalino " + "(medicalRecord_id INTEGER REFERENCES medical_record(medicalRecord_id), "
-					+ " test_id INTEGER REFERENCES bitalino_test(test_id),"
-					+ " PRIMARY KEY (medicalRecord_id, test_id))";
-			stmt1.execute(sql12);
-			stmt1.close();
 			
 			return true;
 		}catch (SQLException tables_error) {

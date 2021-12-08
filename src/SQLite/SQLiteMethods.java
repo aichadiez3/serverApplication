@@ -98,7 +98,6 @@ public class SQLiteMethods implements Interface {
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setString(1, record_date);
 			template.setInt(2, reference_number);
-			//template.setInt(3, bitalino_test_id);
 			template.setInt(3, patient_id);
 			template.executeUpdate();
 			
