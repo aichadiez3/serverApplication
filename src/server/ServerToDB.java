@@ -220,6 +220,13 @@ public class ServerToDB implements Runnable{
                         Integer insurance_id = methods.Search_insurance_by_name(insurance_name);
                         dataOutputStream.writeUTF(insurance_id.toString());
                     }
+                    
+                    if (parameters[0].equals("search_doctor_by_insurance")) {
+                    	Integer insuranceId = Integer.parseInt(parameters[1]);
+                    	String doctor = methods.Search_doctor_by_insurance_id(insuranceId);
+                    	dataOutputStream.writeUTF(doctor.toString());
+                    }
+                    
                     if (parameters[0].equals("search_record_by_date_ascendent")) {
                     	list_records = methods.Search_stored_record_by_date_ascendent();
                     	dataOutputStream.writeUTF(list_records.toString());

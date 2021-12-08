@@ -232,31 +232,10 @@ public class SQLiteMethods implements Interface {
 			ResultSet result_set = template.executeQuery();
 			Integer queries_id = result_set.getInt("queries_id");
 			template.close();
-			
-			/*
-			LinkedList<Boolean> positive_res = psycho.getPositive_res();
-			for() {
-				
-			}
-			
-			
-			List<Biomaterial> biomaterial_list = transaction.getBiomaterial_list();
-			for(Biomaterial biomaterial: biomaterial_list) {
-				table = "INSERT INTO transaction_biomaterial (transaction_id, biomaterial_id) " 
-						+ "VALUES (?,?);";
-				template = this.sqlite_connection.prepareStatement(table);
-				template.setInt(1, transaction_id);
-				template.setInt(2, biomaterial.getBiomaterial_id());
-				template.executeUpdate();
-				template.close();
-			}
-			
-			*/
-			
 			return queries_id;
 		} catch(SQLException new_psycho_test_error) {
 			new_psycho_test_error.printStackTrace();
-			return null;
+			return -1;
 		}
 	}
     
@@ -313,11 +292,11 @@ public class SQLiteMethods implements Interface {
 			insurance_id = result_set.getInt("insurance_id");
 			template.close();
 			return insurance_id;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (SQLException new_insurance_error) {
+			new_insurance_error.printStackTrace();
+			return -1;
 		}
-		return null;
+		
 	}
     
 	// -----> UPDATE METHODS <-----
@@ -451,7 +430,7 @@ public class SQLiteMethods implements Interface {
 			return patient.getPatient_id();
 		} catch (SQLException search_patient_error) {
 			search_patient_error.printStackTrace();
-			return null;
+			return -1;
 		}
 		
 	}
@@ -477,11 +456,11 @@ public class SQLiteMethods implements Interface {
 		
 	}
     
-    	public String Search_doctor_by_insurance_id(String insurance_id) {
+    	public String Search_doctor_by_insurance_id(Integer insurance_id) {
     		try {
 				String SQL_code = "SELECT name FROM doctor WHERE insurance_id = ?";
 				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-				template.setString(1, insurance_id);
+				template.setInt(1, insurance_id);
 				Doctor doctor = new Doctor();
 				ResultSet result_set = template.executeQuery();
 				doctor.setDoctor_id(result_set.getInt("doctor_id"));
