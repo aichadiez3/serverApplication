@@ -161,7 +161,7 @@ public class ServerToDB implements Runnable{
 						Integer telephone = Integer.parseInt(parameters[6]);
 						Integer insurance_id = Integer.parseInt(parameters[7]);
                         Boolean upToDate = methods.Update_patient_info(patientId, birth_date, height, weight, gender, telephone, insurance_id);
-                        dataOutputStream.writeUTF(upToDate.toString());
+                        dataOutputStream.writeUTF(String.valueOf(upToDate));
                     }
                     
                     if (parameters[0].equals("update_medRecord_bitalino")){

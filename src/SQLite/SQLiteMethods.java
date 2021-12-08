@@ -477,6 +477,25 @@ public class SQLiteMethods implements Interface {
 		
 	}
     
+    	public String Search_doctor_by_insurance_id(String insurance_id) {
+    		try {
+				String SQL_code = "SELECT name FROM doctor WHERE insurance_id = ?";
+				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+				template.setString(1, insurance_id);
+				Doctor doctor = new Doctor();
+				ResultSet result_set = template.executeQuery();
+				doctor.setDoctor_id(result_set.getInt("doctor_id"));
+				doctor.setName(result_set.getString("name"));
+				doctor.setTelephone(result_set.getInt("telephone"));
+				doctor.setInsurance_id(result_set.getInt("insurance_id"));
+				template.close();
+				return doctor.getName();
+			} catch (SQLException search_doctor) {
+				search_doctor.printStackTrace();
+				return "Doctor not found.";
+			}
+    	}
+    
     
 	  //funciona
 	    public boolean Search_existent_email(String email) {
