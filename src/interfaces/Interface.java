@@ -30,7 +30,7 @@ public interface Interface {
 	public Patient Search_stored_patient_by_id(Integer patient_id);
     public Integer Search_stored_patient_by_user_id(Integer user_id);
 	public Integer Search_stored_user_by_userName(String user_name);
-	public String Search_doctor_by_insurance_id(String insurance_id);
+	public String Search_doctor_by_insurance_id(Integer insurance_id);
 	public boolean Search_existent_email(String email);
 	public Integer Search_existent_reference_number(String number);
 	public String Get_user_password (String user_name);
