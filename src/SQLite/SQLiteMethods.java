@@ -592,12 +592,12 @@ public class SQLiteMethods implements Interface {
 			Insurance_company insurance = new Insurance_company();
 			ResultSet result_set = template.executeQuery();
 			insurance.setInsurance_id(result_set.getInt("insurance_id"));
-			insurance.setCompany_name(insurance_name);
+			insurance.setCompany_name(result_set.getString("name"));
 			template.close(); 
 			return insurance.getInsurance_id();
 		} catch (SQLException search_insurance_error) {
 			search_insurance_error.printStackTrace();
-			return null;
+			return -1;
 		}
 	}
 	
