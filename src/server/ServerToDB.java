@@ -52,8 +52,6 @@ public class ServerToDB implements Runnable{
         	methods.Insert_default_elements_toDB();
         }
         
-		
-            
             //while true, lee el mensaje y hacemos los métodos que nos pida el mensaje
             	
             try {
@@ -106,7 +104,6 @@ public class ServerToDB implements Runnable{
                     
                     if (parameters[0].equals("new_bitalino_test")) {
                         bitalinoId = methods.Insert_new_bitalino_test();
-                        System.out.println("soy db:"+String.valueOf(bitalinoId));
                 		dataOutputStream.writeUTF(String.valueOf(bitalinoId));
                     }
                     
@@ -160,8 +157,7 @@ public class ServerToDB implements Runnable{
 						String gender = parameters[5];
 						Integer telephone = Integer.parseInt(parameters[6]);
 						Integer insurance_id = Integer.parseInt(parameters[7]);
-                        Boolean upToDate = methods.Update_patient_info(patientId, birth_date, height, weight, gender, telephone, insurance_id);
-                        dataOutputStream.writeUTF(String.valueOf(upToDate));
+                        methods.Update_patient_info(patientId, birth_date, height, weight, gender, telephone, insurance_id);
                     }
                     
                     if (parameters[0].equals("update_medRecord_bitalino")){
@@ -175,6 +171,13 @@ public class ServerToDB implements Runnable{
                         patient = methods.Search_stored_patient_by_id(patient_id);
                         dataOutputStream.writeUTF(patient.toString());
                     }
+                    
+                    if (parameters[0].equals("search_patient_info")) {
+                    	Integer patient_id = Integer.parseInt(parameters[1]);
+                        patient = methods.Search_stored_patient_by_id(patient_id);
+                        dataOutputStream.writeUTF(patient.toString());
+                    }
+                    
                     if (parameters[0].equals("search_patient_by_user_id")) {
                     	Integer user_id = Integer.parseInt(parameters[1]);
                         patientId = methods.Search_stored_patient_by_user_id(user_id);
@@ -218,13 +221,19 @@ public class ServerToDB implements Runnable{
                     if (parameters[0].equals("search_insurance_by_name")) {
                     	String insurance_name = parameters[1];
                         Integer insurance_id = methods.Search_insurance_by_name(insurance_name);
-                        dataOutputStream.writeUTF(insurance_id.toString());
+                        dataOutputStream.writeUTF(String.valueOf(insurance_id));
                     }
+                    
+                    if (parameters[0].equals("search_insurance_by_patient_id")) {
+						patientId = Integer.parseInt(parameters[1]);
+						Integer id = methods.Search_insurance_from_patient(patientId);
+						dataOutputStream.writeUTF(String.valueOf(id));
+					}
                     
                     if (parameters[0].equals("search_doctor_by_insurance")) {
                     	Integer insuranceId = Integer.parseInt(parameters[1]);
                     	String doctor = methods.Search_doctor_by_insurance_id(insuranceId);
-                    	dataOutputStream.writeUTF(doctor.toString());
+                    	dataOutputStream.writeUTF(doctor);
                     }
                     
                     if (parameters[0].equals("search_record_by_date_ascendent")) {

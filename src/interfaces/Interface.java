@@ -24,7 +24,7 @@ public interface Interface {
 	public Integer Insert_new_insurance(String company_name);
 	
 	public boolean Update_user_info(String password, String email, Integer user_id);
-	public boolean Update_patient_info(Integer patient_id, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
+	public void Update_patient_info(Integer patient_id, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id);
 	public boolean Update_medical_record_with_bitalino(Integer bitalino_id, Integer medRecord_id);
 	
 	public Patient Search_stored_patient_by_id(Integer patient_id);
@@ -38,6 +38,7 @@ public interface Interface {
 	
 	public Symptom Search_symptom_by_id(Integer symptom_id);
 	public Integer Search_insurance_by_name(String insurance_name);
+	public Integer Search_insurance_from_patient(Integer patient_id);
 	public String Search_associated_ecg(Integer bitalino_id);
 	public String Search_associated_eda(Integer bitalino_id);
 	

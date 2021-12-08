@@ -1,6 +1,5 @@
 package SQLite;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -171,7 +170,7 @@ public class SQLiteMethods implements Interface {
 			return doctor.getDoctor_id();
 		} catch(SQLException new_doctor_error) {
 			new_doctor_error.printStackTrace();
-			return null;
+			return -1;
 		}
 	}
      
@@ -323,7 +322,7 @@ public class SQLiteMethods implements Interface {
 	}
     
     //funciona
-    public boolean Update_patient_info(Integer patient_id, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
+    public void Update_patient_info(Integer patient_id, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
     	try {
     		
     		Patient patient = Search_stored_patient_by_id(patient_id);
@@ -357,11 +356,8 @@ public class SQLiteMethods implements Interface {
 			template.setInt(7, patient_id);
 			template.executeUpdate();
 			template.close();
-    		
-			return true;
 		} catch (SQLException update_patient_error) {
 			update_patient_error.printStackTrace();
-			return false;
 		}
     }
     
@@ -463,18 +459,30 @@ public class SQLiteMethods implements Interface {
 				template.setInt(1, insurance_id);
 				Doctor doctor = new Doctor();
 				ResultSet result_set = template.executeQuery();
-				doctor.setDoctor_id(result_set.getInt("doctor_id"));
 				doctor.setName(result_set.getString("name"));
-				doctor.setTelephone(result_set.getInt("telephone"));
-				doctor.setInsurance_id(result_set.getInt("insurance_id"));
 				template.close();
-				return doctor.getName();
+				return doctor.getName().toString();
 			} catch (SQLException search_doctor) {
 				search_doctor.printStackTrace();
 				return "Doctor not found.";
 			}
     	}
     
+    	public Integer Search_insurance_from_patient(Integer patient_id) {
+    		try {
+				String SQL_code = "SELECT insurance_id FROM patient WHERE patient_id = ?";
+				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+				template.setInt(1, patient_id);
+				Insurance_company insurance = new Insurance_company();
+				ResultSet result_set = template.executeQuery();
+				insurance.setInsurance_id(result_set.getInt("insurance_id"));
+				template.close();
+				return insurance.getInsurance_id();
+			} catch (SQLException search_insurance_error) {
+				search_insurance_error.printStackTrace();
+				return -1;
+			}
+    	}
     
 	  //funciona
 	    public boolean Search_existent_email(String email) {
@@ -679,6 +687,7 @@ public class SQLiteMethods implements Interface {
 	}
 	
 	// -----> LIST METHODS <-----
+	
 	public List<Symptom> Search_all_symptoms_from_record(Integer record_id) {
 		try {
 			
