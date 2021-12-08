@@ -191,7 +191,7 @@ public class ServerToDB implements Runnable{
                         	String ecg_root = methods.Search_associated_ecg(bitId);
                         	String eda_root = methods.Search_associated_eda(bitId);
                         	
-                        	String out = date+","+String.valueOf(ref)+","+String.valueOf(ecg_root)+","+String.valueOf(eda_root)+";";
+                        	String out = date+","+String.valueOf(ref)+","+String.valueOf(ecg_root)+","+String.valueOf(eda_root);
                         	records.add(out);
                         }
                         dataOutputStream.writeUTF(Arrays.toString(records.toArray()));
