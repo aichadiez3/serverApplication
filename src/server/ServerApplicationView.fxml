@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
 <Pane fx:id="serverScene" prefHeight="795.0" prefWidth="544.0" style="-fx-background-color: -fx-gray;" styleClass="subpane-layout" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
    <children>
@@ -31,14 +32,17 @@
             <Label layoutX="-53.0" layoutY="90.0" prefHeight="106.0" prefWidth="125.0" styleClass="main-text" text="Start the server" />
          </children>
       </Group>
-      <Label layoutX="93.0" layoutY="153.0" style="-fx-font-size: 25;" styleClass="title-text-style" text="ANXIPHARMA" />
+      <Label layoutX="107.0" layoutY="143.0" style="-fx-font-size: 40;" styleClass="title-text-style" text="StresstS">
+         <font>
+            <Font size="19.0" />
+         </font></Label>
       <Label alignment="CENTER" layoutX="74.0" layoutY="275.0" opacity="0.64" prefHeight="175.0" prefWidth="396.0" style="-fx-font-size: 16;" styleClass="main-text" text="This scene only represent a graphical way of starting the server to allow clients have access to its resources. Once started, the scene closes but the server still waiting for connections. Button stop, closes the server and release its resources." wrapText="true" />
       <ImageView fitHeight="195.0" fitWidth="200.0" layoutX="265.0" layoutY="74.0">
          <image>
             <Image url="@icons/menu_icon.png" />
          </image>
       </ImageView>
-      <Group fx:id="stopButton" layoutX="379.0" layoutY="566.0" onKeyPressed="#close_server">
+      <Group fx:id="stopButton" layoutX="379.0" layoutY="566.0">
          <children>
             <Circle fill="WHITE" layoutX="9.0" layoutY="9.0" radius="100.0" stroke="#ffffff00" strokeType="INSIDE">
                <effect>
