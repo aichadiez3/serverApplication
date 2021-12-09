@@ -35,8 +35,6 @@ public class ServerToDB implements Runnable{
 	public void run() {
 		//This executes when we have a client
         String instruction;
-        User user = null;
-        List<MedicalRecord> list_records;
         Patient patient = null;
         Integer userId, patientId;
         Integer medRecordId;
@@ -84,16 +82,12 @@ public class ServerToDB implements Runnable{
                     	String surname = parameters[3];
                     	methods.Insert_new_patient(user_id, name, surname);
                     }
-
-
                     if (parameters[0].equals("new_doctor")) {
                     	String name = parameters[1];
                     	String telephone = parameters[2];
                     	Integer insurance_id = Integer.parseInt(parameters[3]);
                     	methods.Insert_new_doctor(name, telephone,insurance_id);
                     }
-
-                    
                     if (parameters[0].equals("new_medical_record")) {
                     	String record_date = parameters[1];
                 		Integer reference_number = Integer.parseInt(parameters[2]);
@@ -130,7 +124,8 @@ public class ServerToDB implements Runnable{
                 		Integer medicalRecord_id = Integer.parseInt(parameters[parameters.length-1]);
                 		LinkedList<String> positive_res = new LinkedList<String>(Arrays.asList(positives));
 						LinkedList<String> negative_res = new LinkedList<String>(Arrays.asList(negatives)); 
-                        queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, medicalRecord_id);
+						LinkedList<String> symptoms = new LinkedList<String>(Arrays.asList(negatives)); 
+                        queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, symptoms, medicalRecord_id);
                         dataOutputStream.writeUTF(String.valueOf(queriesId));
                     }
                     if (parameters[0].equals("new_physical")) {
@@ -186,7 +181,6 @@ public class ServerToDB implements Runnable{
                     if (parameters[0].equals("list_all_medical_records")) {
                         List<MedicalRecord> record_list = methods.List_all_medical_records();
                         List<String> records = new ArrayList<String>();
-                        String record="";
                         for(int i=0;i<record_list.size();i++) {
                         	String date = record_list.get(i).getRecordDate();
                         	Integer ref = record_list.get(i).getReferenceNumber();
@@ -209,10 +203,6 @@ public class ServerToDB implements Runnable{
                         }
                         dataOutputStream.writeUTF(Arrays.toString(ins_name.toArray()));
                     }
-                    if (parameters[0].equals("search_symptom_by_id")) {    // UNUSED METHOD
-                    	Integer symptom_id = Integer.parseInt(parameters[1]);
-                        methods.Search_symptom_by_id(symptom_id);
-                    }
                     if (parameters[0].equals("search_user_by_userName")) {
                     	String user_name = parameters[1];
                         userId = methods.Search_stored_user_by_userName(user_name);
@@ -234,19 +224,6 @@ public class ServerToDB implements Runnable{
                     	Integer insuranceId = Integer.parseInt(parameters[1]);
                     	String doctor = methods.Search_doctor_by_insurance_id(insuranceId);
                     	dataOutputStream.writeUTF(doctor);
-                    }
-                    
-                    if (parameters[0].equals("search_record_by_date_ascendent")) {
-                    	list_records = methods.Search_stored_record_by_date_ascendent();
-                    	dataOutputStream.writeUTF(list_records.toString());
-                    }
-                    if (parameters[0].equals("search_record_by_date_descendent")) {
-                    	list_records = methods.Search_stored_record_by_date_descendent();
-                    	dataOutputStream.writeUTF(list_records.toString());
-                    }
-                    if (parameters[0].equals("search_all_symptoms_from_record")) {   // UNUSED METHOD
-                    	int record_id = Integer.parseInt(parameters[1]);
-                        methods.Search_all_symptoms_from_record(record_id);
                     }
                     if (parameters[0].equals("list_users")) {
                     	List<User> users = methods.List_all_users();

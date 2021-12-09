@@ -18,7 +18,7 @@ public interface Interface {
 	public Integer Insert_new_medical_record(String record_date, Integer reference_number, Integer patient_id);
 	public Integer Insert_new_ecg(String ecg_values, Integer test_id);
 	public Integer Insert_new_eda(String eda_values, Integer test_id);
-	public Integer Insert_new_psycho_test(LinkedList<String> positive_res, LinkedList<String> negative_res, Integer medicalRecord_id);
+	public Integer Insert_new_psycho_test(LinkedList<String> positive_res, LinkedList<String> negative_res, LinkedList<String> symptoms, Integer medicalRecord_id);
 	public Integer Insert_new_physical_test(Integer saturation, Integer pulse, Integer breathingRate,Integer medicalRecord_id);
 	public Integer Insert_new_bitalino_test();
 	public Integer Insert_new_insurance(String company_name);
@@ -36,16 +36,11 @@ public interface Interface {
 	public String Get_user_password (String user_name);
 	public Integer Search_stored_record_by_id(Integer record_id);
 	
-	public Symptom Search_symptom_by_id(Integer symptom_id);
 	public Integer Search_insurance_by_name(String insurance_name);
 	public Integer Search_insurance_from_patient(Integer patient_id);
 	public String Search_associated_ecg(Integer bitalino_id);
 	public String Search_associated_eda(Integer bitalino_id);
 	
-	public List<MedicalRecord> Search_stored_record_by_date_ascendent();
-	public List<MedicalRecord> Search_stored_record_by_date_descendent();
-	
-	public List<Symptom> Search_all_symptoms_from_record(Integer record_id);
 	public List<User> List_all_users();
 	public List<MedicalRecord> List_all_medical_records();
 	public List<Insurance_company> List_all_insurances();
