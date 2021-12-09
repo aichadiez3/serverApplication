@@ -189,12 +189,10 @@ public class ServerToDB implements Runnable{
                         	String ecg_root = methods.Search_associated_ecg(bitId);
                         	String eda_root = methods.Search_associated_eda(bitId);
                         	
-                        	String out = date+","+String.valueOf(ref)+","+String.valueOf(ecg_root)+","+String.valueOf(eda_root);
+                        	String out = date+","+String.valueOf(ref)+","+String.valueOf(ecg_root)+","+String.valueOf(eda_root)+";";
                         	records.add(out);
                         }
                         String recordsString= Arrays.toString(records.toArray());
-                        System.out.println("records: " + recordsString);
-                        
                         dataOutputStream.writeUTF(recordsString);
                     }
                     if (parameters[0].equals("list_all_insurances")) {
