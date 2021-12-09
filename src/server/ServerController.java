@@ -9,13 +9,10 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import SQLite.SQLiteManager;
-import javafx.event.EventHandler;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -23,7 +20,6 @@ import javafx.stage.Stage;
 
 public class ServerController implements Initializable {
 
-	private SQLiteManager controller;
     ServerSocket serverSocket;
 	private static Stage main_menu_stage;
     private Boolean running=true;
@@ -50,53 +46,59 @@ public class ServerController implements Initializable {
 			
 			serverSocket = null;
 		
-			while(running == true){
+			//while(running){
 	            //This executes when we have a client
-				Socket socket = null;
+				
 				try {
 					serverSocket = new ServerSocket(9000);
-		            while (running == true) {
-		                //This executes when we have a patient
-		                socket = serverSocket.accept();
+		            while (true) {
+		            	
+		            	if (stopButton.isPressed()==true) {
+		            		System.out.println("Close server.");
+		            		releaseResourcesServer(serverSocket);
+		            		System.exit(0);
+		            	} else {
+		            		//This executes when we have a patient
+		                Socket socket = serverSocket.accept();
 		                new Thread(new ServerToDB(socket)).start();	
-		                
-		                System.out.println("Server received a socket: " + socket.getLocalSocketAddress());
-		                
-		                // condition receive a message from a close instruction from client application (button x, log_out..)
-		                //releaseResources(socket);
-		                /*
-		                System.out.println(running);
-		                if (stopButton.isPressed()) {
-		                	running=false;
-		                	System.out.println(stopButton.isPressed());
-							controller.Close_connection(); 
-							releaseResourcesServer(serverSocket);
-							System.exit(0);
-		                }
-		                */
+		               
+		                //System.out.println("Server received a socket: " + socket.getLocalSocketAddress());
+		            	}
+		            	
 		            }
 		        } catch (IOException e) {
 		        	Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, e);
 				}
 				finally {
+					System.out.println("salí");
 					releaseResourcesServer(serverSocket);
-					System.out.println("Client finished.");
 				}
-				
-			}
+			
+			//}
 			
 		});
-		
+		/*
 		stopButton.setOnMouseClicked((MouseEvent event2) -> {
 			running=false;
-			System.out.println("He pillao cacho");
-			controller.Close_connection(); 
+			System.out.println("He pillao cacho"); 
 			releaseResourcesServer(serverSocket);
 			System.exit(0);
 		});	
-	
+	*/
 }
-    
+	
+	
+	
+	/*
+   @FXML
+   void close_server(MouseEvent event) {
+	   running=false;
+		System.out.println("He pillao cacho");
+		releaseResourcesServer(serverSocket);
+		System.exit(0);
+   }
+   */
+	
 	@FXML
 	void minimize_window(MouseEvent event) {
 		main_menu_stage = (Stage) serverScene.getScene().getWindow();
