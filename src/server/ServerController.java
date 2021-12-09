@@ -10,10 +10,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import SQLite.SQLiteManager;
-import SQLite.SQLiteMethods;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -22,9 +24,10 @@ import javafx.stage.Stage;
 public class ServerController implements Initializable {
 
 	private SQLiteManager controller;
-    private SQLiteMethods methods;
     ServerSocket serverSocket;
-	
+	private static Stage main_menu_stage;
+    private Boolean running=true;
+    
 	@FXML
     private Pane serverScene;
 
@@ -35,7 +38,6 @@ public class ServerController implements Initializable {
     private Group stopButton;
 
     
-    private static Stage main_menu_stage;
     
 
 	@Override
@@ -44,20 +46,16 @@ public class ServerController implements Initializable {
 		
 		startButton.setOnMouseClicked((MouseEvent event) -> {
 			
-			// close the scene but the server still waiting for connections
-			main_menu_stage = (Stage) serverScene.getScene().getWindow();
-			main_menu_stage.setIconified(true);
-			
 			// SERVER CREATION
 			
 			serverSocket = null;
 		
-			while(true){
+			while(running == true){
 	            //This executes when we have a client
 				Socket socket = null;
 				try {
 					serverSocket = new ServerSocket(9000);
-		            while (true) {
+		            while (running == true) {
 		                //This executes when we have a patient
 		                socket = serverSocket.accept();
 		                new Thread(new ServerToDB(socket)).start();	
@@ -66,6 +64,16 @@ public class ServerController implements Initializable {
 		                
 		                // condition receive a message from a close instruction from client application (button x, log_out..)
 		                //releaseResources(socket);
+		                /*
+		                System.out.println(running);
+		                if (stopButton.isPressed()) {
+		                	running=false;
+		                	System.out.println(stopButton.isPressed());
+							controller.Close_connection(); 
+							releaseResourcesServer(serverSocket);
+							System.exit(0);
+		                }
+		                */
 		            }
 		        } catch (IOException e) {
 		        	Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, e);
@@ -74,18 +82,36 @@ public class ServerController implements Initializable {
 					//releaseResourcesServer(serverSocket);
 					System.out.println("Client finished.");
 				}
+				
+				/*
+				stopButton.setOnMouseClicked((MouseEvent event2) -> {
+					controller.Close_connection(); 
+					releaseResourcesServer(serverSocket);
+					System.exit(0);
+				});
+				*/
 			}
 			
 		});
 		
-		stopButton.setOnMouseClicked((MouseEvent event) -> {
-			controller.Close_connection(); 
-			releaseResourcesServer(serverSocket);
-			System.exit(0);
-		});
 	
 }
     
+	@FXML
+	void minimize_window(MouseEvent event) {
+		main_menu_stage = (Stage) serverScene.getScene().getWindow();
+		main_menu_stage.setIconified(true);
+	}
+	
+	@FXML
+	void close_server(KeyEvent event) {
+		if (event.getCode() == KeyCode.ESCAPE) {
+			controller.Close_connection(); 
+			releaseResourcesServer(serverSocket);
+			running=false;
+			System.exit(0);
+		}	
+	}
 	
 	private static void releaseResources(Socket socket) {
 		try {
