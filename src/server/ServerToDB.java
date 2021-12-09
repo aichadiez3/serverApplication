@@ -93,44 +93,47 @@ public class ServerToDB implements Runnable{
                 		Integer reference_number = Integer.parseInt(parameters[2]);
                 		patientId =userId = Integer.parseInt(parameters[3]);
                 		medRecordId = methods.Insert_new_medical_record(record_date, reference_number, patientId);
-                		dataOutputStream.writeUTF("MEDICAL RECORD ID");
-                		//dataOutputStream.writeUTF(String.valueOf(medRecordId));
+                		//dataOutputStream.writeUTF("MEDICAL RECORD ID");
+                		dataOutputStream.writeUTF(String.valueOf(medRecordId));
                     }
                     
                     if (parameters[0].equals("new_bitalino_test")) {
                         bitalinoId = methods.Insert_new_bitalino_test();
-                        dataOutputStream.writeUTF("BITALINO");
-                		//dataOutputStream.writeUTF(String.valueOf(bitalinoId));
+                        //dataOutputStream.writeUTF("BITALINO");
+                		dataOutputStream.writeUTF(String.valueOf(bitalinoId));
                     }
                     
                     if (parameters[0].equals("new_ecg")) {
                 		String ecg_values = parameters[1];
                 		Integer test_id = Integer.parseInt(parameters[2]);
                         ecgId = methods.Insert_new_ecg(ecg_values, test_id);
-                        dataOutputStream.writeUTF("ECGID");
+                        //dataOutputStream.writeUTF("ECGID");
                 		//dataOutputStream.writeUTF(String.valueOf(ecgId));
                     }
                     if (parameters[0].equals("new_eda")) {
                 		Integer test_id = Integer.parseInt(parameters[2]);
 						String eda_values = parameters[1];
                         edaId = methods.Insert_new_eda(eda_values, test_id);
-                        dataOutputStream.writeUTF("EDAID");
+                        //dataOutputStream.writeUTF("EDAID");
                 		//dataOutputStream.writeUTF(String.valueOf(edaId));
                     }
                     if (parameters[0].equals("new_psycho")) {
                     	String[] psychotest = instruction.split("]");
                     	String temp = psychotest[0].replace("new_psycho,[","");
-                    	System.out.println(temp);
+                    	//System.out.println(temp);
                     	String temp2 = psychotest[1].replace("[","");
-                    	System.out.println(temp2);
+                    	//System.out.println(temp2);
+                    	String temp3 = psychotest[2].replace("[","");
+                    	//System.out.println(temp3);
                     	String[] positives = temp.split(",");
                     	String[] negatives = temp2.split(",");
+                    	String[] symptoms = temp3.split(",");
                 		Integer medicalRecord_id = Integer.parseInt(parameters[parameters.length-1]);
                 		LinkedList<String> positive_res = new LinkedList<String>(Arrays.asList(positives));
 						LinkedList<String> negative_res = new LinkedList<String>(Arrays.asList(negatives)); 
-						LinkedList<String> symptoms = new LinkedList<String>(Arrays.asList(negatives)); 
-                        queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, symptoms, medicalRecord_id);
-                        dataOutputStream.writeUTF("QUERIESID");
+						LinkedList<String> symptoms_res = new LinkedList<String>(Arrays.asList(symptoms)); 
+                        queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, symptoms_res, medicalRecord_id);
+                        //dataOutputStream.writeUTF("QUERIESID");
                         //dataOutputStream.writeUTF(String.valueOf(queriesId));
                     }
                     if (parameters[0].equals("new_physical")) {
@@ -140,7 +143,7 @@ public class ServerToDB implements Runnable{
                 		Integer medicalRecord_id = Integer.parseInt(parameters[4]);
                         physicalId = methods.Insert_new_physical_test(saturation, pulse, breathingRate, medicalRecord_id);
                         //dataOutputStream.writeUTF(String.valueOf(physicalId));
-                        dataOutputStream.writeUTF("PHYSICALID");
+                        //dataOutputStream.writeUTF("PHYSICALID");
                     }
                     if (parameters[0].equals("change_user_info")) {
                     	String password = parameters[1];
@@ -168,9 +171,7 @@ public class ServerToDB implements Runnable{
                     }
                     
                     if (parameters[0].equals("search_patient_info_by_id")) {
-                    	Integer patient_id = Integer.parseInt(parameters[1]);
-                        patient = methods.Search_stored_patient_by_id(patient_id);
-                        dataOutputStream.writeUTF(patient.toString());
+                    	//PENDIENTE POR HACER
                     }
                     
                     if (parameters[0].equals("search_patient_by_user_id")) {
@@ -228,7 +229,7 @@ public class ServerToDB implements Runnable{
                     	String doctor = methods.Search_doctor_by_insurance_id(insuranceId);
                     	dataOutputStream.writeUTF(doctor);
                     }
-                    if (parameters[0].equals("list_users")) {
+                    if (parameters[0].equals("list_users")) { //POR AHORA NO LA USAMOS
                     	List<User> users = methods.List_all_users();
                         List<String> list = new ArrayList<String>();
                         String userName="";
@@ -239,17 +240,17 @@ public class ServerToDB implements Runnable{
                         dataOutputStream.writeUTF(Arrays.toString(list.toArray()));
                     }
                     
-                    if (parameters[0].equals("search_existent_refNumber")) {
+                    if (parameters[0].equals("search_existent_refNumber")) { 
                     	Integer ref_number = methods.Search_existent_reference_number(Integer.parseInt(parameters[1]));
                     	dataOutputStream.writeUTF(String.valueOf(ref_number));
                     }
                     
-                    if (parameters[0].equals("search_associated_ecg")) {
+                    if (parameters[0].equals("search_associated_ecg")) { //REVISAR DONDE SE LLAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                     	Integer bitalino_id = Integer.parseInt(parameters[1]);
                     	String ecg_root = methods.Search_associated_ecg(bitalino_id);
                     	dataOutputStream.writeUTF(ecg_root);
                     }
-                    if (parameters[0].equals("search_associated_eda")) {
+                    if (parameters[0].equals("search_associated_eda")) { //REVISAR DONDE SE LLAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                     	Integer bitalino_id = Integer.parseInt(parameters[1]);
                     	String eda_root = methods.Search_associated_eda(bitalino_id);
                     	dataOutputStream.writeUTF(eda_root);
