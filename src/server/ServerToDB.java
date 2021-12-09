@@ -93,25 +93,29 @@ public class ServerToDB implements Runnable{
                 		Integer reference_number = Integer.parseInt(parameters[2]);
                 		patientId =userId = Integer.parseInt(parameters[3]);
                 		medRecordId = methods.Insert_new_medical_record(record_date, reference_number, patientId);
-                		dataOutputStream.writeUTF(String.valueOf(medRecordId));
+                		dataOutputStream.writeUTF("MEDICAL RECORD ID");
+                		//dataOutputStream.writeUTF(String.valueOf(medRecordId));
                     }
                     
                     if (parameters[0].equals("new_bitalino_test")) {
                         bitalinoId = methods.Insert_new_bitalino_test();
-                		dataOutputStream.writeUTF(String.valueOf(bitalinoId));
+                        dataOutputStream.writeUTF("BITALINO");
+                		//dataOutputStream.writeUTF(String.valueOf(bitalinoId));
                     }
                     
                     if (parameters[0].equals("new_ecg")) {
                 		String ecg_values = parameters[1];
                 		Integer test_id = Integer.parseInt(parameters[2]);
                         ecgId = methods.Insert_new_ecg(ecg_values, test_id);
-                		dataOutputStream.writeUTF(String.valueOf(ecgId));
+                        dataOutputStream.writeUTF("ECGID");
+                		//dataOutputStream.writeUTF(String.valueOf(ecgId));
                     }
                     if (parameters[0].equals("new_eda")) {
                 		Integer test_id = Integer.parseInt(parameters[2]);
 						String eda_values = parameters[1];
                         edaId = methods.Insert_new_eda(eda_values, test_id);
-                		dataOutputStream.writeUTF(String.valueOf(edaId));
+                        dataOutputStream.writeUTF("EDAID");
+                		//dataOutputStream.writeUTF(String.valueOf(edaId));
                     }
                     if (parameters[0].equals("new_psycho")) {
                     	String[] psychotest = instruction.split("]");
@@ -126,7 +130,8 @@ public class ServerToDB implements Runnable{
 						LinkedList<String> negative_res = new LinkedList<String>(Arrays.asList(negatives)); 
 						LinkedList<String> symptoms = new LinkedList<String>(Arrays.asList(negatives)); 
                         queriesId = methods.Insert_new_psycho_test(positive_res, negative_res, symptoms, medicalRecord_id);
-                        dataOutputStream.writeUTF(String.valueOf(queriesId));
+                        dataOutputStream.writeUTF("QUERIESID");
+                        //dataOutputStream.writeUTF(String.valueOf(queriesId));
                     }
                     if (parameters[0].equals("new_physical")) {
                 		Integer saturation = Integer.parseInt(parameters[1]);
@@ -134,7 +139,8 @@ public class ServerToDB implements Runnable{
                 		Integer breathingRate = Integer.parseInt(parameters[3]);
                 		Integer medicalRecord_id = Integer.parseInt(parameters[4]);
                         physicalId = methods.Insert_new_physical_test(saturation, pulse, breathingRate, medicalRecord_id);
-                        dataOutputStream.writeUTF(String.valueOf(physicalId));
+                        //dataOutputStream.writeUTF(String.valueOf(physicalId));
+                        dataOutputStream.writeUTF("PHYSICALID");
                     }
                     if (parameters[0].equals("change_user_info")) {
                     	String password = parameters[1];
@@ -185,7 +191,10 @@ public class ServerToDB implements Runnable{
                         	String out = date+","+String.valueOf(ref)+","+String.valueOf(ecg_root)+","+String.valueOf(eda_root);
                         	records.add(out);
                         }
-                        dataOutputStream.writeUTF(Arrays.toString(records.toArray()));
+                        String recordsString= Arrays.toString(records.toArray());
+                        System.out.println("records: " + recordsString);
+                        
+                        dataOutputStream.writeUTF(recordsString);
                     }
                     if (parameters[0].equals("list_all_insurances")) {
                         List<Insurance_company> list = methods.List_all_insurances();
