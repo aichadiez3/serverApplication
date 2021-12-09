@@ -35,7 +35,6 @@ public class ServerToDB implements Runnable{
 	public void run() {
 		//This executes when we have a client
         String instruction;
-        Patient patient = null;
         Integer userId, patientId;
         Integer medRecordId;
         Integer ecgId, bitalinoId;
@@ -171,7 +170,17 @@ public class ServerToDB implements Runnable{
                     }
                     
                     if (parameters[0].equals("search_patient_info_by_id")) {
-                    	//PENDIENTE POR HACER
+                    	patientId = Integer.parseInt(parameters[1]);
+                    	Patient patient = methods.Search_stored_patient_by_id(patientId);
+                    	String name = patient.getName();
+                    	String surname = patient.getSurname();
+                    	String birthday = patient.getBirth_date();
+                    	String gender = patient.getGender();
+                    	Integer height = patient.getHeight();
+                    	Integer weight = patient.getWeight();
+                    	Integer phone = patient.getTelephone();
+                    	Integer insurance = patient.getInsurance_id();
+                    	dataOutputStream.writeUTF(name+","+surname+","+birthday+","+gender+","+height+","+weight+","+phone+","+insurance);
                     }
                     
                     if (parameters[0].equals("search_patient_by_user_id")) {
@@ -215,12 +224,11 @@ public class ServerToDB implements Runnable{
                         Integer insurance_id = methods.Search_insurance_by_name(insurance_name);
                         dataOutputStream.writeUTF(String.valueOf(insurance_id));
                     }
-                    
-                    if (parameters[0].equals("search_insurance_by_patient_id")) {
-						patientId = Integer.parseInt(parameters[1]);
-						Integer id = methods.Search_insurance_from_patient(patientId);
-						dataOutputStream.writeUTF(String.valueOf(id));
-					}
+                    if (parameters[0].equals("search_insurance_by_id")) {
+                    	Integer insurance_id = Integer.parseInt(parameters[1]);
+                        String insurance_name = methods.Search_insurance_by_id(insurance_id);
+                        dataOutputStream.writeUTF(String.valueOf(insurance_name));
+                    }
                     
                     if (parameters[0].equals("search_doctor_by_insurance")) {
                     	Integer insuranceId = Integer.parseInt(parameters[1]);

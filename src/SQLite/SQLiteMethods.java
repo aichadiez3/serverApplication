@@ -458,25 +458,6 @@ public class SQLiteMethods implements Interface {
 			}
     	}
     
-    	public Integer Search_insurance_from_patient(Integer patient_id) {
-    		Integer id=-1;
-    		try {
-				String SQL_code = "SELECT insurance_id FROM patient WHERE patient_id = ?";
-				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-				template.setInt(1, patient_id);
-				ResultSet result_set = template.executeQuery();
-				
-				while(result_set.next()) {
-					id = result_set.getInt("insurance_id");
-				}
-				template.close();
-				return id;
-			} catch (SQLException search_insurance_error) {
-				search_insurance_error.printStackTrace();
-				return id;
-			}
-    	}
-    
 	  //funciona
 	    public boolean Search_existent_email(String email) {
 			try {
@@ -540,30 +521,6 @@ public class SQLiteMethods implements Interface {
 		
 	}
     
-    /*
-	public Integer Search_stored_record_by_id(Integer record_id) {
-		Integer id=-1;
-		try {
-			String SQL_code = "SELECT record_id FROM medical_record WHERE medicalRecord_id = ?";
-			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setInt(1, record_id);
-			ResultSet result_set = template.executeQuery();
-			while(result_set.next()) {
-				id = result_set.getInt("")
-				return id;
-			} else {
-				template.close();
-				return id;
-			}
-		} catch (SQLException search_record_error) {
-			search_record_error.printStackTrace();
-			return id;
-		}
-		
-	}
-	*/
-	
-	
 	public Integer Search_insurance_by_name(String insurance_name) {
 		Integer id=-1;
 		try {
@@ -580,6 +537,25 @@ public class SQLiteMethods implements Interface {
 		} catch (SQLException search_insurance_error) {
 			search_insurance_error.printStackTrace();
 			return id;
+		}
+	}
+	
+	public String Search_insurance_by_id(Integer insurance_id) {
+		String name="Insurance not found";
+		try {
+			String SQL_code = "SELECT name FROM insurance WHERE insurance_id = ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setInt(1, insurance_id);
+			
+			ResultSet result_set = template.executeQuery();
+			while(result_set.next()) {
+				name = result_set.getString("name");
+			}
+			template.close(); 
+			return name;
+		} catch (SQLException search_insurance_error) {
+			search_insurance_error.printStackTrace();
+			return name;
 		}
 	}
 	
