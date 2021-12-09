@@ -79,21 +79,21 @@ public class ServerController implements Initializable {
 		        	Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, e);
 				}
 				finally {
-					//releaseResourcesServer(serverSocket);
+					releaseResourcesServer(serverSocket);
 					System.out.println("Client finished.");
 				}
 				
-				/*
-				stopButton.setOnMouseClicked((MouseEvent event2) -> {
-					controller.Close_connection(); 
-					releaseResourcesServer(serverSocket);
-					System.exit(0);
-				});
-				*/
 			}
 			
 		});
 		
+		stopButton.setOnMouseClicked((MouseEvent event2) -> {
+			running=false;
+			System.out.println("He pillao cacho");
+			controller.Close_connection(); 
+			releaseResourcesServer(serverSocket);
+			System.exit(0);
+		});	
 	
 }
     
@@ -103,30 +103,13 @@ public class ServerController implements Initializable {
 		main_menu_stage.setIconified(true);
 	}
 	
-	@FXML
-	void close_server(KeyEvent event) {
-		if (event.getCode() == KeyCode.ESCAPE) {
-			controller.Close_connection(); 
-			releaseResourcesServer(serverSocket);
-			running=false;
-			System.exit(0);
-		}	
-	}
-	
-	private static void releaseResources(Socket socket) {
-		try {
-	        socket.close();
-	    } catch (IOException ex) {
-	        Logger.getLogger(LaunchServerApp.class.getName()).log(Level.SEVERE, null, ex);
-	    }
-	}
-	
 	public static void releaseResourcesServer(ServerSocket serverSocket) {
 		try {
 			serverSocket.close();
 	    } catch (IOException ex) {
 	        Logger.getLogger(LaunchServerApp.class.getName()).log(Level.SEVERE, null, ex);
 	    }
+		System.out.println("Release serverController");
 	}
 	
 	

@@ -249,20 +249,24 @@ public class ServerToDB implements Runnable{
                 Logger.getLogger(ServerToDB.class.getName()).log(Level.SEVERE, null, ex);
                  
             } 
-            /*
+            
             finally {
-                releaseResourcesClient(socket, dataOutputStream); 
+                releaseResourcesClient(socket, dataInputStream,dataOutputStream); 
             }
-           	*/
+           	
 	}
 	
-	private static void releaseResourcesClient(Socket socket, DataOutputStream dataOutputStream) {
+	private static void releaseResourcesClient(Socket socket, DataInputStream dataInputStream,DataOutputStream dataOutputStream) {
 		try {
 			dataOutputStream.close();
         } catch (IOException ex) {
             Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+		try {
+			dataInputStream.close();
+		} catch (IOException ex) {
+			Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, ex);
+		}
         try {
             socket.close();
         } catch (IOException ex) {
