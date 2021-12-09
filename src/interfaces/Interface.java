@@ -32,7 +32,7 @@ public interface Interface {
 	public Integer Search_stored_user_by_userName(String user_name);
 	public String Search_doctor_by_insurance_id(Integer insurance_id);
 	public boolean Search_existent_email(String email);
-	public Integer Search_existent_reference_number(String number);
+	public Integer Search_existent_reference_number(Integer number);
 	public String Get_user_password (String user_name);
 	public Integer Search_stored_record_by_id(Integer record_id);
 	

@@ -30,9 +30,6 @@ public class SQLiteManager {
 	}
 
 
-	public void setSqlite_connection(Connection sqlite_connection) {
-		this.sqlite_connection = sqlite_connection;
-	}
 
 
 	public boolean Connect() {

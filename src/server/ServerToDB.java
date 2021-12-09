@@ -260,7 +260,7 @@ public class ServerToDB implements Runnable{
                     }
                     
                     if (parameters[0].equals("search_existent_refNumber")) {
-                    	Integer ref_number = methods.Search_existent_reference_number(parameters[1]);
+                    	Integer ref_number = methods.Search_existent_reference_number(Integer.parseInt(parameters[1]));
                     	dataOutputStream.writeUTF(String.valueOf(ref_number));
                     }
                     
