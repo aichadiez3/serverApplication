@@ -45,8 +45,8 @@ public class ServerController implements Initializable {
 		startButton.setOnMouseClicked((MouseEvent event) -> {
 			
 			// close the scene but the server still waiting for connections
-			main_menu_stage = (Stage) serverScene.getScene().getWindow();
-			main_menu_stage.setIconified(true);
+				main_menu_stage = (Stage) serverScene.getScene().getWindow();
+				main_menu_stage.setIconified(true);
 			
 			// SERVER CREATION
 			

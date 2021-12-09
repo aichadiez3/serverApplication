@@ -500,17 +500,21 @@ public class SQLiteMethods implements Interface {
 
 	    
 	    public Integer Search_existent_reference_number(Integer number) {
-	    	Integer match=0;
+	    	Integer match=1;
 			try {
 				String SQL_code = "SELECT reference_number FROM medical_record WHERE reference_number = ?";
 				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 				template.setInt(1, number);
 				ResultSet result_set = template.executeQuery();
-				while(result_set.next()){
-					match = result_set.getInt("reference_number");
-				}
-				template.close();
+				if(result_set.next()){
+					match=0;
+					template.close();
+					return match;
+				} else {
+					template.close();
 				return match;
+				}
+				
 			} catch (SQLException search_refnumber_error) {
 				search_refnumber_error.printStackTrace();
 				return match;
