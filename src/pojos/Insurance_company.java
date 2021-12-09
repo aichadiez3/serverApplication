@@ -9,6 +9,7 @@ public class Insurance_company implements Serializable {
 
 	private Integer insurance_id;
 	private String company_name;
+	
 	public Integer getInsurance_id() {
 		return insurance_id;
 	}
