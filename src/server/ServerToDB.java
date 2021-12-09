@@ -161,13 +161,7 @@ public class ServerToDB implements Runnable{
                     	methods.Update_medical_record_with_bitalino(bitalino, medicalRecordId);
                     }
                     
-                    if (parameters[0].equals("search_patient_by_id")) {
-                    	Integer patient_id = Integer.parseInt(parameters[1]);
-                        patient = methods.Search_stored_patient_by_id(patient_id);
-                        dataOutputStream.writeUTF(patient.toString());
-                    }
-                    
-                    if (parameters[0].equals("search_patient_info")) {
+                    if (parameters[0].equals("search_patient_info_by_id")) {
                     	Integer patient_id = Integer.parseInt(parameters[1]);
                         patient = methods.Search_stored_patient_by_id(patient_id);
                         dataOutputStream.writeUTF(patient.toString());

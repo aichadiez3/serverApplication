@@ -145,7 +145,7 @@ public class SQLiteMethods implements Interface {
      
     public Integer Insert_new_doctor(String name, String telephone, Integer insurance_id) {
 		try {
-			String table = "INSERT INTO doctor (name, telephone, insurance_id) " + "VALUES (?,?,?)";
+			String table = "INSERT INTO doctor (name, telephone, insurance_id) " + "VALUES (?,?,?);";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(table);
 			template.setString(1, name);
 			template.setString(2, telephone);
@@ -401,59 +401,57 @@ public class SQLiteMethods implements Interface {
     
     //funciona
     public Integer Search_stored_patient_by_user_id(Integer user_id) {
+    	Integer id=-1;
 		try {
 			String SQL_code = "SELECT * FROM patient WHERE user_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setInt(1, user_id);
-			Patient patient= new Patient();
 			ResultSet result_set = template.executeQuery();
-			patient.setPatient_id(result_set.getInt("patient_id"));
-			patient.setName(result_set.getString("name"));
-			patient.setSurname(result_set.getString("surname"));
-			patient.setBirth_date(result_set.getString("birth_date"));
-			patient.setHeight(result_set.getInt("height"));
-			patient.setWeight(result_set.getInt("weight"));
-			patient.setGender(result_set.getString("gender"));
-			patient.setTelephone(result_set.getInt("telephone"));
-			patient.setInsurance_id(result_set.getInt("insurance_id"));
-			patient.setUser_id(user_id);
+			while(result_set.next()) {
+				id = result_set.getInt("patient_id");
+			}
 			template.close();
-			return patient.getPatient_id();
+			return id;
 		} catch (SQLException search_patient_error) {
 			search_patient_error.printStackTrace();
-			return -1;
+			return id;
 		}
 		
 	}
     
-    //funciona
-    public Integer Search_stored_user_by_userName(String user_name) {
-		try {
-			String SQL_code = "SELECT user_id FROM user WHERE user_name LIKE ?";
-			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-			template.setString(1, user_name);
-			User user = new User();
-			ResultSet result_set = template.executeQuery();
-		    user.setUserId(result_set.getInt("user_id"));
-			template.close();
-			return user.getUserId();
-		} catch (SQLException search_patient_error) {
-			search_patient_error.printStackTrace();
-			return -1;
+	    //funciona
+	    public Integer Search_stored_user_by_userName(String user_name) {
+	    	Integer user_id=-1;
+			try {
+				String SQL_code = "SELECT user_id FROM user WHERE user_name LIKE ?";
+				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+				template.setString(1, user_name);
+				ResultSet result_set = template.executeQuery();
+				
+			    while(result_set.next()) {
+			    	user_id = result_set.getInt("user_id");
+			    }
+				template.close();
+				return user_id;
+			} catch (SQLException search_patient_error) {
+				search_patient_error.printStackTrace();
+				return user_id;
+			}
+			
 		}
-		
-	}
     
     	public String Search_doctor_by_insurance_id(Integer insurance_id) {
+    		String name="";
     		try {
 				String SQL_code = "SELECT name FROM doctor WHERE insurance_id = ?";
 				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 				template.setInt(1, insurance_id);
-				Doctor doctor = new Doctor();
 				ResultSet result_set = template.executeQuery();
-				doctor.setName(result_set.getString("name"));
+				while(result_set.next()) {
+					name = result_set.getString("name");
+				}
 				template.close();
-				return doctor.getName().toString();
+				return name;
 			} catch (SQLException search_doctor) {
 				search_doctor.printStackTrace();
 				return "Doctor not found.";
@@ -461,35 +459,38 @@ public class SQLiteMethods implements Interface {
     	}
     
     	public Integer Search_insurance_from_patient(Integer patient_id) {
+    		Integer id=-1;
     		try {
 				String SQL_code = "SELECT insurance_id FROM patient WHERE patient_id = ?";
 				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 				template.setInt(1, patient_id);
-				Insurance_company insurance = new Insurance_company();
 				ResultSet result_set = template.executeQuery();
-				insurance.setInsurance_id(result_set.getInt("insurance_id"));
+				
+				while(result_set.next()) {
+					id = result_set.getInt("insurance_id");
+				}
 				template.close();
-				return insurance.getInsurance_id();
+				return id;
 			} catch (SQLException search_insurance_error) {
 				search_insurance_error.printStackTrace();
-				return -1;
+				return id;
 			}
     	}
     
 	  //funciona
 	    public boolean Search_existent_email(String email) {
 			try {
-				String SQL_code = "SELECT * FROM user WHERE email LIKE ?";
+				String SQL_code = "SELECT email FROM user WHERE email LIKE ?";
 				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 				template.setString(1, email);
-				User user = new User();
 				ResultSet result_set = template.executeQuery();
-			    user.setUserName(result_set.getString("user_name"));
-			    user.setPassword(result_set.getString("password"));
-			    user.setEmail(result_set.getString("email"));
-			    user.setUserId(result_set.getInt("user_id"));
-				template.close();
-				return true;
+				if(result_set.next()) {
+					template.close();
+					return true;
+				} else{
+					template.close();
+					return false;
+				}
 			} catch (SQLException search_patient_error) {
 				search_patient_error.printStackTrace();
 				return false;
@@ -499,122 +500,121 @@ public class SQLiteMethods implements Interface {
 
 	    
 	    public Integer Search_existent_reference_number(Integer number) {
+	    	Integer match=0;
 			try {
-				String SQL_code = "SELECT * FROM medical_record WHERE reference_number = ?";
+				String SQL_code = "SELECT reference_number FROM medical_record WHERE reference_number = ?";
 				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 				template.setInt(1, number);
 				ResultSet result_set = template.executeQuery();
-
-				if(result_set.next())
-				{
-					template.close();
-					return 1;
+				while(result_set.next()){
+					match = result_set.getInt("reference_number");
 				}
-				else {
-					template.close();
-					return 0;
-				}
-				
-				
+				template.close();
+				return match;
 			} catch (SQLException search_refnumber_error) {
-				System.out.println(search_refnumber_error.getMessage());
 				search_refnumber_error.printStackTrace();
-				return 0;
+				return match;
 			}
 			
 		}
     
     
     public String Get_user_password (String user_name) {
+    	String pass="Password doesn't match";
 		try {
-			String SQL_code = "SELECT * FROM user WHERE user_name LIKE ?";
+			String SQL_code = "SELECT password FROM user WHERE user_name LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setString(1, user_name);
-			User user = new User();
 			ResultSet result_set = template.executeQuery();
-		    user.setUserName(result_set.getString("user_name"));
-		    user.setPassword(result_set.getString("password"));
-		    user.setEmail(result_set.getString("email"));
-		    user.setUserId(result_set.getInt("user_id"));
+			while (result_set.next()) {
+				pass = result_set.getString("password");
+			}
 			template.close();
-			return user.getPassword();
+			return pass;
+			
+			
 		} catch (SQLException search_patient_error) {
 			search_patient_error.printStackTrace();
-			return null;
+			return pass;
 		}
 		
 	}
     
+    /*
 	public Integer Search_stored_record_by_id(Integer record_id) {
+		Integer id=-1;
 		try {
-			String SQL_code = "SELECT * FROM medical_record WHERE medicalRecord_id = ?";
+			String SQL_code = "SELECT record_id FROM medical_record WHERE medicalRecord_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setInt(1, record_id);
-			MedicalRecord record=new MedicalRecord();
 			ResultSet result_set = template.executeQuery();
-			record.setMedicalRecord_id(record_id);
-			record.setReferenceNumber(result_set.getInt("reference_number"));
-			record.setRecordDate(result_set.getString("record_date"));
-			record.setPatient_id(result_set.getInt("patient_id"));
-			record.setBitalinoTestId(result_set.getInt("bitalino_test_id"));
-			template.close();
-			return record.getMedicalRecord_id();
+			while(result_set.next()) {
+				id = result_set.getInt("")
+				return id;
+			} else {
+				template.close();
+				return id;
+			}
 		} catch (SQLException search_record_error) {
 			search_record_error.printStackTrace();
-			return -1;
+			return id;
 		}
 		
 	}
+	*/
 	
 	
 	public Integer Search_insurance_by_name(String insurance_name) {
+		Integer id=-1;
 		try {
 			String SQL_code = "SELECT insurance_id FROM insurance WHERE name LIKE ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setString(1, insurance_name);
-			Insurance_company insurance = new Insurance_company();
+			
 			ResultSet result_set = template.executeQuery();
-			insurance.setInsurance_id(result_set.getInt("insurance_id"));
-			insurance.setCompany_name(result_set.getString("name"));
+			while(result_set.next()) {
+				id = result_set.getInt("insurance_id");
+			}
 			template.close(); 
-			return insurance.getInsurance_id();
+			return id;
 		} catch (SQLException search_insurance_error) {
 			search_insurance_error.printStackTrace();
-			return -1;
+			return id;
 		}
 	}
 	
 	public String Search_associated_ecg(Integer bitalino_id) {
+		String root="Not registered.";
 		try {
 			String SQL_code = "SELECT ecg_root FROM ecg_test WHERE test_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setInt(1, bitalino_id);
 			ResultSet result_set = template.executeQuery();
-			if(result_set.next())
-			{
-				return "OK";
+			while(result_set.next()){
+				root = result_set.getString("ecg_root");
 			}
 			template.close();
-			return "NOK";
+			return root;
 		} catch (SQLException search_ecg_error) {
 			search_ecg_error.printStackTrace();
-			return "Not registered.";
+			return root;
 		}
 	}
 	public String Search_associated_eda(Integer bitalino_id) {
+		String root="Not registered.";
 		try {
 			String SQL_code = "SELECT eda_root FROM eda_test WHERE test_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 			template.setInt(1, bitalino_id);
 			ResultSet result_set = template.executeQuery();
-			if(result_set.next()) {
-				return "OK";
+			while(result_set.next()){
+				root = result_set.getString("eda_root");
 			}
 			template.close();
-			return "NOK";
+			return root;
 		} catch (SQLException search_eda_error) {
 			search_eda_error.printStackTrace();
-			return "Not registered.";
+			return root;
 		}
 	}
 	

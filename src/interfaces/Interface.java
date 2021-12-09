@@ -34,7 +34,7 @@ public interface Interface {
 	public boolean Search_existent_email(String email);
 	public Integer Search_existent_reference_number(Integer number);
 	public String Get_user_password (String user_name);
-	public Integer Search_stored_record_by_id(Integer record_id);
+	//public Integer Search_stored_record_by_id(Integer record_id);
 	
 	public Integer Search_insurance_by_name(String insurance_name);
 	public Integer Search_insurance_from_patient(Integer patient_id);
