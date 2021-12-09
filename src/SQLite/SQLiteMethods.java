@@ -58,8 +58,7 @@ public class SQLiteMethods implements Interface {
 		Insert_new_doctor("Sara Girod", "56846304", 14);
 	}
 	
-	
-	//funciona
+
 	public Integer Insert_new_user(String user_name, String password, String email) {
 		try {
 			String table = "INSERT INTO user (user_name, password, email) " + " VALUES(?,?,?);";
@@ -109,7 +108,7 @@ public class SQLiteMethods implements Interface {
 		}
 	}
 	
-	//funciona
+
     public Integer Insert_new_patient(Integer user_id, String name, String surname) {
     	try {
 			String table = "INSERT INTO patient (user_id, name, surname) " + "VALUES (?,?,?);";
@@ -129,7 +128,6 @@ public class SQLiteMethods implements Interface {
 			patient.setSurname(result_set.getString("surname"));
 			patient.setUser_id(user_id);
 			patient.setBirth_date(null);
-			//patient.setAge();
 			patient.setHeight(null);
 			patient.setWeight(null);
 			patient.setGender(null);
@@ -209,7 +207,6 @@ public class SQLiteMethods implements Interface {
 	}
     
     
-    // CREO QUE HABRÁ QUE CAMBIAR LOS TIPOS A STRING PARA EXPORTARLOS A TEXTO Y QUE SEA ENTENDIBLE
     public Integer Insert_new_psycho_test(LinkedList<String> positive_res, LinkedList<String> negative_res, LinkedList<String> symptoms, Integer medicalRecord_id) {
 		try {
 			String table = "INSERT INTO psycho_test (positive_res, negative_res, symptoms, medicalRecord_id) " + "VALUES (?,?,?,?)";
@@ -295,7 +292,7 @@ public class SQLiteMethods implements Interface {
     
 	// -----> UPDATE METHODS <-----
 	
-    //funciona
+
     public boolean Update_user_info(String password, String email, Integer user_id) {
 		try {
 			String SQL_code = "UPDATE user SET password = ?, email = ? WHERE user_id = ?";
@@ -316,7 +313,7 @@ public class SQLiteMethods implements Interface {
 		}
 	}
     
-    //funciona
+ 
     public void Update_patient_info(Integer patient_id, String birth_date, Integer height, Integer weight, String gender, Integer telephone, Integer insurance_id) {
     	try {
     		
@@ -325,29 +322,12 @@ public class SQLiteMethods implements Interface {
     		String SQL_code = "UPDATE patient SET birth_date = ?, height = ?, weight = ?, gender = ?, telephone = ?, insurance_id = ? WHERE patient_id = ?";
 			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
 
-			if(!birth_date.equals("")) {
 			template.setString(1, birth_date);
-			}
-			
-			if(!height.equals("")) {
-				template.setInt(2, height);
-			}
-			
-			if(!weight.equals("")) {
-				template.setInt(3, weight);
-			}
-			
-			if(!gender.equals("")) {
-				template.setString(4, gender);
-			}
-			
-			if(!telephone.equals("")) {
-				template.setInt(5, telephone);
-			}
-			
-			if(!insurance_id.equals("")) {
-				template.setInt(6, insurance_id);
-			}
+			template.setInt(2, height);
+			template.setInt(3, weight);
+			template.setString(4, gender);
+			template.setInt(5, telephone);
+			template.setInt(6, insurance_id);
 			template.setInt(7, patient_id);
 			template.executeUpdate();
 			template.close();
@@ -373,7 +353,7 @@ public class SQLiteMethods implements Interface {
     }
     
 	// -----> SEARCH STORED ELEMENTS BY ID METHODS <-----
-    //funciona
+
     public Patient Search_stored_patient_by_id(Integer patient_id) {
 		try {
 			String SQL_code = "SELECT * FROM patient WHERE patient_id = ?";
@@ -398,8 +378,8 @@ public class SQLiteMethods implements Interface {
 		}
 		
 	}
-    
-    //funciona
+
+
     public Integer Search_stored_patient_by_user_id(Integer user_id) {
     	Integer id=-1;
 		try {
@@ -418,8 +398,8 @@ public class SQLiteMethods implements Interface {
 		}
 		
 	}
-    
-	    //funciona
+
+
 	    public Integer Search_stored_user_by_userName(String user_name) {
 	    	Integer user_id=-1;
 			try {
@@ -458,7 +438,7 @@ public class SQLiteMethods implements Interface {
 			}
     	}
     
-	  //funciona
+	
 	    public boolean Search_existent_email(String email) {
 			try {
 				String SQL_code = "SELECT email FROM user WHERE email LIKE ?";
@@ -596,28 +576,6 @@ public class SQLiteMethods implements Interface {
 	
 	
 	// -----> LIST METHODS <-----
-	
-	public List<User> List_all_users() {
-		try {
-			Statement statement = this.sqlite_connection.createStatement();
-			String SQL_code = "SELECT * FROM user";
-			List<User> users_list = new LinkedList<User>();
-			ResultSet result_set = statement.executeQuery(SQL_code);
-			while (result_set.next()) {
-				User user = new User();
-				user.setUserId(result_set.getInt("user_id"));
-				user.setUserName(result_set.getString("user_name"));
-				user.setPassword(result_set.getString("password"));
-				user.setEmail(result_set.getString("email"));
-				users_list.add(user);
-			}
-			statement.close();
-			return users_list;
-		} catch (SQLException list_users_error) {
-			list_users_error.printStackTrace();
-			return null;
-		}
-	}
 	
 	public List<MedicalRecord> List_all_medical_records() {
 		List<MedicalRecord> record_list = new LinkedList<MedicalRecord>();

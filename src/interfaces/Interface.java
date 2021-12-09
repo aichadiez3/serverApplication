@@ -39,7 +39,6 @@ public interface Interface {
 	public String Search_associated_ecg(Integer bitalino_id);
 	public String Search_associated_eda(Integer bitalino_id);
 	
-	public List<User> List_all_users();
 	public List<MedicalRecord> List_all_medical_records();
 	public List<Insurance_company> List_all_insurances();
 	
