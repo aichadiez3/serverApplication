@@ -45,58 +45,25 @@ public class ServerController implements Initializable {
 			// SERVER CREATION
 			
 			serverSocket = null;
-		
-			//while(running){
-	            //This executes when we have a client
 				
 				try {
 					serverSocket = new ServerSocket(9000);
 					new Thread(new ThreadCreation(serverSocket)).start();
-				/*
-				 * while (true) {
-				 * 
-				 * if (stopButton.isPressed()==true) { System.out.println("Close server.");
-				 * releaseResourcesServer(serverSocket); System.exit(0); } else { //This
-				 * executes when we have a patient Socket socket = serverSocket.accept(); new
-				 * Thread(new ServerToDB(socket)).start();
-				 * 
-				 * //System.out.println("Server received a socket: " +
-				 * socket.getLocalSocketAddress()); }
-				 * 
-				 * }
-				 */
+				
 		        } catch (IOException e) {
 		        	Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, e);
 				}
-//				finally {
-//					System.out.println("salí");
-//					releaseResourcesServer(serverSocket);
-//				}
-			
-			//}
 			
 		});
 		
 		stopButton.setOnMouseClicked((MouseEvent event2) -> {
-			System.out.println("He pillao cacho"); 
+			System.out.println("Closing the server..."); 
 			releaseResourcesServer(serverSocket);
 			Thread.currentThread().interrupt();
 			System.exit(0);
 		});	
 
-}
-	
-	
-	
-	/*
-   @FXML
-   void close_server(MouseEvent event) {
-	   running=false;
-		System.out.println("He pillao cacho");
-		releaseResourcesServer(serverSocket);
-		System.exit(0);
-   }
-   */
+	}
 	
 	@FXML
 	void minimize_window(MouseEvent event) {
@@ -110,7 +77,7 @@ public class ServerController implements Initializable {
 	    } catch (IOException ex) {
 	        Logger.getLogger(LaunchServerApp.class.getName()).log(Level.SEVERE, null, ex);
 	    }
-		System.out.println("Release serverController");
+		System.out.println("Releasing server resources");
 	}
 	
 	

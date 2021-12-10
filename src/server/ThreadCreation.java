@@ -3,7 +3,6 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class ThreadCreation implements Runnable{
 
@@ -26,8 +25,7 @@ public class ThreadCreation implements Runnable{
 			             
 		            }
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					System.out.println("Thread finished");
+					System.out.println("Client finished");
 				}
 	}
 }
