@@ -3,8 +3,13 @@ package server;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -63,6 +68,8 @@ public class ServerToDB implements Runnable{
                     }
                     
                     String[] parameters = instruction.split(",");
+                    String[] bitalinoParam = instruction.split("|");
+                    
                     if (parameters[0].equals("new_user")) {
                     	String user_name = parameters[1];
                     	String password = parameters[2];
@@ -241,6 +248,41 @@ public class ServerToDB implements Runnable{
                     	} else {
                         	dataOutputStream.writeUTF("wrong");
                     	}
+                    }
+                    if(parameters[0].equals("save_in_server")) {
+                    	String dataEcg = bitalinoParam[1];
+                    	String dataEda = bitalinoParam[2];
+                    	String patientName = bitalinoParam[3];
+                    	Integer refNumber = Integer.parseInt(bitalinoParam[4]);
+                    	
+                    	try {
+                			FileWriter writer1,writer2;
+                			String ecg_root="", eda_root="";
+                			
+                			Path path = Paths.get("./bitalinoResults/"+patientName+"/"+LocalDate.now().toString());
+                			
+                			Files.createDirectories(path);
+                			
+                			if(!dataEcg.equals("&")) {
+                			  ecg_root = path +"/ecg_results_"+refNumber+".txt";
+                			  System.out.println(ecg_root);
+                			  writer1 = new FileWriter(ecg_root);
+                		      writer1.write(dataEcg);
+                		      writer1.close();
+                			}
+                		      
+                			if(!dataEda.equals("&")) {
+                			  eda_root = path +"/eda_results_"+refNumber+".txt";
+                			  System.out.println(eda_root);
+                		      writer2 = new FileWriter(eda_root);
+                		      writer2.write(dataEda);
+                		      writer2.close();
+                			} 
+                		      System.out.println("Successfully wrote to the file into server.");
+                		    
+                		} catch (IOException file_creation_error) {
+                		      file_creation_error.printStackTrace();
+                		}
                     }
                 }
             
