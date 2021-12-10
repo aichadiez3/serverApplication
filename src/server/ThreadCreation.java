@@ -15,9 +15,7 @@ public class ThreadCreation implements Runnable{
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		
-            //This executes when we have a client
 				try {
 					while (true) {
 		            	 Socket socket = serverSocket.accept();
