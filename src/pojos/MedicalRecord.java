@@ -15,10 +15,6 @@ public class MedicalRecord implements Serializable{
 	private String recordDate;
 	private Integer referenceNumber;
 	private Integer bitalino_test_id;
-	private Integer ecg_id;
-	private Integer eda_id;
-	private List<Integer> symptom_list = new LinkedList<Integer>();
-
 	
 	public MedicalRecord() {
 		super();

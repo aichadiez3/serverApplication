@@ -16,12 +16,10 @@ public class Patient implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer patient_id;
-	//private User user;
 	private Integer user_id;
 	private String name;
 	private String surname;
 	private String birth_date;
-	//private Integer age;
 	private Integer height;
 	private Integer weight;
 	private String gender;
@@ -85,28 +83,6 @@ public class Patient implements Serializable {
 	public void setBirth_date(String birth_date) {
 		this.birth_date = birth_date;
 	}
-	
-	/*public Date convert_LocalDate_to_Date(LocalDate localDate) {
-		return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-	}*/
-	
-
-	/*public Integer getAge() {
-		return age;
-	}
-
-	public void setAge() {
-		if(age != null) {
-			
-		LocalDate date = this.birth_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		Period period = Period.between(date, LocalDate.now());
-		this.age = period.getYears();
-		}
-		else {
-			this.age=null;
-		}
-	}
-	*/
 
 	public Integer getHeight() {
 		return height;

@@ -269,7 +269,6 @@ public class SQLiteMethods implements Interface {
 		}
     }
     
-    //funciona
 	public Integer Insert_new_insurance(String company_name) {
 		Integer insurance_id;
 		String table = "INSERT INTO insurance (name) " + "VALUES (?)";
@@ -292,7 +291,6 @@ public class SQLiteMethods implements Interface {
     
 	// -----> UPDATE METHODS <-----
 	
-
     public boolean Update_user_info(String password, String email, Integer user_id) {
 		try {
 			String SQL_code = "UPDATE user SET password = ?, email = ? WHERE user_id = ?";
@@ -400,84 +398,84 @@ public class SQLiteMethods implements Interface {
 	}
 
 
-	    public Integer Search_stored_user_by_userName(String user_name) {
-	    	Integer user_id=-1;
-			try {
-				String SQL_code = "SELECT user_id FROM user WHERE user_name LIKE ?";
-				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-				template.setString(1, user_name);
-				ResultSet result_set = template.executeQuery();
-				
-			    while(result_set.next()) {
-			    	user_id = result_set.getInt("user_id");
-			    }
-				template.close();
-				return user_id;
-			} catch (SQLException search_patient_error) {
-				search_patient_error.printStackTrace();
-				return user_id;
-			}
+    public Integer Search_stored_user_by_userName(String user_name) {
+    	Integer user_id=-1;
+		try {
+			String SQL_code = "SELECT user_id FROM user WHERE user_name LIKE ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setString(1, user_name);
+			ResultSet result_set = template.executeQuery();
 			
+		    while(result_set.next()) {
+		    	user_id = result_set.getInt("user_id");
+		    }
+			template.close();
+			return user_id;
+		} catch (SQLException search_patient_error) {
+			search_patient_error.printStackTrace();
+			return user_id;
 		}
-    
-    	public String Search_doctor_by_insurance_id(Integer insurance_id) {
-    		String name="";
-    		try {
-				String SQL_code = "SELECT name FROM doctor WHERE insurance_id = ?";
-				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-				template.setInt(1, insurance_id);
-				ResultSet result_set = template.executeQuery();
-				while(result_set.next()) {
-					name = result_set.getString("name");
-				}
-				template.close();
-				return name;
-			} catch (SQLException search_doctor) {
-				search_doctor.printStackTrace();
-				return "Doctor not found.";
+		
+	}
+
+	public String Search_doctor_by_insurance_id(Integer insurance_id) {
+		String name="";
+		try {
+			String SQL_code = "SELECT name FROM doctor WHERE insurance_id = ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setInt(1, insurance_id);
+			ResultSet result_set = template.executeQuery();
+			while(result_set.next()) {
+				name = result_set.getString("name");
 			}
-    	}
-    
-	
-	    public boolean Search_existent_email(String email) {
-			try {
-				String SQL_code = "SELECT email FROM user WHERE email LIKE ?";
-				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-				template.setString(1, email);
-				ResultSet result_set = template.executeQuery();
-				if(result_set.next()) {
-					template.close();
-					return true;
-				} else{
-					template.close();
-					return false;
-				}
-			} catch (SQLException search_patient_error) {
-				search_patient_error.printStackTrace();
+			template.close();
+			return name;
+		} catch (SQLException search_doctor) {
+			search_doctor.printStackTrace();
+			return "Doctor not found.";
+		}
+	}
+
+
+    public boolean Search_existent_email(String email) {
+		try {
+			String SQL_code = "SELECT email FROM user WHERE email LIKE ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setString(1, email);
+			ResultSet result_set = template.executeQuery();
+			if(result_set.next()) {
+				template.close();
+				return true;
+			} else{
+				template.close();
 				return false;
 			}
-			
+		} catch (SQLException search_patient_error) {
+			search_patient_error.printStackTrace();
+			return false;
 		}
+		
+	}
 
 	    
-	    public Integer Search_existent_reference_number(Integer number) {
-	    	Integer match=0;
-			try {
-				String SQL_code = "SELECT reference_number FROM medical_record WHERE reference_number = ?";
-				PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
-				template.setInt(1, number);
-				ResultSet result_set = template.executeQuery();
-				while(result_set.next()){
-					match = result_set.getInt("reference_number");
-				}
-				template.close();
-				return match;
-			} catch (SQLException search_refnumber_error) {
-				search_refnumber_error.printStackTrace();
-				return match;
+    public Integer Search_existent_reference_number(Integer number) {
+    	Integer match=0;
+		try {
+			String SQL_code = "SELECT reference_number FROM medical_record WHERE reference_number = ?";
+			PreparedStatement template = this.sqlite_connection.prepareStatement(SQL_code);
+			template.setInt(1, number);
+			ResultSet result_set = template.executeQuery();
+			while(result_set.next()){
+				match = result_set.getInt("reference_number");
 			}
-			
+			template.close();
+			return match;
+		} catch (SQLException search_refnumber_error) {
+			search_refnumber_error.printStackTrace();
+			return match;
 		}
+		
+	}
     
     
     public String Get_user_password (String user_name) {
@@ -615,7 +613,4 @@ public class SQLiteMethods implements Interface {
 			return null;
 		}
 	}
-
-	
-	
 }

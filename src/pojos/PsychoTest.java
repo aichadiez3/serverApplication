@@ -38,8 +38,7 @@ public class PsychoTest implements Serializable {
 	public void setNegative_res(LinkedList<String> negative_res) {
 		this.negative_res = negative_res;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(queries_id);
