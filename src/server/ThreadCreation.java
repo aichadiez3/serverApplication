@@ -23,6 +23,7 @@ public class ThreadCreation implements Runnable{
 					while (true) {
 		            	 Socket socket = serverSocket.accept();
 			             new Thread(new ServerToDB(socket)).start();	
+			             
 		            }
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
