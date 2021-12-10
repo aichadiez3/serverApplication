@@ -1,74 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="serverScene" prefHeight="795.0" prefWidth="544.0" style="-fx-background-color: -fx-gray;" styleClass="subpane-layout" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="722.0" prefWidth="539.0" style="-fx-background-color: -fx-gray;" styleClass="subpane-layout" stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.ServerController">
    <children>
-      <Group fx:id="startButton" layoutX="154.0" layoutY="566.0">
+      <Group fx:id="serverScene" layoutX="50.0" layoutY="14.0">
          <children>
-            <Circle fill="WHITE" layoutX="9.0" layoutY="9.0" radius="100.0" stroke="#ffffff00" strokeType="INSIDE">
-               <effect>
-                  <DropShadow>
-                     <color>
-                        <Color red="0.46970000863075256" green="0.7699999809265137" blue="0.7649949789047241" opacity="0.46206897497177124" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Circle>
-            <ImageView fitHeight="111.0" fitWidth="109.0" layoutX="-45.0" layoutY="-42.0" opacity="0.79" pickOnBounds="true" preserveRatio="true">
+            <Group fx:id="startButton" layoutX="49.0" layoutY="335.0">
+               <children>
+                  <Label layoutX="-11.0" layoutY="281.0" prefHeight="78.0" prefWidth="125.0" styleClass="main-text" text="Start the server" />
+                  <Circle fx:id="startCircle" fill="WHITE" layoutX="51.0" layoutY="181.0" radius="100.0" stroke="#ffffff00" strokeType="INSIDE">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.46970000863075256" green="0.7699999809265137" blue="0.7649949789047241" opacity="0.46206897497177124" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Circle>
+                  <ImageView fx:id="startImage" fitHeight="111.0" fitWidth="109.0" layoutX="-3.0" layoutY="130.0" opacity="0.79" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/start_black.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <Label layoutX="33.0" layoutY="115.0" style="-fx-font-size: 40;" styleClass="title-text-style" text="StresstS">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutY="247.0" opacity="0.64" prefHeight="175.0" prefWidth="396.0" style="-fx-font-size: 16;" styleClass="main-text" text="This scene only represent a graphical way of starting the server to allows clients to request data from its database. Once started, the server waits for connections. Button stop, closes the server and release its resources." wrapText="true" />
+            <ImageView fitHeight="195.0" fitWidth="200.0" layoutX="191.0" layoutY="46.0">
                <image>
-                  <Image url="@icons/start_black.png" />
+                  <Image url="@icons/menu_icon.png" />
                </image>
             </ImageView>
-            <Label layoutX="-53.0" layoutY="90.0" prefHeight="106.0" prefWidth="125.0" styleClass="main-text" text="Start the server" />
-         </children>
-      </Group>
-      <Label layoutX="107.0" layoutY="143.0" style="-fx-font-size: 40;" styleClass="title-text-style" text="StresstS">
-         <font>
-            <Font size="19.0" />
-         </font></Label>
-      <Label alignment="CENTER" layoutX="74.0" layoutY="275.0" opacity="0.64" prefHeight="175.0" prefWidth="396.0" style="-fx-font-size: 16;" styleClass="main-text" text="This scene only represent a graphical way of starting the server to allows clients to request data from its database. Once started, the server waits for connections. Button stop, closes the server and release its resources." wrapText="true" />
-      <ImageView fitHeight="195.0" fitWidth="200.0" layoutX="265.0" layoutY="74.0">
-         <image>
-            <Image url="@icons/menu_icon.png" />
-         </image>
-      </ImageView>
-      <Group fx:id="stopButton" layoutX="379.0" layoutY="566.0">
-         <children>
-            <Circle fill="WHITE" layoutX="9.0" layoutY="9.0" radius="100.0" stroke="#ffffff00" strokeType="INSIDE">
-               <effect>
-                  <DropShadow>
-                     <color>
-                        <Color red="0.6568889021873474" green="0.75789475440979" blue="0.4014035165309906" opacity="0.46000000834465027" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Circle>
-            <Label layoutX="-53.0" layoutY="90.0" prefHeight="106.0" prefWidth="125.0" styleClass="main-text" text="Stop the server" />
-            <ImageView fitHeight="101.0" fitWidth="99.0" layoutX="-40.0" layoutY="-41.0" opacity="0.79" preserveRatio="true">
+            <Group fx:id="stopButton" layoutX="332.0" layoutY="522.0">
+               <children>
+                  <Circle fill="WHITE" layoutX="9.0" layoutY="9.0" radius="100.0" stroke="#ffffff00" strokeType="INSIDE">
+                     <effect>
+                        <DropShadow>
+                           <color>
+                              <Color red="0.6568889021873474" green="0.75789475440979" blue="0.4014035165309906" opacity="0.46000000834465027" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Circle>
+                  <ImageView fitHeight="101.0" fitWidth="99.0" layoutX="-40.0" layoutY="-41.0" opacity="0.79" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/stop.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+            <ImageView fitHeight="48.0" fitWidth="55.0" layoutX="423.0" onMouseClicked="#minimize_window" preserveRatio="true">
                <image>
-                  <Image url="@icons/stop.png" />
+                  <Image url="@icons/minus.png" />
                </image>
             </ImageView>
+            <Label layoutX="278.0" layoutY="601.0" prefHeight="106.0" prefWidth="125.0" styleClass="main-text" text="Stop the server" />
          </children>
       </Group>
-      <ImageView fitHeight="48.0" fitWidth="55.0" layoutX="477.0" layoutY="14.0" onMouseClicked="#minimize_window" preserveRatio="true">
-         <image>
-            <Image url="@icons/minus.png" />
-         </image>
-      </ImageView>
+      <Pane fx:id="closePane" layoutX="33.0" layoutY="153.0" prefHeight="338.0" prefWidth="471.0" styleClass="bubble-pane-layout" stylesheets="@../../../test/src/application/dark-theme.css" visible="false">
+         <children>
+            <Label layoutX="82.0" layoutY="72.0" stylesheets="@dark-theme.css" text="Do you want to proceed closing the server?">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="passwordField" layoutX="79.0" layoutY="176.0" prefHeight="39.0" prefWidth="299.0" promptText="Closing password" />
+            <Label layoutX="121.0" layoutY="127.0" text="Enter the code: closeStresstS">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="39.0" fitWidth="33.0" layoutX="82.0" layoutY="120.0" preserveRatio="true">
+               <image>
+                  <Image url="@icons/small_arrow.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="exitButton" layoutX="192.0" layoutY="257.0" mnemonicParsing="false" onMouseClicked="#close_server" prefHeight="39.0" prefWidth="73.0" styleClass="button-edit" stylesheets="@dark-theme.css" text="Close" />
+         </children>
+      </Pane>
    </children>
-   <stylesheets>
-      <URL value="@../server/dark-theme.css" />
-      <URL value="@dark-theme.css" />
-   </stylesheets>
-</Pane>
+</AnchorPane>
