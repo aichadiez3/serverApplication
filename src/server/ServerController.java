@@ -51,40 +51,39 @@ public class ServerController implements Initializable {
 				
 				try {
 					serverSocket = new ServerSocket(9000);
-		            while (true) {
-		            	
-		            	if (stopButton.isPressed()==true) {
-		            		System.out.println("Close server.");
-		            		releaseResourcesServer(serverSocket);
-		            		System.exit(0);
-		            	} else {
-		            		//This executes when we have a patient
-		                Socket socket = serverSocket.accept();
-		                new Thread(new ServerToDB(socket)).start();	
-		               
-		                //System.out.println("Server received a socket: " + socket.getLocalSocketAddress());
-		            	}
-		            	
-		            }
+					new Thread(new ThreadCreation(serverSocket)).start();
+				/*
+				 * while (true) {
+				 * 
+				 * if (stopButton.isPressed()==true) { System.out.println("Close server.");
+				 * releaseResourcesServer(serverSocket); System.exit(0); } else { //This
+				 * executes when we have a patient Socket socket = serverSocket.accept(); new
+				 * Thread(new ServerToDB(socket)).start();
+				 * 
+				 * //System.out.println("Server received a socket: " +
+				 * socket.getLocalSocketAddress()); }
+				 * 
+				 * }
+				 */
 		        } catch (IOException e) {
 		        	Logger.getLogger(ServerController.class.getName()).log(Level.SEVERE, null, e);
 				}
-				finally {
-					System.out.println("salí");
-					releaseResourcesServer(serverSocket);
-				}
+//				finally {
+//					System.out.println("salí");
+//					releaseResourcesServer(serverSocket);
+//				}
 			
 			//}
 			
 		});
-		/*
+		
 		stopButton.setOnMouseClicked((MouseEvent event2) -> {
-			running=false;
 			System.out.println("He pillao cacho"); 
 			releaseResourcesServer(serverSocket);
+			Thread.currentThread().interrupt();
 			System.exit(0);
 		});	
-	*/
+
 }
 	
 	
