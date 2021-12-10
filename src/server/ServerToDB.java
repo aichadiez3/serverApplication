@@ -278,9 +278,8 @@ public class ServerToDB implements Runnable{
                 		      writer2.write(dataEda);
                 		      writer2.close();
                 			} 
-                		      //System.out.println("Successfully wrote to the file into server.");
-                		      //dataOutputStream.writeUTF("Successfully wrote to the file into server.");
-                		      
+                		      System.out.println("Successfully wrote to the file into server.");
+                		    
                 		} catch (IOException file_creation_error) {
                 		      file_creation_error.printStackTrace();
                 		}
